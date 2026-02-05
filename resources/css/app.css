@@ -1,0 +1,36 @@
+@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "flowbite/src/themes/default";
+
+@plugin "flowbite/plugin";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source "../node_modules/flowbite";
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* For WebKit browsers (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 5px;              /* width of vertical scrollbar */
+  height: 5px;             /* height of horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 9999px;    /* fully rounded track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #565725;         /* scrollbar handle color */
+  border-radius: 9999px;    /* fully rounded thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3d3d1a;         /* darker on hover */
+}
+
