@@ -5,7 +5,7 @@
 @endsection
 @section('name_page', 'Inventori')
 @section('content')
-    <div class="p-5">
+    <div>
         <div class="mb-4">
             <button class="bg-green-600 hover:bg-green-800 p-2 rounded-md text-white" data-modal-target="tambah_inventori" data-modal-toggle="tambah_inventori">
                 <i class="fas fa-plus-circle text-[16px]"></i> Tambah Inventori
@@ -68,9 +68,9 @@
             </div>
         </div>
 
-        <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs border border-default rounded-[10px]">
+        <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs border border-gray-300">
             <table class="w-full text-sm text-left text-[#565725]">
-                <thead class="border border-default bg-[#565725] text-white">
+                <thead class="bg-[#565725] text-white">
                     <tr>
                         <th scope="col" class="px-2 py-1 font-semibold text-center w-[30px] border border-default">
                             No

@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="mt-5">
-                        <button type="submit" class="w-full bg-[#565725] text-white p-2.5 rounded-md hover:bg-[#45461a]">Let's Start</button>
+                        <button type="submit" class="w-full bg-[#565725] text-white p-2.5 rounded-xl hover:bg-[#45461a]">Let's Start</button>
                     </div>
                 </form>
             </div>
@@ -80,8 +80,11 @@
     </div>
 
    <div class="mx-3 mt-5 bg-[#0F0F0F] rounded-t-[30px]">
-        <footer class="text-center p-3 text-white">
-            &copy; 2025 Sistem Informasi Stock Management Jus Kode Jogja
+        <footer class="text-center p-1 text-white">
+             @php
+                $year = date('Y');
+            @endphp
+             &copy; {{ $year }} Sistem Informasi Stock Management Jus Kode Jogja
         </footer>
    </div>
 </body>

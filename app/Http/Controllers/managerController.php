@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Kategori;
 use App\Models\uom;
 use App\Models\Inventori;
+use App\Models\permintaanBahanBaku;
+use App\Models\permintaanBahanBakuDetail;
 
 class managerController extends Controller
 {
@@ -16,7 +18,7 @@ class managerController extends Controller
 
     public function inventoriManager()
     {
-        $inventori = Inventori::orderBy('id_kategori', 'asc')->get();
+        $inventori = Inventori::orderBy('id', 'asc')->get();
         $kategori = Kategori::all();
         $colorMap = [
             1 => 'bg-amber-200',
@@ -27,11 +29,19 @@ class managerController extends Controller
             6 => 'bg-red-600 text-white',
         ];
         $uom = uom::all();
-        return view('manager.inventori',[
-            'inventori' => $inventori,
-            'kategori' => $kategori,
-            'uom' => $uom,
-        ],compact('kategori', 'colorMap'));
+        return view('manager.inventori',compact('inventori', 'kategori', 'uom', 'colorMap'));
+    }
+
+    public function laporanPermintaanBahanBakuManager()
+    {
+        $permintaanBahanBaku = permintaanBahanBaku::orderBy('id', 'desc')->get();
+        return view('manager.laporanPermintaanBahanBaku',compact('permintaanBahanBaku'));
+    }
+    public function tambahLaporanPermintaanBahanBakuManager()
+    {
+        $uom = uom::all();
+        $inventori = Inventori::with('uom')->get();
+        return view('manager.tambahLaporanPermintaanBahanBaku', compact('inventori', 'uom'));
     }
 
     public function laporanKedatanganBahanBakuManager()
@@ -42,11 +52,6 @@ class managerController extends Controller
     public function laporanPenjualanHarianManager()
     {
         return view('manager.laporanPenjualanHarian');
-    }
-
-    public function laporanRequestBahanBakuManager()
-    {
-        return view('manager.laporanRequestBahanBaku');
     }
 
     public function laporanStockHarianManager()

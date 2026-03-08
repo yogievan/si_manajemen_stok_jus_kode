@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Model;
 
 class inventori extends Model
@@ -18,4 +17,9 @@ class inventori extends Model
         'safety_stock',
         'reorder_point',
     ];
+
+    public function uom()
+    {
+        return $this->belongsTo(uom::class, 'id_uom');
+    }
 }

@@ -21,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital@0;1&display=swap" rel="stylesheet">
     
     {{-- favicon --}}
-    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
     {{-- flowbite css --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
@@ -29,64 +29,86 @@
 </head>
 <body>
     <div class="grid grid-cols-4 min-h-screen">
-        <div class="p-2 m-1.5 bg-[#f5f5f5] border rounded-[15px]">
+
+        <!-- SIDEBAR -->
+        <aside class="h-screen sticky top-0 p-2 bg-[#565725] mr-1.5">
             <div class="flex p-3 justify-center align-center">
                 <div class="flex-none">
-                    <img src="../assets/logo/logo_w.jpg" alt="icons" class="w-[70px] rounded-full border-2 border-[#565725]">
+                    <img src="{{ asset('assets/logo/logo.jpg') }}" alt="icons" class="w-[70px] rounded-full shadow-md">
                 </div>
-                <div class="w-64 flex-1 my-auto ml-2 font-bold text-[18px] text-[#565725]">JUS KODE JOGJA</div>
+                <div class="w-64 flex-1 my-auto ml-2 font-bold text-[18px] text-white text-shadow-md">
+                    JUS KODE JOGJA
+                </div>
             </div>
-            <p class="mt-10 text-gray-500">Menu</p>
-            <hr class="mt-3">
+
+            <p class="mt-10 text-[#9e9e4e]">Menu</p>
+            <p class="mt-3 h-[2px] bg-[#9e9e4e] border-0"></p>
+
             <nav>
                 <ul class="mt-5">
                     @yield('menu')
                 </ul>
             </nav>
-        </div>
-        <div class="col-span-3 m-1 rounded-[15px]">
-            <div class="bg-white rounded-[15px] border min-h-15 mb-1.5 p-1">
+        </aside>
+
+        <!-- CONTENT -->
+        <div class="col-span-3 rounded-[15px] flex flex-col">
+
+            <!-- TOP BAR -->
+            <div class="bg-white rounded-[15px] border min-h-15 m-1.5 p-1">
                 <div class="flex gap-2">
                     <div class="flex-auto font-bold text-[#565725] ml-3 my-auto text-[20px]">
                         @yield('name_page')
                     </div>
+
                     <div class="flex-none w-[300px] text-[#565725] m-auto">
                         <div class="grid grid-rows-2 text-right">
-                            <div class="text-[14px] font-bold">Nama User Nama User Nama User</div>
-                            <div class="text-[10px]">Jabatan User</div>
+                            <div class="text-[14px] font-bold">
+                                Nama User Nama User Nama User
+                            </div>
+                            <div class="text-[10px]">
+                                Jabatan User
+                            </div>
                         </div>
                     </div>
+
                     <div class="flex-none w-[40px] my-auto">
-                        <i class="fas fa-user-circle text-[40px] text-[#565725] text-center my-auto"></i>
+                        <i class="fas fa-user-circle text-[40px] text-[#565725]"></i>
                     </div>
+
                     <div class="flex-none my-auto ml-2 border-l pl-3">
-                        <button class="bg-red-600 p-3 rounded-full text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300" onclick="return confirm('Apakah kamu mau Logout?')">
+                        <button class="bg-red-600 p-3 rounded-full text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300"
+                            onclick="return confirm('Apakah kamu mau Logout?')">
                             <i class="fas fa-power-off w-[25px]"></i>
                         </button>
                     </div>
                 </div>
             </div>
-            <main>
+
+            <!-- MAIN CONTENT -->
+            <main class="flex-1">
                 @yield('optional_content')
                 @yield('graph_content')
-                <div class="p-3 bg-white rounded-[15px] border min-h-screen">
+
+                <div class="p-3 bg-white rounded-[15px] border min-h-screen m-1.5">
                     @yield('content')
+                </div>
+                
+                <!-- FOOTER -->
+                <div class="mx-1.5 mt-3 bg-[#0F0F0F] rounded-t-[15px]">
+                    @php
+                        $year = date('Y');
+                    @endphp
+                    <footer class="text-center p-1 text-white">
+                        &copy; {{ $year }} Sistem Informasi Stock Management Jus Kode Jogja
+                    </footer>
                 </div>
             </main>
         </div>
     </div>
-
-    <div class="mx-3 mt-5 bg-[#0F0F0F] rounded-t-[30px]">
-        @php
-            $year = date('Y');
-        @endphp
-        <footer class="text-center p-3 text-white">
-            &copy; {{ $year }} Sistem Informasi Stock Management Jus Kode Jogja
-        </footer>
-    </div>
     {{-- flowbite js --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-
     @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+    @stack('scripts')
 </body>
 </html>

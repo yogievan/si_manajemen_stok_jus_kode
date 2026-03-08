@@ -94,14 +94,14 @@ class financeController extends Controller
         return Redirect::back();
     }
 
+    public function laporanPermintaanBahanBakuFinance()
+    {
+        return view('finance.laporanPermintaanBahanBaku');
+    }
+
     public function laporanKedatanganBahanBakuFinance()
     {
         return view('finance.laporanKedatanganBahanBaku');
-    }
-
-    public function laporanRequestBahanBakuFinance()
-    {
-        return view('finance.laporanRequestBahanBaku');
     }
 
     public function laporanPenjualanHarianFinance()

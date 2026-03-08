@@ -5,10 +5,10 @@
 @endsection
 @section('name_page', 'Inventori Stock Bahan Baku dan Buah')
 @section('content')
-    <div class="p-5">
-        <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default">
+    <div>
+        <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs border border-gray-300">
             <table class="w-full text-sm text-left text-[#565725]">
-                <thead class="border border-default bg-[#565725] text-white">
+                <thead class="bg-[#565725] text-white">
                     <tr>
                         <th scope="col" class="px-2 py-1 font-semibold text-center w-[30px] border border-default">
                             No

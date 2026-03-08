@@ -17,7 +17,7 @@ Route::get('/finance/laporankedatanganbahanbaku', [App\Http\Controllers\financeC
 Route::get('/finance/laporanpenjualanharian', [App\Http\Controllers\financeController::class, 'laporanPenjualanHarianFinance'])->name('finance.laporanPenjualanHarian');
 Route::get('/finance/laporanstockharian', [App\Http\Controllers\financeController::class, 'laporanStockHarianFinance'])->name('finance.laporanStockHarian');
 Route::get('/finance/laporanstockopname', [App\Http\Controllers\financeController::class, 'laporanStockOpnameFinance'])->name('finance.laporanStockOpname');
-Route::get('/finance/laporanpermintaanbahanbaku', [App\Http\Controllers\financeController::class, 'laporanRequestBahanBakuFinance'])->name('finance.laporanRequestBahanBaku');
+Route::get('/finance/laporanpermintaanbahanbaku', [App\Http\Controllers\financeController::class, 'laporanPermintaanBahanBakuFinance'])->name('finance.laporanPermintaanBahanBaku');
 Route::get('/finance/pengaturan', [App\Http\Controllers\financeController::class, 'pengaturan'])->name('finance.pengaturan');
 
 // Manager Routes
@@ -25,7 +25,8 @@ Route::get('/manager/dashboard', [App\Http\Controllers\managerController::class,
 Route::get('/manager/inventori', [App\Http\Controllers\managerController::class, 'inventoriManager'])->name('manager.inventori');
 Route::get('/manager/laporankedatanganbahanbaku', [App\Http\Controllers\managerController::class, 'laporanKedatanganBahanBakuManager'])->name('manager.laporanKedatanganBahanBaku');
 Route::get('/manager/laporanpenjualanharian', [App\Http\Controllers\managerController::class, 'laporanPenjualanHarianManager'])->name('manager.laporanPenjualanHarian');
-Route::get('/manager/laporanpermintaanbahanbaku', [App\Http\Controllers\managerController::class, 'laporanRequestBahanBakuManager'])->name('manager.laporanRequestBahanBaku');
+Route::get('/manager/laporanpermintaanbahanbaku', [App\Http\Controllers\managerController::class, 'laporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku');
+Route::get('/manager/laporanpermintaanbahanbaku/tambah', [App\Http\Controllers\managerController::class, 'tambahLaporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku.tambah');
 Route::get('/manager/laporanstockharian', [App\Http\Controllers\managerController::class, 'laporanStockHarianManager'])->name('manager.laporanStockHarian');
 Route::get('/manager/laporanstockopname', [App\Http\Controllers\managerController::class, 'laporanStockOpnameManager'])->name('manager.laporanStockOpname');
 
