@@ -14,12 +14,13 @@
                 </span>
             </a>
         </div>
-        <form action="#" method="POST">
+        <form action="{{ route('manager.laporanPermintaanBahanBaku.simpan') }}" method="POST">
         @csrf
-        <div class="text-[#565725] font-semibold mb-4">
-            <div class="pb-2"> Tanggal Pengajuan Permintaan Bahan Baku</div>
+        <div class="text-[#565725] mb-4">
+            <div class="pb-2 font-semibold"> Tanggal Pengajuan Permintaan Bahan Baku</div>
             <div class="relative max-w-sm">
-                <input id="date" name="tgl_request" type="text" placeholder="Pilih tanggal"  class="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
+                <input id="date" name="tgl_request" type="text" placeholder="Pilih tanggal"  class="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                required>
                 
                 <svg class="w-5 h-5 absolute right-3 top-2.5 text-gray-400"
                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -43,7 +44,7 @@
             <tr class="item-row text-[#565725]">
                 <td class="border text-center nomor">1</td>
                 <td class="border p-2">
-                    <select name="id_inventori[]" class="select-bahan w-full p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this)">
+                    <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this)">
                         <option value="">Pilih Bahan Baku</option>
                         @foreach ($inventori as $item)
                             <option value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}">
@@ -62,15 +63,15 @@
             </tr>
         </tbody>
         </table>
-            <button type="button" onclick="tambahItem()" class="mt-3 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800"> + Tambah Barang</button>
+            <button type="button" onclick="tambahItem()" class="mt-3 bg-white text-blue-600 px-4 py-2 rounded border border-blue-600 hover:bg-blue-800 hover:text-white"> + Tambah Bahan Baku</button>
 
             <div class="mt-4 text-[#565725]">
-                <div class="pb-2 font-semibold"> Keterangan Manager</div>
-                <textarea name="catatan" id="" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="Catatan (Opsional)"></textarea>
+                <div class="pb-2 font-semibold">Keterangan Manager</div>
+                <textarea name="keterangan_manager" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="Catatan (Opsional)"></textarea>
             </div>
 
            <div class="mt-4">
-                <button type="submit" class="bg-green-600 hover:bg-green-800 text-white px-6 py-2 rounded">
+                <button type="submit" class="bg-green-600 hover:bg-green-800 text-white px-6 py-2 rounded" onclick="this.disabled=true; this.form.submit();">
                     Simpan Pengajuan Permintaan Bahan Baku
                 </button>
             </div>
@@ -86,7 +87,7 @@
         row.innerHTML = `
             <td class="border text-center nomor text-[#565725]"></td>
             <td class="border p-2 text-[#565725]">
-                <select name="id_inventori[]" class="select-bahan w-full p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this)">
+                <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this)">
                     <option value="">Pilih Bahan Baku</option>
                     @foreach ($inventori as $item)
                         <option value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}">
@@ -96,7 +97,7 @@
                 </select>
             </td>
             <td class="border p-2 text-[#565725]">
-                <input type="number" name="qty_request[]" class="w-full p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
+                <input type="number" name="qty_request[]" class="w-[150px] text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
             </td>
             <td class="border p-2 text-center uom text-[#565725]">-</td>
             <td class="border text-center">

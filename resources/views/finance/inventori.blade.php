@@ -209,8 +209,8 @@
                                         </div>
 
                                         <a href="{{ route('finance.inventori.hapus', $item->id) }}" data-confirm-delete="true">
-                                            <button class="bg-red-600 hover:bg-red-800 p-2 rounded-md text-white">
-                                                <i class="fas fa-trash text-[16px]"></i> Delete
+                                            <button class="bg-red-600 hover:bg-red-800 p-2 rounded-md text-white" window="Hapus Bahan Baku">
+                                                <i class="fas fa-trash text-[16px]"></i>
                                             </button>
                                         </a>
                                     </div>

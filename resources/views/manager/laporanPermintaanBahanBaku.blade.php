@@ -22,10 +22,13 @@
                         No
                     </th>
                     <th scope="col" class="px-2 py-1 font-semibold text-center w-[150px] border border-default">
-                        Tanggal Permintaan Bahan Baku
+                        Waktu Permintaan
                     </th>
                     <th scope="col" class="px-2 py-1 font-semibold text-center w-[150px] border border-default">
-                        Tanggal Approval Finance
+                        Keterangan Manager
+                    </th>
+                    <th scope="col" class="px-2 py-1 font-semibold text-center w-[150px] border border-default">
+                        Tanggal Approval
                     </th>
                     <th scope="col" class="px-2 py-1 font-semibold text-center w-[70px] border border-default">
                         Status Finance
@@ -43,7 +46,10 @@
                                 {{++$no}}
                             </th>
                             <td class="px-2 py-1 border border-default w-[150px]">
-                                {{ $item -> tgl_request }}
+                                {{ date('d F Y \P\u\k\u\l H:i \W\I\B', strtotime($item->tgl_request)) }}
+                            </td>
+                            <td class="px-2 py-1 text-center border border-default w-[150px]">
+                                {{ $item -> keterangan_manager }}
                             </td>
                             <td class="px-2 py-1 text-center border border-default w-[150px]">
                                 {{ $item -> approve_at }}
@@ -53,12 +59,19 @@
                             </td>
                             <td class="px-2 py-1 text-center border border-default w-[70px]">
                                 <div class="flex justify-center gap-2">
-                                    <button class="bg-blue-600 hover:bg-blue-800 p-2 rounded-md text-white openEditModal">
-                                        <i class="fas fa-edit text-[16px]"></i> Edit
-                                    </button>
-                                    <a href="{{ route('finance.inventori.hapus', $item->id) }}" data-confirm-delete="true">
+                                    <a href="#">
+                                        <button class="bg-gray-600 hover:bg-gray-800 p-2 rounded-md text-white openEditModal">
+                                            <i class="fas fa-file-alt text-[16px]"></i> Detail
+                                        </button></a>
+                                    </a>
+                                    <a href="#">
+                                        <button class="bg-blue-600 hover:bg-blue-800 p-2 rounded-md text-white openEditModal">
+                                            <i class="fas fa-edit text-[16px]"></i> Edit
+                                        </button>
+                                    </a>
+                                    <a href="#" data-confirm-delete="true">
                                         <button class="bg-red-600 hover:bg-red-800 p-2 rounded-md text-white">
-                                            <i class="fas fa-trash text-[16px]"></i> Delete
+                                            <i class="fas fa-trash text-[16px]"></i>
                                         </button>
                                     </a>
                                 </div>

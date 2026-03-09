@@ -27,6 +27,7 @@ Route::get('/manager/laporankedatanganbahanbaku', [App\Http\Controllers\managerC
 Route::get('/manager/laporanpenjualanharian', [App\Http\Controllers\managerController::class, 'laporanPenjualanHarianManager'])->name('manager.laporanPenjualanHarian');
 Route::get('/manager/laporanpermintaanbahanbaku', [App\Http\Controllers\managerController::class, 'laporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku');
 Route::get('/manager/laporanpermintaanbahanbaku/tambah', [App\Http\Controllers\managerController::class, 'tambahLaporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku.tambah');
+Route::post('/manager/laporanpermintaanbahanbaku/tambah/simpan', [App\Http\Controllers\managerController::class, 'simpanLaporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku.simpan');
 Route::get('/manager/laporanstockharian', [App\Http\Controllers\managerController::class, 'laporanStockHarianManager'])->name('manager.laporanStockHarian');
 Route::get('/manager/laporanstockopname', [App\Http\Controllers\managerController::class, 'laporanStockOpnameManager'])->name('manager.laporanStockOpname');
 
