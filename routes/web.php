@@ -26,6 +26,7 @@ Route::get('/manager/inventori', [App\Http\Controllers\managerController::class,
 Route::get('/manager/laporankedatanganbahanbaku', [App\Http\Controllers\managerController::class, 'laporanKedatanganBahanBakuManager'])->name('manager.laporanKedatanganBahanBaku');
 Route::get('/manager/laporanpenjualanharian', [App\Http\Controllers\managerController::class, 'laporanPenjualanHarianManager'])->name('manager.laporanPenjualanHarian');
 Route::get('/manager/laporanpermintaanbahanbaku', [App\Http\Controllers\managerController::class, 'laporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku');
+Route::get('/manager/laporanpermintaanbahanbaku/detail/{id}', [App\Http\Controllers\managerController::class, 'detailLaporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku.detail');
 Route::get('/manager/laporanpermintaanbahanbaku/tambah', [App\Http\Controllers\managerController::class, 'tambahLaporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku.tambah');
 Route::post('/manager/laporanpermintaanbahanbaku/tambah/simpan', [App\Http\Controllers\managerController::class, 'simpanTambahLaporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku.simpan');
 Route::get('/manager/laporanpermintaanbahanbaku/edit/{id}', [App\Http\Controllers\managerController::class, 'editLaporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku.edit');

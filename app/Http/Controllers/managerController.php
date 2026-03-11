@@ -40,6 +40,14 @@ class managerController extends Controller
         $permintaanBahanBaku = permintaanBahanBaku::orderBy('id', 'desc')->get();
         return view('manager.laporanPermintaanBahanBaku',compact('permintaanBahanBaku'));
     }
+    public function detailLaporanPermintaanBahanBakuManager($id)
+    {
+        $uom = uom::all();
+        $inventori = Inventori::with('uom')->get();
+        $permintaanBahanBaku = permintaanBahanBaku::findOrFail($id);
+        $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $id)->get();
+        return view('manager.detailLaporanPermintaanBahanBaku', compact('permintaanBahanBaku', 'permintaanBahanBakuDetail', 'inventori', 'uom'));
+    }
     public function tambahLaporanPermintaanBahanBakuManager()
     {
         $uom = uom::all();

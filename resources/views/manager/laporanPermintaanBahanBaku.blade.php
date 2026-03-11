@@ -59,13 +59,13 @@
                             </td>
                             <td class="px-2 py-1 text-center border border-default w-[70px]">
                                 <div class="flex justify-center gap-2">
-                                    <a href="#">
-                                        <button class="bg-gray-600 hover:bg-gray-800 p-2 rounded-md text-white openEditModal">
+                                    <a href="{{ route('manager.laporanPermintaanBahanBaku.detail', $item->id) }}">
+                                        <button class="bg-gray-600 hover:bg-gray-800 p-2 rounded-md text-white">
                                             <i class="fas fa-file-alt text-[16px]"></i> Detail
-                                        </button></a>
+                                        </button>
                                     </a>
                                     <a href="{{ route('manager.laporanPermintaanBahanBaku.edit', $item->id) }}">
-                                        <button class="bg-blue-600 hover:bg-blue-800 p-2 rounded-md text-white openEditModal">
+                                        <button class="bg-blue-600 hover:bg-blue-800 p-2 rounded-md text-white">
                                             <i class="fas fa-edit text-[16px]"></i> Edit
                                         </button>
                                     </a>

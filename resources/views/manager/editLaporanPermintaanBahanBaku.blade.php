@@ -44,7 +44,7 @@
         <tbody id="items">
             @foreach ( $permintaanBahanBakuDetail as $no => $detail )
                 <tr class="item-row text-[#565725]">
-                    <td class="border text-center nomor">{{++$no}}</td>
+                    <td class="border text-center w-[50px]">{{++$no}}</td>
                     <td class="border p-2">
                         <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this)">
                             <option value="">Pilih Bahan Baku</option>
@@ -62,11 +62,11 @@
                         </select>
                     </td>
                     <td class="border p-2">
-                        <input type="number" value="{{ $detail->qty_request }}" name="qty_request[]" class="w-[150px] p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
+                        <input type="number" value="{{ $detail->qty_request }}" name="qty_request[]" class="w-[150px] text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
                     </td>
                     @foreach ($inventori as $item)
                         @if ($detail->id_inventori == $item->id)
-                            <td class="border p-2 text-center uom text-[#565725] w-[50px]">
+                            <td class="border p-2 text-center text-[#565725] w-[50px]">
                                 {{ $item->uom->nama_uom }}
                             </td>
                         @endif
@@ -112,7 +112,7 @@
                 </select>
             </td>
             <td class="border p-2 text-[#565725]">
-                <input type="number" name="qty_request[]" class="w-[150px] text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
+                <input type="number" name="qty_request[]" class="w-[150px] text-[#565725] text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
             </td>
             <td class="border p-2 text-center uom text-[#565725]">-</td>
             <td class="border text-center">

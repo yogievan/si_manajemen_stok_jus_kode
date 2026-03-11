@@ -42,7 +42,7 @@
         </thead>
         <tbody id="items">
             <tr class="item-row text-[#565725]">
-                <td class="border text-center nomor">1</td>
+                <td class="border text-center nomor w-[50px] text-[#565725]">1</td>
                 <td class="border p-2">
                     <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this)">
                         <option value="" selected disabled>Pilih Bahan Baku</option>
@@ -54,7 +54,7 @@
                     </select>
                 </td>
                 <td class="border p-2">
-                    <input autocomplete="off" type="number" name="qty_request[]" class="w-[150px] p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
+                    <input autocomplete="off" type="number" name="qty_request[]" class="w-[150px] text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
                 </td>
                 <td class="border p-2 text-center uom text-[#565725] w-[50px]">-</td>
                 <td class="border text-center w-[100px]">
@@ -85,8 +85,8 @@
         const row = document.createElement('tr');
         row.classList.add('item-row');
         row.innerHTML = `
-            <td class="border text-center nomor"></td>
-                <td class="border p-2">
+            <td class="border text-center nomor w-[50px] text-[#565725]"></td>
+                <td class="border p-2 text-[#565725]">
                     <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this)">
                         <option value="" selected disabled>Pilih Bahan Baku</option>
                         @foreach ($inventori as $item)
@@ -97,7 +97,7 @@
                     </select>
                 </td>
                 <td class="border p-2">
-                    <input autocomplete="off" type="number" name="qty_request[]" class="w-[150px] p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
+                    <input autocomplete="off" type="number" name="qty_request[]" class="w-[150px] text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
                 </td>
                 <td class="border p-2 text-center uom text-[#565725] w-[50px]">-</td>
                 <td class="border text-center w-[100px]">
