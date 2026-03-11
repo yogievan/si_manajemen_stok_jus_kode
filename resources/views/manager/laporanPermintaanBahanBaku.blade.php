@@ -46,7 +46,7 @@
                                 {{++$no}}
                             </th>
                             <td class="px-2 py-1 border border-default w-[150px]">
-                                {{ date('d F Y \P\u\k\u\l H:i \W\I\B', strtotime($item->tgl_request)) }}
+                                {{ \Carbon\Carbon::parse($item->tgl_request)->translatedFormat('d F Y \P\u\k\u\l H:i') }} WIB
                             </td>
                             <td class="px-2 py-1 text-center border border-default w-[150px]">
                                 {{ $item -> keterangan_manager }}
@@ -64,13 +64,13 @@
                                             <i class="fas fa-file-alt text-[16px]"></i> Detail
                                         </button></a>
                                     </a>
-                                    <a href="#">
+                                    <a href="{{ route('manager.laporanPermintaanBahanBaku.edit', $item->id) }}">
                                         <button class="bg-blue-600 hover:bg-blue-800 p-2 rounded-md text-white openEditModal">
                                             <i class="fas fa-edit text-[16px]"></i> Edit
                                         </button>
                                     </a>
-                                    <a href="#" data-confirm-delete="true">
-                                        <button class="bg-red-600 hover:bg-red-800 p-2 rounded-md text-white">
+                                    <a href="{{ route('manager.laporanPermintaanBahanBaku.hapus', $item->id) }}" data-confirm-delete="true">
+                                        <button class="bg-red-600 hover:bg-red-800 p-2 rounded-md text-white " window="Hapus Laporan Permintaan Bahan Baku">
                                             <i class="fas fa-trash text-[16px]"></i>
                                         </button>
                                     </a>

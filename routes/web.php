@@ -27,7 +27,10 @@ Route::get('/manager/laporankedatanganbahanbaku', [App\Http\Controllers\managerC
 Route::get('/manager/laporanpenjualanharian', [App\Http\Controllers\managerController::class, 'laporanPenjualanHarianManager'])->name('manager.laporanPenjualanHarian');
 Route::get('/manager/laporanpermintaanbahanbaku', [App\Http\Controllers\managerController::class, 'laporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku');
 Route::get('/manager/laporanpermintaanbahanbaku/tambah', [App\Http\Controllers\managerController::class, 'tambahLaporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku.tambah');
-Route::post('/manager/laporanpermintaanbahanbaku/tambah/simpan', [App\Http\Controllers\managerController::class, 'simpanLaporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku.simpan');
+Route::post('/manager/laporanpermintaanbahanbaku/tambah/simpan', [App\Http\Controllers\managerController::class, 'simpanTambahLaporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku.simpan');
+Route::get('/manager/laporanpermintaanbahanbaku/edit/{id}', [App\Http\Controllers\managerController::class, 'editLaporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku.edit');
+Route::put('/manager/laporanpermintaanbahanbaku/edit/{id}/simpan', [App\Http\Controllers\managerController::class, 'simpanEditLaporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku.update');
+Route::delete('/manager/laporanpermintaanbahanbaku/hapus/{id}', [App\Http\Controllers\managerController::class, 'hapusLaporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku.hapus');
 Route::get('/manager/laporanstockharian', [App\Http\Controllers\managerController::class, 'laporanStockHarianManager'])->name('manager.laporanStockHarian');
 Route::get('/manager/laporanstockopname', [App\Http\Controllers\managerController::class, 'laporanStockOpnameManager'])->name('manager.laporanStockOpname');
 

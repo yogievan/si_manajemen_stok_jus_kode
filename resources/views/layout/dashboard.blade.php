@@ -108,7 +108,41 @@
     </div>
     {{-- flowbite js --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-    @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    @include('sweetalert::alert')
+    <script>
+        document.addEventListener('click', function(e){
+            const btn = e.target.closest('[data-confirm-delete]');
+            if(!btn) return;
+            e.preventDefault();
+            Swal.fire({
+                title: 'Yakin ingin menghapus?',
+                text: 'Data tidak dapat dikembalikan!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if(result.isConfirmed){
+                    let form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = btn.href;
+                    let csrf = document.createElement('input');
+                    csrf.type = 'hidden';
+                    csrf.name = '_token';
+                    csrf.value = "{{ csrf_token() }}";
+                    let method = document.createElement('input');
+                    method.type = 'hidden';
+                    method.name = '_method';
+                    method.value = 'DELETE';
+                    form.appendChild(csrf);
+                    form.appendChild(method);
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
+        });
+    </script>
     @stack('scripts')
 </body>
 </html>

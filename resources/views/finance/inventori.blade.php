@@ -31,18 +31,18 @@
                         <form action="{{ route('finance.inventori.tambah') }}" method="POST" class="grid grid-cols-1 gap-4">
                             @csrf
                             <div>
-                                <input type="text" name="nama_barang" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Nama Barang" required>
+                                <input autocomplete="off" type="text" name="nama_barang" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Nama Barang" required>
                             </div>
                             <div class="grid grid-cols-3 gap-4">
                                 <select name="id_kategori" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" required>
-                                    <option selected>Pilih Kategori Bahan Baku</option>
+                                    <option value="" selected disabled>Pilih Kategori Bahan Baku</option>
                                     @foreach ($kategori as $item)
                                         <option value="{{ $item -> id }}">{{ $item -> nama_kategori }}</option>
                                     @endforeach
                                 </select>
-                                <input type="number" name="stock" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Stock Awal">
+                                <input autocomplete="off" type="number" name="stock" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Stock Awal">
                                 <select name="id_uom" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" required>
-                                    <option selected>Pilih Unit Of Measurement</option>
+                                    <option value="" selected disabled>Pilih Unit Of Measurement</option>
                                     @foreach ($uom as $item)
                                         <option value="{{ $item -> id }}">{{ $item -> nama_uom }}</option>
                                     @endforeach
@@ -50,12 +50,12 @@
                             </div>
                             <div class="grid grid-cols-4 gap-4">
                                 <div class="flex gap-1">
-                                    <input type="number" name="lead_time" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Lead Time">
+                                    <input autocomplete="off" type="number" name="lead_time" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Lead Time" required>
                                     <p class="text-center align-center content-center">Hari</p>
                                 </div>
-                                <input type="number" name="average_daily_usage" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Average Daily Usage">
-                                <input type="number" name="safety_stock" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Safety Stock">
-                                <input type="number" name="reorder_point" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Reorder Point">
+                                <input autocomplete="off" type="number" name="average_daily_usage" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Average Daily Usage">
+                                <input autocomplete="off" type="number" name="safety_stock" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Safety Stock">
+                                <input autocomplete="off" type="number" name="reorder_point" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Reorder Point">
                             </div>
                             <button type="submit">
                                 <div class="bg-green-600 hover:bg-green-800 p-2 rounded-md text-white w-full text-center">
@@ -178,14 +178,14 @@
                                                         </div>
                                                         <div class="grid grid-cols-3 gap-4">
                                                             <select name="id_kategori" id="edit-kategori" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" required>
-                                                                <option selected>Pilih Kategori Bahan Baku</option>
+                                                                <option selected disabled>Pilih Kategori Bahan Baku</option>
                                                                 @foreach($kategori as $k)
                                                                     <option value="{{ $k->id }}">{{ $k->nama_kategori }}</option>
                                                                 @endforeach
                                                             </select>
                                                             <input type="number" name="stock" id="edit-stock" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Stock Awal">
                                                             <select name="id_uom" id="edit-uom" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" required>
-                                                                <option selected>Pilih Unit Of Measurement</option>
+                                                                <option selected disabled>Pilih Unit Of Measurement</option>
                                                                @foreach($uom as $u)
                                                                     <option value="{{ $u->id }}">{{ $u->nama_uom }}</option>
                                                                 @endforeach
@@ -209,7 +209,7 @@
                                         </div>
 
                                         <a href="{{ route('finance.inventori.hapus', $item->id) }}" data-confirm-delete="true">
-                                            <button class="bg-red-600 hover:bg-red-800 p-2 rounded-md text-white" window="Hapus Bahan Baku">
+                                            <button class="bg-red-600 hover:bg-red-800 p-2 rounded-md text-white " window="Hapus Bahan Baku">
                                                 <i class="fas fa-trash text-[16px]"></i>
                                             </button>
                                         </a>
@@ -226,7 +226,9 @@
             </table>
         </div>
     </div>
-    <script>
+@endsection
+@push('scripts')
+<script>
     document.addEventListener('DOMContentLoaded', () => {
         const buttons = document.querySelectorAll('.openEditModal');
 
@@ -244,5 +246,5 @@
             });
         });
     });
-    </script>
-@endsection
+</script>
+@endpush

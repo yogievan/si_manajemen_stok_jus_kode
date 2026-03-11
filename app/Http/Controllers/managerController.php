@@ -47,9 +47,13 @@ class managerController extends Controller
         $permintaanBahanBaku = permintaanBahanBaku::orderBy('id', 'desc')->get();
         return view('manager.tambahLaporanPermintaanBahanBaku', compact('inventori', 'uom', 'permintaanBahanBaku'));
     }
-    public function simpanLaporanPermintaanBahanBakuManager(Request $request)
+    public function simpanTambahLaporanPermintaanBahanBakuManager(Request $request)
     {
-        $permintaanBahanBaku = permintaanBahanBaku::orderBy('id', 'desc')->get();
+        $request->validate([
+            'tgl_request' => 'required',
+            'id_inventori' => 'required|array',
+            'qty_request' => 'required|array',
+        ]);
         $tanggal = Carbon::parse($request->tgl_request)->setTimeFrom(Carbon::now());
         $laporanPermintaanBahanBaku = permintaanBahanBaku::create([
             'tgl_request' => $tanggal,
@@ -63,7 +67,48 @@ class managerController extends Controller
                 'qty_request' => $request->qty_request[$key],
             ]);
         }
-        Alert::toast('Pengajuan Bahan Baku Berhasil di tambahakan!','success');
+        Alert::toast('Laporan Pengajuan Bahan Baku Berhasil di tambahakan!','success');
+        return redirect()->route('manager.laporanPermintaanBahanBaku');
+    }
+    public function editLaporanPermintaanBahanBakuManager($id)
+    {
+        $uom = uom::all();
+        $inventori = Inventori::with('uom')->get();
+        $permintaanBahanBaku = permintaanBahanBaku::findOrFail($id);
+        $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $id)->get();                    
+        return view('manager.editLaporanPermintaanBahanBaku', compact('inventori', 'uom', 'permintaanBahanBaku', 'permintaanBahanBakuDetail'));
+    }
+    public function simpanEditLaporanPermintaanBahanBakuManager(Request $request, $id)
+    {
+        $request->validate([
+            'tgl_request' => 'required',
+            'id_inventori' => 'required|array',
+            'qty_request' => 'required|array',
+        ]);
+        $permintaanBahanBaku = permintaanBahanBaku::findOrFail($id);
+        $tanggal = Carbon::createFromFormat('d-m-Y', $request->tgl_request)->setTimeFrom(Carbon::now());
+        $permintaanBahanBaku->update([
+            'tgl_request' => $tanggal,
+            'keterangan_manager' => $request->keterangan_manager
+        ]);
+
+        permintaanBahanBakuDetail::where('id_laporan_permintaan', $id)->delete();
+
+        foreach ($request->id_inventori as $key => $inventori) {
+            permintaanBahanBakuDetail::create([
+                'id_laporan_permintaan' => $id,
+                'id_inventori' => $inventori,
+                'qty_request' => $request->qty_request[$key],
+            ]);
+        }
+        Alert::toast('Pengajuan Bahan Baku Berhasil di rubah!','success');
+        return redirect()->route('manager.laporanPermintaanBahanBaku');
+    }
+    public function hapusLaporanPermintaanBahanBakuManager($id)
+    {
+        $permintaanBahanBaku = permintaanBahanBaku::findOrFail($id);
+        $permintaanBahanBaku->delete();
+        Alert::toast('Laporan Pengajuan Bahan Baku Berhasil di hapus!','success');
         return redirect()->route('manager.laporanPermintaanBahanBaku');
     }
 
