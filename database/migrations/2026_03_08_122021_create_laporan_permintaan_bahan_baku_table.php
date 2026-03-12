@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('laporan_permintaan_bahan_baku', function (Blueprint $table) {
             $table->id();
             $table->timestamp('tgl_request')->nullable();
-            $table->string('status_finance')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamps();
         });

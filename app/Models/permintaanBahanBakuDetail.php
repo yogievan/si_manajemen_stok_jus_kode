@@ -15,5 +15,6 @@ class permintaanBahanBakuDetail extends Model
         'qty_approve',
         'keterangan_manager',
         'keterangan_finance',
+        'status_finance',
     ];
 }

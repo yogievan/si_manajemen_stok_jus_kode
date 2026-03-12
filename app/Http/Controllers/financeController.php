@@ -8,6 +8,9 @@ use App\Models\uom;
 use App\Models\Inventori;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\permintaanBahanBaku;
+use App\Models\permintaanBahanBakuDetail;
+use Carbon\Carbon;
 
 class financeController extends Controller
 {
@@ -94,7 +97,50 @@ class financeController extends Controller
 
     public function laporanPermintaanBahanBakuFinance()
     {
-        return view('finance.laporanPermintaanBahanBaku');
+        $permintaanBahanBaku = permintaanBahanBaku::orderBy('id', 'desc')->get();
+        return view('finance.laporanPermintaanBahanBaku', compact('permintaanBahanBaku'));
+    }
+    public function detailLaporanPermintaanBahanBakuFinance($id)
+    {
+        $uom = uom::all();
+        $inventori = Inventori::with('uom')->get();
+        $permintaanBahanBaku = permintaanBahanBaku::findOrFail($id);
+        $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $id)->get();
+        return view('finance.detailLaporanPermintaanBahanBaku', compact('permintaanBahanBaku', 'permintaanBahanBakuDetail', 'inventori', 'uom'));
+    }
+    public function validasiLaporanPermintaanBahanBakuFinance($id)
+    {
+        $uom = uom::all();
+        $inventori = Inventori::with('uom')->get();
+        $permintaanBahanBaku = permintaanBahanBaku::findOrFail($id);
+        $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $id)->get();                    
+        return view('finance.validasiLaporanPermintaanBahanBaku', compact('inventori', 'uom', 'permintaanBahanBaku', 'permintaanBahanBakuDetail'));
+    }
+    public function simpanValidasiLaporanPermintaanBahanBakuFinance(Request $request, $id)
+    {
+        $request->validate([
+            'status_finance' => 'required|array',
+            'status_finance.*' => 'required',
+            'qty_approve' => 'required|array',
+            'qty_approve.*' => 'required|numeric|min:0',
+        ]);
+        $permintaanBahanBaku = permintaanBahanBaku::findOrFail($id);
+        $permintaanBahanBaku->update([
+            'approved_at' => now(),
+        ]);
+
+        foreach ($request->id_detail as $key => $detailId) {
+            $detail = PermintaanBahanBakuDetail::find($detailId);
+            if ($detail) {
+                $detail->qty_approve = $request->qty_approve[$key];
+                $detail->status_finance = $request->status_finance[$key];
+                $detail->keterangan_finance = $request->keterangan_finance[$key] ?? null;
+                $detail->save();
+            }
+
+        }
+        Alert::toast('Validasi Pengajuan Permintaan Bahan Baku Berhasil!','success');
+        return redirect()->route('finance.laporanPermintaanBahanBaku');
     }
 
     public function laporanKedatanganBahanBakuFinance()

@@ -13,11 +13,14 @@ Route::get('/finance/inventori', [App\Http\Controllers\financeController::class,
 Route::post('/finance/inventori/tambah', [App\Http\Controllers\financeController::class, 'tambahInventoriFinance'])->name('finance.inventori.tambah');
 Route::delete('/finance/inventori/hapus-{id}', [App\Http\Controllers\financeController::class, 'hapusInventoriFinance'])->name('finance.inventori.hapus');
 Route::post('/finance/inventori/edit', [App\Http\Controllers\financeController::class, 'editInventoriFinance'])->name('finance.inventori.edit');
+Route::get('/finance/laporanpermintaanbahanbaku', [App\Http\Controllers\financeController::class, 'laporanPermintaanBahanBakuFinance'])->name('finance.laporanPermintaanBahanBaku');
+Route::get('/finance/laporanpermintaanbahanbaku/detail/{id}', [App\Http\Controllers\financeController::class, 'detailLaporanPermintaanBahanBakuFinance'])->name('finance.laporanPermintaanBahanBaku.detail');
+Route::get('/finance/laporanpermintaanbahanbaku/validasi/{id}', [App\Http\Controllers\financeController::class, 'validasiLaporanPermintaanBahanBakuFinance'])->name('finance.laporanPermintaanBahanBaku.validasi');
+Route::put('/finance/laporanpermintaanbahanbaku/validasi/{id}/simpan', [App\Http\Controllers\financeController::class, 'simpanValidasiLaporanPermintaanBahanBakuFinance'])->name('finance.laporanPermintaanBahanBaku.validasi.simpan');
 Route::get('/finance/laporankedatanganbahanbaku', [App\Http\Controllers\financeController::class, 'laporanKedatanganBahanBakuFinance'])->name('finance.laporanKedatanganBahanBaku');
 Route::get('/finance/laporanpenjualanharian', [App\Http\Controllers\financeController::class, 'laporanPenjualanHarianFinance'])->name('finance.laporanPenjualanHarian');
 Route::get('/finance/laporanstockharian', [App\Http\Controllers\financeController::class, 'laporanStockHarianFinance'])->name('finance.laporanStockHarian');
 Route::get('/finance/laporanstockopname', [App\Http\Controllers\financeController::class, 'laporanStockOpnameFinance'])->name('finance.laporanStockOpname');
-Route::get('/finance/laporanpermintaanbahanbaku', [App\Http\Controllers\financeController::class, 'laporanPermintaanBahanBakuFinance'])->name('finance.laporanPermintaanBahanBaku');
 Route::get('/finance/pengaturan', [App\Http\Controllers\financeController::class, 'pengaturan'])->name('finance.pengaturan');
 
 // Manager Routes

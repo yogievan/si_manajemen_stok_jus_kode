@@ -87,14 +87,8 @@
         </tbody>
         </table>
             <button type="button" onclick="tambahItem()" class="mt-3 bg-white text-blue-600 px-4 py-2 rounded border border-blue-600 hover:bg-blue-800 hover:text-white"> + Tambah Bahan Baku</button>
-
-            <div class="mt-4 text-[#565725]">
-                <div class="pb-2 font-semibold" >Keterangan Manager</div>
-                <textarea name="keterangan_manager" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="Catatan (Opsional)" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'">{{ $permintaanBahanBaku->keterangan_manager }}</textarea>
-            </div>
-
-           <div class="mt-4">
-                <button type="submit" class="bg-green-600 hover:bg-green-800 text-white px-6 py-2 rounded" onclick="this.disabled=true; this.form.submit();">
+            <div class="mt-10">
+                <button type="submit" class="bg-green-600 hover:bg-green-800 text-white px-6 py-2 rounded">
                     Simpan Pengajuan Permintaan Bahan Baku
                 </button>
             </div>

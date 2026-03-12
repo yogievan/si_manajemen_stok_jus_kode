@@ -1,13 +1,13 @@
 @extends('layout.dashboard')
-@section('web_title', 'Manager Laporan Permintaan Bahan Baku')
+@section('web_title', 'Finance Laporan Permintaan Bahan Baku')
 @section('menu')
-    @include('layout.menu.manager')
+    @include('layout.menu.finance')
 @endsection
 @section('name_page', 'Detail Formulir Permintaan Bahan Baku')
 @section('content')
     <div>
         <div class="mb-6">
-            <a href="{{ route('manager.laporanPermintaanBahanBaku') }}" class="group inline-flex items-center gap-2 text-gray-400 hover:text-red-600 transition">
+            <a href="{{ route('finance.laporanPermintaanBahanBaku') }}" class="group inline-flex items-center gap-2 text-gray-400 hover:text-red-600 transition">
                 <i class="fas fa-arrow-left group-hover:text-red-600"></i>
                 <span class="group-hover:text-red-600">
                     Kembali ke Halaman Laporan Permintaan Bahan Baku

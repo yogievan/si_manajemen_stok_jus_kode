@@ -15,29 +15,26 @@
         </div>
     </div>
     <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs border border-gray-300">
-            <table class="w-full text-sm text-left text-[#565725]">
+            <table class="w-full text-[#565725]">
                 <thead class="bg-[#565725] text-white">
-                <tr>
-                    <th scope="col" class="px-2 py-1 font-semibold text-center w-[30px] border border-default">
-                        No
-                    </th>
-                    <th scope="col" class="px-2 py-1 font-semibold text-center w-[150px] border border-default">
-                        Waktu Permintaan
-                    </th>
-                    <th scope="col" class="px-2 py-1 font-semibold text-center w-[150px] border border-default">
-                        Keterangan Manager
-                    </th>
-                    <th scope="col" class="px-2 py-1 font-semibold text-center w-[150px] border border-default">
-                        Tanggal Approval
-                    </th>
-                    <th scope="col" class="px-2 py-1 font-semibold text-center w-[70px] border border-default">
-                        Status Finance
-                    </th>
-                    <th scope="col" class="px-2 py-1 font-semibold text-center w-[70px] border border-default">
-                        Aksi
-                    </th>
-                </tr>
-            </thead>
+                    <tr>
+                        <th scope="col" class="px-2 py-1 font-semibold text-center w-[30px] border border-default">
+                            No
+                        </th>
+                        <th scope="col" class="px-2 py-1 font-semibold text-center w-[100px] border border-default">
+                            Tanggal Permintaan
+                        </th>
+                        <th scope="col" class="px-2 py-1 font-semibold text-center w-[100px] border border-default">
+                            Waktu Permintaan
+                        </th>
+                        <th scope="col" class="px-2 py-1 font-semibold text-center w-[200px] border border-default">
+                            Waktu Approval
+                        </th>
+                        <th scope="col" class="px-2 py-1 font-semibold text-center w-[100px] border border-default">
+                            Aksi
+                        </th>
+                    </tr>
+                </thead>
             <tbody>
                 @if ($permintaanBahanBaku->count() >0)
                     @foreach ($permintaanBahanBaku as $no => $item)
@@ -45,32 +42,29 @@
                             <th scope="row" class="px-2 py-1 font-medium text-heading whitespace-nowrap w-[30px] text-center">
                                 {{++$no}}
                             </th>
-                            <td class="px-2 py-1 border border-default w-[150px]">
-                                {{ \Carbon\Carbon::parse($item->tgl_request)->translatedFormat('d F Y \P\u\k\u\l H:i') }} WIB
+                            <td class="px-2 py-1 text-center border border-default w-[100px]">
+                                {{ \Carbon\Carbon::parse($item->tgl_request)->translatedFormat('d F Y') }}
                             </td>
-                            <td class="px-2 py-1 text-center border border-default w-[150px]">
-                                {{ $item -> keterangan_manager }}
+                            <td class="px-2 py-1 text-center border border-default w-[100px]">
+                                {{ \Carbon\Carbon::parse($item->tgl_request)->translatedFormat('\P\u\k\u\l H:i:s') }} WIB
                             </td>
-                            <td class="px-2 py-1 text-center border border-default w-[150px]">
-                                {{ $item -> approve_at }}
+                            <td class="px-2 py-1 text-center border border-default w-[200px]">
+                                {{ \Carbon\Carbon::parse($item->approve_at)->translatedFormat('l, d F Y \P\u\k\u\l H:i:s') }} WIB
                             </td>
-                            <td class="px-2 py-1 text-center border border-default w-[70px]">
-                                {{ $item -> status_finance }}
-                            </td>
-                            <td class="px-2 py-1 text-center border border-default w-[70px]">
-                                <div class="flex justify-center gap-2">
-                                    <a href="{{ route('manager.laporanPermintaanBahanBaku.detail', $item->id) }}">
-                                        <button class="bg-gray-600 hover:bg-gray-800 p-2 rounded-md text-white">
+                            <td class="px-2 py-1 text-center border border-default">
+                                <div class="flex gap-2">
+                                    <a href="{{ route('manager.laporanPermintaanBahanBaku.detail', $item->id) }}" class="flex-1">
+                                        <button class="w-full bg-gray-600 hover:bg-gray-800 p-2 rounded-md text-white">
                                             <i class="fas fa-file-alt text-[16px]"></i> Detail
                                         </button>
                                     </a>
-                                    <a href="{{ route('manager.laporanPermintaanBahanBaku.edit', $item->id) }}">
-                                        <button class="bg-blue-600 hover:bg-blue-800 p-2 rounded-md text-white">
+                                    <a href="{{ route('manager.laporanPermintaanBahanBaku.edit', $item->id) }}" class="flex-1">
+                                        <button class="w-full bg-blue-600 hover:bg-blue-800 p-2 rounded-md text-white">
                                             <i class="fas fa-edit text-[16px]"></i> Edit
                                         </button>
                                     </a>
                                     <a href="{{ route('manager.laporanPermintaanBahanBaku.hapus', $item->id) }}" data-confirm-delete="true">
-                                        <button class="bg-red-600 hover:bg-red-800 p-2 rounded-md text-white " window="Hapus Laporan Permintaan Bahan Baku">
+                                        <button class="bg-red-600 hover:bg-red-800 px-2 py-2 rounded-md text-white">
                                             <i class="fas fa-trash text-[16px]"></i>
                                         </button>
                                     </a>

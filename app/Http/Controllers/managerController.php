@@ -67,7 +67,6 @@ class managerController extends Controller
         $laporanPermintaanBahanBaku = permintaanBahanBaku::create([
             'tgl_request' => $tanggal,
             'keterangan_manager' => $request->keterangan_manager,
-            'status_finance' => 'Pending',
         ]);
         foreach($request->id_inventori as $key => $inventori){
             permintaanBahanBakuDetail::create([
@@ -75,6 +74,7 @@ class managerController extends Controller
                 'id_inventori' => $inventori,
                 'qty_request' => $request->qty_request[$key],
                 'keterangan_manager' => $request->keterangan_manager[$key],
+                'status_finance' => 'Pending',
             ]);
         }
         Alert::toast('Laporan Pengajuan Bahan Baku Berhasil di tambahakan!','success');

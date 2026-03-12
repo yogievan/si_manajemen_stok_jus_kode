@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('qty_approve')->nullable();
             $table->string('keterangan_manager')->nullable();
             $table->string('keterangan_finance')->nullable();
+            $table->string('status_finance')->nullable();
             $table->timestamps();
         });
     }
