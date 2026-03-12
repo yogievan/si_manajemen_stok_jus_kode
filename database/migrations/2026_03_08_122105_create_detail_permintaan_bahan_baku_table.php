@@ -16,7 +16,9 @@ return new class extends Migration
             $table->foreignId('id_inventori')->references('id')->on('inventori')->onDelete('cascade');
             $table->foreignId('id_laporan_permintaan')->references('id')->on('laporan_permintaan_bahan_baku')->onDelete('cascade');
             $table->integer('qty_request');
-            $table->integer('qty_approval_finance')->nullable();
+            $table->integer('qty_approve')->nullable();
+            $table->string('keterangan_manager')->nullable();
+            $table->string('keterangan_finance')->nullable();
             $table->timestamps();
         });
     }

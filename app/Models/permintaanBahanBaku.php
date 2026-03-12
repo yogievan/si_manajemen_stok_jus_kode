@@ -10,9 +10,7 @@ class permintaanBahanBaku extends Model
 
     protected $fillable = [
         'tgl_request',
-        'keterangan_manager',
         'status_finance',
-        'keterangan_finance',
         'approved_at',
     ];
 }

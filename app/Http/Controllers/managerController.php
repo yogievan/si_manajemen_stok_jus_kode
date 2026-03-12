@@ -61,6 +61,7 @@ class managerController extends Controller
             'tgl_request' => 'required',
             'id_inventori' => 'required|array',
             'qty_request' => 'required|array',
+            'keterangan_manager' => 'required|array',
         ]);
         $tanggal = Carbon::parse($request->tgl_request)->setTimeFrom(Carbon::now());
         $laporanPermintaanBahanBaku = permintaanBahanBaku::create([
@@ -73,6 +74,7 @@ class managerController extends Controller
                 'id_laporan_permintaan' => $laporanPermintaanBahanBaku->id,
                 'id_inventori' => $inventori,
                 'qty_request' => $request->qty_request[$key],
+                'keterangan_manager' => $request->keterangan_manager[$key],
             ]);
         }
         Alert::toast('Laporan Pengajuan Bahan Baku Berhasil di tambahakan!','success');
@@ -92,12 +94,12 @@ class managerController extends Controller
             'tgl_request' => 'required',
             'id_inventori' => 'required|array',
             'qty_request' => 'required|array',
+            'keterangan_manager' => 'required|array',
         ]);
         $permintaanBahanBaku = permintaanBahanBaku::findOrFail($id);
         $tanggal = Carbon::createFromFormat('d-m-Y', $request->tgl_request)->setTimeFrom(Carbon::now());
         $permintaanBahanBaku->update([
             'tgl_request' => $tanggal,
-            'keterangan_manager' => $request->keterangan_manager
         ]);
 
         permintaanBahanBakuDetail::where('id_laporan_permintaan', $id)->delete();
@@ -107,6 +109,7 @@ class managerController extends Controller
                 'id_laporan_permintaan' => $id,
                 'id_inventori' => $inventori,
                 'qty_request' => $request->qty_request[$key],
+                'keterangan_manager' => $request->keterangan_manager[$key],
             ]);
         }
         Alert::toast('Pengajuan Bahan Baku Berhasil di rubah!','success');

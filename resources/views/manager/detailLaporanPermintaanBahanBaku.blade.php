@@ -16,7 +16,7 @@
         </div>
         <div class="text-[#565725] mb-4 flex gap-2">
             <div class="pb-2">Waktu Pengajuan Permintaan Bahan Baku : </div>
-            <div class="font-bold">{{ \Carbon\Carbon::parse($permintaanBahanBaku->tgl_request)->translatedFormat('d F Y \P\u\k\u\l H:i') }} WIB</div>
+            <div class="font-bold">{{ \Carbon\Carbon::parse($permintaanBahanBaku->tgl_request)->translatedFormat('l, d F Y \P\u\k\u\l H:i') }} WIB</div>
         </div>
 
         <table class="w-full border border-gray-300 text-sm">
@@ -29,55 +29,52 @@
                 <th class="border p-2 w-[50px]">Jumlah Disetujui</th>
                 <th class="border p-2 w-[50px]">UOM</th>
                 <th class="border p-2 w-[100px]">Keterangan Manager</th>
-                <th class="border p-2 w-[50px]">Status Purchasing</th>
-                <th class="border p-2 w-[100px]">Keterangan Purchasing</th>
-                <th class="border p-2 w-[50px]">Approve time</th>
-
+                <th class="border p-2 w-[50px]">Status Finance</th>
+                <th class="border p-2 w-[100px]">Keterangan Finance</th>
             </tr>
         </thead>
         <tbody id="items" class="text-center">
             @foreach ( $permintaanBahanBakuDetail as $no => $detail )
                 <tr class="item-row text-[#565725]">
                     <td class="border text-center w-[50px]">{{++$no}}</td>
-                    <td class="border p-2 w-[150px]">
-                        @foreach ($inventori as $item)
-                            @if ($detail->id_inventori == $item->id)
-                               {{ $item->nama_barang }}
-                            @endif
-                        @endforeach
-                    </td>
-                    <td class="border p-2 w-[50px]">
-                        {{ $detail->qty_request }}
-                    </td>
-                    <td class="border p-2 w-[50px]">
-                        {{ $item->stock }}
-                    </td>
-                    <td class="border p-2 w-[50px]">
-                        {{ $detail->qty_approve }}
-                    </td>
                     @foreach ($inventori as $item)
                         @if ($detail->id_inventori == $item->id)
+                        <td class="border p-2 w-[150px]">
+                            {{ $item->nama_barang }}
+                        </td>
+                        <td class="border p-2 w-[50px]">
+                            {{ $detail->qty_request }}
+                        </td>
+                        <td class="border p-2 w-[50px]">
+                            {{ $item->stock }}
+                        </td>
+                        <td class="border p-2 w-[50px]">
+                            {{ $detail->qty_approve }}
+                        </td>
                             <td class="border p-2 text-center text-[#565725] w-[50px]">
                                 {{ $item->uom->nama_uom }}
                             </td>
                         @endif
                     @endforeach
                     <td class="border p-2 w-[100px]">
-                        {{ $permintaanBahanBaku->keterangan_manager }}
+                        {{ $detail->keterangan_manager }}
                     </td>
                     <td class="border p-2 w-[50px]">
                         {{ $permintaanBahanBaku->status_finance }}
                     </td>
                     <td class="border p-2 w-[100px]">
-                        {{ $permintaanBahanBaku->keterangan_finance }}
-                    </td>
-                    <td class="border p-2 w-[50px]">
-                        {{ $permintaanBahanBaku->approve_at }}
+                        {{ $detail->keterangan_finance }}
                     </td>
                 </tr>
             @endforeach
         </tbody>
         </table>
+        <div class="text-[#565725] mt-2 flex gap-2">
+            <div class="pb-2">Waktu Laporan Permintaan Bahan Baku  disetujui: </div>
+            <div class="font-bold">
+                {{ $permintaanBahanBaku->approved_at ? \Carbon\Carbon::parse($permintaanBahanBaku->approved_at)->translatedFormat('l, d F Y \P\u\k\u\l H:i') . ' WIB' : '-'}}
+            </div>
+        </div>
     </div>
 @endsection
 @push('scripts')

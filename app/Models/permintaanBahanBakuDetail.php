@@ -12,6 +12,8 @@ class permintaanBahanBakuDetail extends Model
         'id_inventori',
         'id_laporan_permintaan',
         'qty_request',
-        'qty_approval_finance',
+        'qty_approve',
+        'keterangan_manager',
+        'keterangan_finance',
     ];
 }

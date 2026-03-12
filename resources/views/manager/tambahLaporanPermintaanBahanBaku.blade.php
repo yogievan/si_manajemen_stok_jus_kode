@@ -29,52 +29,51 @@
                 </svg>
             </div>
         </div>
-
         <table class="w-full border border-gray-300 text-sm">
         <thead class="bg-[#565725] text-white">
             <tr>
-                <th class="border p-2 w-[50px]">No</th>
-                <th class="border p-2">Nama Bahan Baku</th>
-                <th class="border p-2 w-[150px]">Jumlah</th>
+                <th class="border p-2 w-[30px]">No</th>
+                <th class="border p-2 w-[200px]">Nama Bahan Baku</th>
+                <th class="border p-2 w-[70px]">Jumlah</th>
+                <th class="border p-2 w-[70px]">Sisa Stok</th>
                 <th class="border p-2 w-[50px]">UOM</th>
-                <th class="border p-2 w-[100px]">Aksi</th>
+                <th class="border p-2 w-[150px]">Keterangan</th>
+                <th class="border p-2 w-[50px]">Aksi</th>
             </tr>
         </thead>
         <tbody id="items">
             <tr class="item-row text-[#565725]">
-                <td class="border text-center nomor w-[50px] text-[#565725]">1</td>
-                <td class="border p-2">
-                    <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this)">
+                <td class="border text-center nomor w-[30px] text-[#565725]">1</td>
+                <td class="border p-2 text-[#565725]">
+                    <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this); updateStok(this)">
                         <option value="" selected disabled>Pilih Bahan Baku</option>
                         @foreach ($inventori as $item)
-                            <option value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}">
+                            <option value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}" data-stok="{{ $item->stock }}">
                                 {{ $item->nama_barang }}
                             </option>
                         @endforeach
                     </select>
                 </td>
                 <td class="border p-2">
-                    <input autocomplete="off" type="number" name="qty_request[]" class="w-[150px] text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
+                    <input autocomplete="off" type="number" name="qty_request[]" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
                 </td>
-                <td class="border p-2 text-center uom text-[#565725] w-[50px]">-</td>
-                <td class="border text-center w-[100px]">
+                <td class="border p-2 text-center text-[12px] stok text-[#565725] w-[50px]">-</td>
+                <td class="border p-2 text-center text-[12px] uom text-[#565725] w-[50px]">-</td>
+                <td class="border p-2 text-center uom text-[#565725]">
+                    <textarea name="keterangan_manager[]" rows="1" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" placeholder="Keterangan (Opsional)" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+                </td>
+                <td class="border text-center">
                     <button type="button" class="bg-red-500 text-white px-3 py-1 rounded" onclick="hapusItem(this)">Hapus</button>
                 </td>
             </tr>
         </tbody>
         </table>
-            <button type="button" onclick="tambahItem()" class="mt-3 bg-white text-blue-600 px-4 py-2 rounded border border-blue-600 hover:bg-blue-800 hover:text-white"> + Tambah Bahan Baku</button>
-
-            <div class="mt-4 text-[#565725]">
-                <div class="pb-2 font-semibold">Keterangan Manager</div>
-                <textarea autocomplete="off" name="keterangan_manager" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="Catatan (Opsional)" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
-            </div>
-
-           <div class="mt-4">
-                <button type="submit" class="bg-green-600 hover:bg-green-800 text-white px-6 py-2 rounded">
-                    Simpan Pengajuan Permintaan Bahan Baku
-                </button>
-            </div>
+        <button type="button" onclick="tambahItem()" class="mt-3 bg-white text-blue-600 px-4 py-2 rounded border border-blue-600 hover:bg-blue-800 hover:text-white"> + Tambah Bahan Baku</button>
+        <div class="mt-10">
+            <button type="submit" class="bg-green-600 hover:bg-green-800 text-white px-6 py-2 rounded">
+                Simpan Pengajuan Permintaan Bahan Baku
+            </button>
+        </div>
         </form>
     </div>
 @endsection
@@ -85,24 +84,28 @@
         const row = document.createElement('tr');
         row.classList.add('item-row');
         row.innerHTML = `
-            <td class="border text-center nomor w-[50px] text-[#565725]"></td>
-                <td class="border p-2 text-[#565725]">
-                    <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this)">
-                        <option value="" selected disabled>Pilih Bahan Baku</option>
-                        @foreach ($inventori as $item)
-                            <option value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}">
-                                {{ $item->nama_barang }}
-                            </option>
-                        @endforeach
-                    </select>
-                </td>
-                <td class="border p-2">
-                    <input autocomplete="off" type="number" name="qty_request[]" class="w-[150px] text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
-                </td>
-                <td class="border p-2 text-center uom text-[#565725] w-[50px]">-</td>
-                <td class="border text-center w-[100px]">
-                    <button type="button" class="bg-red-500 text-white px-3 py-1 rounded" onclick="hapusItem(this)">Hapus</button>
-                </td> 
+            <td class="border text-center nomor w-[30px] text-[#565725]">1</td>
+            <td class="border p-2 text-[#565725]">
+                <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this); updateStok(this)">
+                    <option value="" selected disabled>Pilih Bahan Baku</option>
+                    @foreach ($inventori as $item)
+                        <option value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}" data-stok="{{ $item->stock }}">
+                            {{ $item->nama_barang }}
+                        </option>
+                    @endforeach
+                </select>
+            </td>
+            <td class="border p-2">
+                <input autocomplete="off" type="number" name="qty_request[]" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
+            </td>
+            <td class="border p-2 text-center text-[12px] stok text-[#565725] w-[50px]">-</td>
+            <td class="border p-2 text-center text-[12px] uom text-[#565725] w-[50px]">-</td>
+            <td class="border p-2 text-center uom text-[#565725]">
+                <textarea name="keterangan_manager[]" rows="1" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" placeholder="Keterangan (Opsional)" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+            </td>
+            <td class="border text-center">
+                <button type="button" class="bg-red-500 text-white px-3 py-1 rounded" onclick="hapusItem(this)">Hapus</button>
+            </td>
             `;
         table.appendChild(row);
         updateNomor();
@@ -129,6 +132,17 @@
             uomCell.innerText = uom;
         }else{
             uomCell.innerText = "-";
+        }
+    }
+    function updateStok(select){
+        const selectedOption = select.options[select.selectedIndex];
+        const stok = selectedOption.getAttribute("data-stok");
+        const row = select.closest("tr");
+        const stokCell = row.querySelector(".stok");
+        if(stok){
+            stokCell.innerText = stok;
+        }else{
+            stokCell.innerText = "-";
         }
     }
 </script>

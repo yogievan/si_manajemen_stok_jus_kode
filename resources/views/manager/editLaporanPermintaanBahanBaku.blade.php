@@ -34,11 +34,13 @@
         <table class="w-full border border-gray-300 text-sm">
         <thead class="bg-[#565725] text-white">
             <tr>
-                <th class="border p-2 w-[50px]">No</th>
-                <th class="border p-2">Nama Bahan Baku</th>
-                <th class="border p-2 w-[150px]">Jumlah</th>
+                <th class="border p-2 w-[30px]">No</th>
+                <th class="border p-2 w-[200px]">Nama Bahan Baku</th>
+                <th class="border p-2 w-[70px]">Jumlah</th>
+                <th class="border p-2 w-[70px]">Sisa Stok</th>
                 <th class="border p-2 w-[50px]">UOM</th>
-                <th class="border p-2 w-[100px]">Aksi</th>
+                <th class="border p-2 w-[150px]">Keterangan</th>
+                <th class="border p-2 w-[50px]">Aksi</th>
             </tr>
         </thead>
         <tbody id="items">
@@ -62,16 +64,22 @@
                         </select>
                     </td>
                     <td class="border p-2">
-                        <input type="number" value="{{ $detail->qty_request }}" name="qty_request[]" class="w-[150px] text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
+                        <input type="number" value="{{ $detail->qty_request }}" name="qty_request[]" class="w-full text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
                     </td>
                     @foreach ($inventori as $item)
                         @if ($detail->id_inventori == $item->id)
-                            <td class="border p-2 text-center text-[#565725] w-[50px]">
+                            <td class="border p-2 text-center text-[12px] stok text-[#565725] w-[50px]">
+                                {{ $item->stock }}
+                            </td>
+                            <td class="border p-2 text-center text-[12px] text-[#565725] w-[50px]">
                                 {{ $item->uom->nama_uom }}
                             </td>
                         @endif
                     @endforeach
-                    <td class="border text-center w-[100px]">
+                    <td class="border p-2 text-center uom text-[#565725]">
+                        <textarea name="keterangan_manager[]" rows="1" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" placeholder="Keterangan (Opsional)" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'">{{ $detail->keterangan_manager }}</textarea>
+                    </td>
+                    <td class="border text-center">
                         <button type="button" class="bg-red-500 text-white px-3 py-1 rounded" onclick="hapusItem(this)">Hapus</button>
                     </td>
                 </tr>
@@ -99,25 +107,30 @@
         const table = document.getElementById('items');
         const row = document.createElement('tr');
         row.classList.add('item-row');
+        const nomorBaru = document.querySelectorAll('#items .item-row').length + 1;
         row.innerHTML = `
-            <td class="border text-center nomor text-[#565725]"></td>
+            <td class="border text-center nomor w-[30px] text-[#565725]">${nomorBaru}</td>
             <td class="border p-2 text-[#565725]">
-                <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this)">
-                    <option value="">Pilih Bahan Baku</option>
+                <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this); updateStok(this)">
+                    <option value="" selected disabled>Pilih Bahan Baku</option>
                     @foreach ($inventori as $item)
-                        <option value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}">
-                                {{ $item->nama_barang }}
-                            </option>
+                        <option value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}" data-stok="{{ $item->stock }}">
+                            {{ $item->nama_barang }}
+                        </option>
                     @endforeach
                 </select>
             </td>
-            <td class="border p-2 text-[#565725]">
-                <input type="number" name="qty_request[]" class="w-[150px] text-[#565725] text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
+            <td class="border p-2">
+                <input autocomplete="off" type="number" name="qty_request[]" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
             </td>
-            <td class="border p-2 text-center uom text-[#565725]">-</td>
+            <td class="border p-2 text-center text-[12px] stok text-[#565725] w-[50px]">-</td>
+            <td class="border p-2 text-center text-[12px] uom text-[#565725] w-[50px]">-</td>
+            <td class="border p-2 text-center uom text-[#565725]">
+                <textarea name="keterangan_manager[]" rows="1" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" placeholder="Keterangan (Opsional)" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+            </td>
             <td class="border text-center">
                 <button type="button" class="bg-red-500 text-white px-3 py-1 rounded" onclick="hapusItem(this)">Hapus</button>
-            </td> 
+            </td>
             `;
         table.appendChild(row);
         updateNomor();
