@@ -49,7 +49,7 @@
                                 {{ \Carbon\Carbon::parse($item->tgl_request)->translatedFormat('\P\u\k\u\l H:i:s') }} WIB
                             </td>
                             <td class="px-2 py-1 text-center border border-default w-[200px]">
-                                {{ \Carbon\Carbon::parse($item->approve_at)->translatedFormat('l, d F Y \P\u\k\u\l H:i:s') }} WIB
+                                {{ $item->approved_at ? \Carbon\Carbon::parse($item->approved_at)->translatedFormat('l, d F Y \P\u\k\u\l H:i:s') . ' WIB' : '-' }}
                             </td>
                             <td class="px-2 py-1 text-center border border-default">
                                 <div class="flex gap-2">

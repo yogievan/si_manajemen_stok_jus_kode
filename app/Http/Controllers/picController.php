@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Kategori;
 use App\Models\uom;
 use App\Models\Inventori;
+use App\Models\permintaanBahanBaku;
+use App\Models\permintaanBahanBakuDetail;
+use Carbon\Carbon;
 
 class picController extends Controller
 {
@@ -36,7 +39,8 @@ class picController extends Controller
 
     public function laporanKedatanganBahanBakuPic()
     {
-        return view('pic.laporanKedatanganBahanBaku');
+        $permintaanBahanBaku = permintaanBahanBaku::orderBy('id', 'desc')->where('approved_at', '!=', null)->get();
+        return view('pic.laporanKedatanganBahanBaku', compact('permintaanBahanBaku'));
     }
 
     public function laporanPenjualanHarianPic()
