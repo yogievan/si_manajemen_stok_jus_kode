@@ -27,6 +27,10 @@ Route::get('/finance/pengaturan', [App\Http\Controllers\financeController::class
 Route::get('/manager/dashboard', [App\Http\Controllers\managerController::class, 'dashboardManager'])->name('manager.dashboard');
 Route::get('/manager/inventori', [App\Http\Controllers\managerController::class, 'inventoriManager'])->name('manager.inventori');
 Route::get('/manager/laporankedatanganbahanbaku', [App\Http\Controllers\managerController::class, 'laporanKedatanganBahanBakuManager'])->name('manager.laporanKedatanganBahanBaku');
+Route::get('/manager/laporankedatanganbahanbaku/detail/{id}', [App\Http\Controllers\managerController::class, 'detailLaporanKedatanganBahanBakuManager'])->name('manager.laporanKedatanganBahanBaku.detail');
+Route::get('/manager/laporankedatanganbahanbaku/tambah/{id}', [App\Http\Controllers\managerController::class, 'tambahLaporanKedatanganBahanBakuManager'])->name('manager.laporanKedatanganBahanBaku.tambah');
+Route::put('/manager/laporankedatanganbahanbaku/tambah/{id}/simpan', [App\Http\Controllers\managerController::class, 'simpanTambahLaporanKedatanganBahanBakuManager'])->name('manager.laporanKedatanganBahanBaku.simpan');
+Route::delete('/manager/laporankedatanganbahanbaku/hapus/{id}', [App\Http\Controllers\managerController::class, 'hapusLaporanKedatanganBahanBakuManager'])->name('manager.laporanKedatanganBahanBaku.hapus');
 Route::get('/manager/laporanpenjualanharian', [App\Http\Controllers\managerController::class, 'laporanPenjualanHarianManager'])->name('manager.laporanPenjualanHarian');
 Route::get('/manager/laporanpermintaanbahanbaku', [App\Http\Controllers\managerController::class, 'laporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku');
 Route::get('/manager/laporanpermintaanbahanbaku/detail/{id}', [App\Http\Controllers\managerController::class, 'detailLaporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku.detail');
@@ -42,5 +46,6 @@ Route::get('/manager/laporanstockopname', [App\Http\Controllers\managerControlle
 Route::get('/pic/dashboard', [App\Http\Controllers\picController::class, 'dashboardPic'])->name('pic.dashboard');
 Route::get('/pic/inventori', [App\Http\Controllers\picController::class, 'inventoriPic'])->name('pic.inventori');
 Route::get('/pic/laporankedatanganbahanbaku', [App\Http\Controllers\picController::class, 'laporanKedatanganBahanBakuPic'])->name('pic.laporanKedatanganBahanBaku');
+Route::delete('/pic/laporankedatanganbahanbaku/hapus/{id}', [App\Http\Controllers\picController::class, 'hapusLaporanKedatanganBahanBakuPic'])->name('pic.laporanKedatanganBahanBaku.hapus');
 Route::get('/pic/laporanpenjualanharian', [App\Http\Controllers\picController::class, 'laporanPenjualanHarianPic'])->name('pic.laporanPenjualanHarian');
 Route::get('/pic/laporanstockharian', [App\Http\Controllers\picController::class, 'laporanStockHarianPic'])->name('pic.laporanStockHarian');

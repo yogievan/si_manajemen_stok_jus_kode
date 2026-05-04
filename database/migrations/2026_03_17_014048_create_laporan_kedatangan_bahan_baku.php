@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('laporan_kedatangan_bahan_baku', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_request')->references('id')->on('laporan_permintaan_bahan_baku')->onDelete('cascade');
-            $table->foreignId('id_users')->references('id')->on('users')->onDelete('cascade')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamps();
         });

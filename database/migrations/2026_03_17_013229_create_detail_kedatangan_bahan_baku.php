@@ -16,11 +16,11 @@ return new class extends Migration
             $table->foreignId('id_laporan_kedatangan')->references('id')->on('laporan_kedatangan_bahan_baku')->onDelete('cascade');
             $table->foreignId('id_inventori')->references('id')->on('inventori')->onDelete('cascade');
             $table->timestamp('tgl_kedatangan')->nullable();
-            $table->integer('total_terima')->nullable();
-            $table->string('status_manager')->nullable();
+            $table->integer('qty_kedatangan')->nullable();
+            $table->string('lampiran_kedatangan')->nullable();
             $table->string('keterangan_manager')->nullable();
             $table->string('status_finance')->nullable();
-            $table->string('keterangan_finance')->nullable();
+            $table->string('confirm_finance')->nullable();
             $table->timestamps();
         });
     }

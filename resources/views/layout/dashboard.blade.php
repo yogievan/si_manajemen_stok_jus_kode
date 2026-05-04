@@ -28,7 +28,7 @@
     
 </head>
 <body>
-    <div class="grid grid-cols-4 min-h-screen">
+    <div class="grid grid-cols-6 min-h-screen">
 
         <!-- SIDEBAR -->
         <aside class="h-screen sticky top-0 p-2 bg-[#565725] mr-1.5">
@@ -52,7 +52,7 @@
         </aside>
 
         <!-- CONTENT -->
-        <div class="col-span-3 rounded-[15px] flex flex-col">
+        <div class="col-span-5 rounded-[15px] flex flex-col">
 
             <!-- TOP BAR -->
             <div class="bg-white rounded-[15px] border min-h-15 m-1.5 p-1">

@@ -10,6 +10,8 @@ use App\Models\uom;
 use App\Models\Inventori;
 use App\Models\permintaanBahanBaku;
 use App\Models\permintaanBahanBakuDetail;
+use App\Models\kedatanganBahanBaku;
+use App\Models\kedatanganBahanBakuDetail;
 use Carbon\Carbon;
 
 class managerController extends Controller
@@ -125,7 +127,51 @@ class managerController extends Controller
 
     public function laporanKedatanganBahanBakuManager()
     {
-        return view('manager.laporanKedatanganBahanBaku');
+        $kedatanganBahanBaku = kedatanganBahanBaku::orderBy('id', 'desc')->get();
+        $permintaanBahanBaku = permintaanBahanBaku::orderBy('id', 'desc')->where('approved_at', '!=', null)->get();
+        return view('manager.laporanKedatanganBahanBaku',compact('permintaanBahanBaku', 'kedatanganBahanBaku'));
+    }
+
+    public function tambahLaporanKedatanganBahanBakuManager($id)
+    {
+        $permintaanBahanBaku = permintaanBahanBaku::findOrFail($id);
+        $inventori = Inventori::with('uom')->get();
+        $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $id)->get();
+        return view('manager.tambahLaporanKedatanganBahanBaku', compact('permintaanBahanBaku', 'permintaanBahanBakuDetail', 'inventori'));
+    }
+    public function simpanTambahLaporanKedatanganBahanBakuManager(Request $request, $id)
+    {
+        $request->validate([
+            'id_inventori' => 'required|array',
+            'qty_kedatangan' => 'required|array',
+            'lampiran_kedatangan' => 'required|array',
+            'keterangan_manager' => 'required|array',
+        ]);
+        $tanggal = Carbon::parse($request->tgl_request)->setTimeFrom(Carbon::now());
+        $laporanKedatanganBahanBaku = kedatanganBahanBaku::create([
+            'id_request' => $id,
+        ]);
+        foreach($request->id_inventori as $key => $inventori){
+            kedatanganBahanBakuDetail::create([
+                'id_laporan_kedatangan' => $laporanKedatanganBahanBaku->id,
+                'id_inventori' => $inventori,
+                'tgl_kedatangan' => $request->tgl_kedatangan[$key],
+                'qty_kedatangan' => $request->qty_kedatangan[$key],
+                'lampiran_kedatangan' => $request->lampiran_kedatangan[$key],
+                'keterangan_manager' => $request->keterangan_manager[$key],
+                'status_finance' => 'Pending',
+            ]);
+        }
+        Alert::toast('Laporan Kedatangan Bahan Baku Berhasil di tambahakan!','success');
+        return redirect()->route('manager.laporanKedatanganBahanBaku');
+    }
+
+    public function hapusLaporanKedatanganBahanBakuManager($id)
+    {
+        $kedatanganBahanBaku = kedatanganBahanBaku::findOrFail($id);
+        $kedatanganBahanBaku->delete();
+        Alert::toast('Laporan Kedatangan Bahan Baku Berhasil di hapus!','success');
+        return redirect()->route('manager.laporanKedatanganBahanBaku');
     }
 
     public function laporanPenjualanHarianManager()

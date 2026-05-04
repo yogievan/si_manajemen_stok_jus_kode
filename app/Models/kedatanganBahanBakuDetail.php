@@ -11,9 +11,8 @@ class kedatanganBahanBakuDetail extends Model
         protected $fillable = [
             'id_laporan_kedatangan',
             'id_inventori',
-            'total_terima',
+            'qty_kedatangan',
             'lampiran_kedatangan',
-            'status_manager',
             'keterangan_manager',
             'status_finance',
             'keterangan_finance',

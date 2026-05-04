@@ -42,6 +42,12 @@ class picController extends Controller
         $permintaanBahanBaku = permintaanBahanBaku::orderBy('id', 'desc')->where('approved_at', '!=', null)->get();
         return view('pic.laporanKedatanganBahanBaku', compact('permintaanBahanBaku'));
     }
+    public function detailLaporanKedatanganBahanBakuPic($id)
+    {
+        $permintaanBahanBaku = permintaanBahanBaku::findOrFail($id);
+        $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_permintaan_bahan_baku', $id)->get();
+        return view('pic.detailLaporanKedatanganBahanBaku', compact('permintaanBahanBaku', 'permintaanBahanBakuDetail'));
+    }
 
     public function laporanPenjualanHarianPic()
     {

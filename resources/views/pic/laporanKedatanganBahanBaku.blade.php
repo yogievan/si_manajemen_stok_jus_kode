@@ -38,17 +38,17 @@
                             </td>
                             <td class="px-2 py-1 text-center border border-default">
                                 <div class="flex gap-2 justify-center">
-                                    <a href="{{ route('manager.laporanPermintaanBahanBaku.detail', $item->id) }}">
+                                    <a href="{{ route('pic.laporanKedatanganBahanBaku.detail', $item->id) }}">
                                         <button class="w-full bg-gray-600 hover:bg-gray-800 p-2 rounded-md text-white">
                                             <i class="fas fa-file-alt text-[16px]"></i> Detail
                                         </button>
                                     </a>
-                                    <a href="{{ route('manager.laporanPermintaanBahanBaku.edit', $item->id) }}" class="flex-auto">
+                                    <a href="{{ route('pic.laporanKedatanganBahanBaku.edit', $item->id) }}" class="flex-auto">
                                         <button class="w-full bg-green-600 hover:bg-green-800 p-2 rounded-md text-white flex items-center gap-1 justify-center">
                                             <i class="fas fa-plus-circle text-[16px]"></i> Buat Laporan Kedatangan Bahan Baku
                                         </button>
                                     </a>
-                                    <a href="{{ route('manager.laporanPermintaanBahanBaku.hapus', $item->id) }}" data-confirm-delete="true">
+                                    <a href="{{ route('pic.laporanKedatanganBahanBaku.hapus', $item->id) }}" data-confirm-delete="true">
                                         <button class="bg-red-600 hover:bg-red-800 px-2 py-2 rounded-md text-white">
                                             <i class="fas fa-trash text-[16px]"></i>
                                         </button>

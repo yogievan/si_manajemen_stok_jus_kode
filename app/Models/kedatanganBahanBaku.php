@@ -10,7 +10,6 @@ class kedatanganBahanBaku extends Model
 
     protected $fillable = [
         'id_request',
-        'id_users',
         'approved_at',
     ];
 }
