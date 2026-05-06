@@ -9,10 +9,15 @@
         <div class="mb-6">
             <a href="{{ route('manager.laporanKedatanganBahanBaku') }}" class="group inline-flex items-center gap-2 text-gray-400 hover:text-red-600 transition">
                 <i class="fas fa-arrow-left group-hover:text-red-600"></i>
-                <span class="group-hover:text-red-600">
+                <span class="group-hover:text-red-600 text-xl font-bold">
                     Kembali ke Halaman Laporan Kedatangan Bahan Baku
                 </span>
             </a>
+        </div>
+
+        <div class="text-[#565725]">
+            <div><b>Request Order :</b> {{ \Carbon\Carbon::parse($permintaanBahanBaku->tgl_request)->translatedFormat('l, d F Y \P\u\k\u\l H:i') }} WIB</div>
+            <div><b>Approve Time:</b> {{ $permintaanBahanBaku->approved_at ? \Carbon\Carbon::parse($permintaanBahanBaku->approved_at)->translatedFormat('l, d F Y \P\u\k\u\l H:i') . ' WIB' : '-'}}</div>
         </div>
 
         <form action="{{ route('manager.laporanKedatanganBahanBaku.simpan', $permintaanBahanBaku->id) }}" method="POST">
@@ -24,7 +29,7 @@
                        <tr>
                             <th class="border p-2 w-[20px]">No</th>
                             <th class="border p-2 w-[200px]">Nama Bahan Baku</th>
-                            <th class="border p-2 w-[20px]">Permintaan</th>
+                            <th class="border p-2 w-[20px]">Disetujui</th>
                             <th class="border p-2 w-[50px]">Tanggal Kedatangan</th>
                             <th class="border p-2 w-[20px]">Jumlah Kedatangan</th>
                             <th class="border p-2 w-[20px]">UOM</th>
@@ -39,7 +44,8 @@
                                 @foreach ($inventori as $item)
                                     @if ($detail->id_inventori == $item->id)
                                     <td class="border p-2 w-[200px]">
-                                        <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this)" readonly>
+                                        <input type="hidden" name="id_inventori[]" value="{{ $item->id }}">
+                                        <select class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" onchange="updateUOM(this)" disabled>
                                             @foreach ($inventori as $item)
                                                 @if ($detail->id_inventori == $item->id)
                                                     <option selected value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}">
@@ -50,25 +56,23 @@
                                         </select>
                                     </td>
                                     <td class="border p-2 w-[20px]">
-                                        {{ $detail->qty_request }}
+                                        {{ $detail->qty_approve }}
                                     </td>
                                     <td class="border p-2 w-[20px]">
                                         <div class="relative max-w-sm">
-                                            <input autocomplete="off" value="" id="date" name="tgl_kedatangan[]" type="text" placeholder=""  class="w-full text-sm border rounded-lg px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
-                                            
-                                            <svg class="w-5 h-5 absolute right-2 top-2.5 text-gray-400"
-                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M8 7V3m8 4V3m-9 8h10m-11 9h12a2 2 0 002-2V7H4v11a2 2 0 002 2z"/>
-                                            </svg>
+                                            <input value=""  name="tgl_kedatangan[]" type="date" class="w-full text-sm border rounded-lg px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
                                         </div>
                                     </td>
                                     <td class="border p-2 w-[20px]">
                                         <input type="number" name="qty_kedatangan[]" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500">
                                     </td>
-                                    <td class="border p-2 text-center text-[#565725] w-[20px]">
-                                        {{ $item->uom->nama_uom }}
-                                    </td>
+                                    @foreach ($inventori as $item)
+                                        @if ($detail->id_inventori == $item->id)
+                                            <td class="border p-2 text-center text-[12px] text-[#565725] w-[50px]">
+                                                {{ $item->uom->nama_uom }}
+                                            </td>
+                                        @endif
+                                    @endforeach
                                     <td class="border p-2 w-[150px]">
                                         <input type="text" name="lampiran_kedatangan[]" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500">
                                     </td>

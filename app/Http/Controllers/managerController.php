@@ -117,6 +117,7 @@ class managerController extends Controller
         Alert::toast('Pengajuan Bahan Baku Berhasil di rubah!','success');
         return redirect()->route('manager.laporanPermintaanBahanBaku');
     }
+
     public function hapusLaporanPermintaanBahanBakuManager($id)
     {
         $permintaanBahanBaku = permintaanBahanBaku::findOrFail($id);
@@ -143,11 +144,12 @@ class managerController extends Controller
     {
         $request->validate([
             'id_inventori' => 'required|array',
-            'qty_kedatangan' => 'required|array',
-            'lampiran_kedatangan' => 'required|array',
-            'keterangan_manager' => 'required|array',
+            'qty_kedatangan' => 'nullable|array',
+            'lampiran_kedatangan' => 'nullable|array',
+            'keterangan_manager' => 'nullable|array',
+            'tgl_kedatangan' => 'nullable|array',
+            'tgl_kedatangan.*' => 'nullable|date',
         ]);
-        $tanggal = Carbon::parse($request->tgl_request)->setTimeFrom(Carbon::now());
         $laporanKedatanganBahanBaku = kedatanganBahanBaku::create([
             'id_request' => $id,
         ]);
@@ -155,15 +157,52 @@ class managerController extends Controller
             kedatanganBahanBakuDetail::create([
                 'id_laporan_kedatangan' => $laporanKedatanganBahanBaku->id,
                 'id_inventori' => $inventori,
-                'tgl_kedatangan' => $request->tgl_kedatangan[$key],
-                'qty_kedatangan' => $request->qty_kedatangan[$key],
-                'lampiran_kedatangan' => $request->lampiran_kedatangan[$key],
-                'keterangan_manager' => $request->keterangan_manager[$key],
+                'tgl_kedatangan' => !empty($request->tgl_kedatangan[$key]) ? Carbon::parse($request->tgl_kedatangan[$key])->setTimeFrom(Carbon::now()) : null,
+                'qty_kedatangan' => $request->qty_kedatangan[$key] ?? 0,
+                'lampiran_kedatangan' => $request->lampiran_kedatangan[$key] ?? null,
+                'keterangan_manager' => $request->keterangan_manager[$key] ?? null,
                 'status_finance' => 'Pending',
             ]);
         }
         Alert::toast('Laporan Kedatangan Bahan Baku Berhasil di tambahakan!','success');
         return redirect()->route('manager.laporanKedatanganBahanBaku');
+    }
+
+    public function editLaporanKedatanganBahanBakuManager($id)
+    {
+        $uom = uom::all();
+        $inventori = Inventori::with('uom')->get();
+        $kedatanganBahanBaku = kedatanganBahanBaku::findOrFail($id);
+        $kedatanganBahanBakuDetail = kedatanganBahanBakuDetail::where('id_laporan_kedatangan', $id)->get();
+        $permintaanBahanBaku = permintaanBahanBaku::findOrFail($kedatanganBahanBaku->id_request);
+        $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $kedatanganBahanBaku->id_request)->get();
+        return view('manager.editLaporanKedatanganBahanBaku', compact('inventori', 'uom', 'kedatanganBahanBaku', 'kedatanganBahanBakuDetail', 'permintaanBahanBaku', 'permintaanBahanBakuDetail'));
+    }
+
+    public function simpanEditLaporanKedatanganBahanBakuManager(Request $request, $id)
+    {
+         $request->validate([
+            'id_inventori' => 'required|array',
+            'qty_kedatangan' => 'nullable|array',
+            'lampiran_kedatangan' => 'nullable|array',
+            'keterangan_manager' => 'nullable|array',
+            'tgl_kedatangan' => 'nullable|array',
+            'tgl_kedatangan.*' => 'nullable|date',
+        ]);
+        $kedatanganBahanBaku = kedatanganBahanBaku::findOrFail($id);
+        kedatanganBahanBakuDetail::where('id_laporan_kedatangan', $id)->delete();
+        foreach($request->id_inventori as $key => $inventori){
+            kedatanganBahanBakuDetail::create([
+                'id_laporan_kedatangan' => $id,
+                'id_inventori' => $inventori,
+                'tgl_kedatangan' => !empty($request->tgl_kedatangan[$key]) ? Carbon::parse($request->tgl_kedatangan[$key])->setTimeFrom(Carbon::now()) : null,
+                'qty_kedatangan' => $request->qty_kedatangan[$key] ?? 0,
+                'lampiran_kedatangan' => $request->lampiran_kedatangan[$key] ?? null,
+                'keterangan_manager' => $request->keterangan_manager[$key] ?? null,
+            ]);
+        }
+        Alert::toast('Laporan Kedatangan Bahan Baku Berhasil di rubah!','success');
+        return redirect()->route('manager.laporanKedatanganBahanBaku', compact('kedatanganBahanBaku'));
     }
 
     public function hapusLaporanKedatanganBahanBakuManager($id)

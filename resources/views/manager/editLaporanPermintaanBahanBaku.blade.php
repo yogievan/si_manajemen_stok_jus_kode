@@ -9,7 +9,7 @@
         <div class="mb-6">
             <a href="{{ route('manager.laporanPermintaanBahanBaku') }}" class="group inline-flex items-center gap-2 text-gray-400 hover:text-red-600 transition">
                 <i class="fas fa-arrow-left group-hover:text-red-600"></i>
-                <span class="group-hover:text-red-600">
+                <span class="group-hover:text-red-600 text-xl font-bold">
                     Kembali ke Halaman Laporan Permintaan Bahan Baku
                 </span>
             </a>
@@ -40,9 +40,10 @@
                 <th class="border p-2 w-[50px]">Sisa stok</th>
                 <th class="border p-2 w-[50px]">Jumlah Disetujui</th>
                 <th class="border p-2 w-[50px]">UOM</th>
-                <th class="border p-2 w-[100px]">Keterangan Manager</th>
-                <th class="border p-2 w-[50px]">Status Finance</th>
-                <th class="border p-2 w-[100px]">Keterangan Finance</th>
+                <th class="border p-2 w-[100px]">Ket. Manager</th>
+                <th class="border p-2 w-[50px]">Status</th>
+                <th class="border p-2 w-[100px]">Ket. Finance</th>
+                <th class="border p-2 w-[50px]">Aksi</th>
             </tr>
             </thead>
             <tbody id="items">
@@ -74,15 +75,26 @@
                                     {{ $item->stock }}
                                 </td>
                                 <td class="border p-2 text-center text-[12px] text-[#565725] w-[50px]">
+                                    {{ $detail->qty_approve }}
+                                </td>
+                                <td class="border p-2 text-center text-[12px] text-[#565725] w-[50px]">
                                     {{ $item->uom->nama_uom }}
                                 </td>
                             @endif
                         @endforeach
                         <td class="border p-2 text-center uom text-[#565725]">
-                            <textarea name="keterangan_manager[]" rows="1" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" placeholder="Keterangan (Opsional)" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'">{{ $detail->keterangan_manager }}</textarea>
+                            <textarea name="keterangan_manager[]" rows="1" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" placeholder="(Opsional)" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'">{{ $detail->keterangan_manager }}</textarea>
                         </td>
-                        <td class="border text-center">
-                            <button type="button" class="bg-red-500 text-white px-3 py-1 rounded" onclick="hapusItem(this)">Hapus</button>
+                        <td class="border p-2 text-center text-[12px] text-[#565725] w-[50px]">
+                            {{ $detail->status_finance }}
+                        </td>
+                        <td class="border p-2 text-center text-[12px] text-[#565725] w-[50px]">
+                            {{ $detail->keterangan_finance }}
+                        </td>
+                        <td class="border text-center p-2">
+                            <button type="button" class="bg-red-500 text-white p-1 text-xl rounded w-full" onclick="hapusItem(this)">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </td>
                     </tr>
                 @endforeach

@@ -50,8 +50,8 @@
                                         </button>
                                     </a>
 
-                                    <a href="{{ route('finance.laporanPermintaanBahanBaku.validasi', $item->id) }}">
-                                        <button class="bg-blue-600 hover:bg-blue-800 p-2 rounded-md text-white">
+                                    <a href="{{ route('finance.laporanPermintaanBahanBaku.validasi', $item->id) }}" class="flex-1">
+                                        <button class="bg-green-600 hover:bg-green-800 p-2 rounded-md text-white w-full">
                                             <i class="fas fa-tasks text-[16px]"></i> Validasi Permintaan
                                         </button>
                                     </a>

@@ -104,7 +104,7 @@
                                                 <i class="fas fa-file-alt text-[16px]"></i> Detail
                                             </button>
                                         </a>
-                                        <a href="{{ route('manager.laporanKedatanganBahanBaku.tambah', $item->id) }}" class="flex-1">
+                                        <a href="{{ route('manager.laporanKedatanganBahanBaku.edit', $item->id) }}" class="flex-1">
                                             <button class="w-full bg-yellow-400 hover:bg-yellow-500 p-2 rounded-md text-white flex items-center gap-1 justify-center">
                                                 <i class="fas fa-edit text-[16px]"></i> Edit Lap. Kedatangan
                                             </button>

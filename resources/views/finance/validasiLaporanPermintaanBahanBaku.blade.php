@@ -9,7 +9,7 @@
         <div class="mb-6">
             <a href="{{ route('finance.laporanPermintaanBahanBaku') }}" class="group inline-flex items-center gap-2 text-gray-400 hover:text-red-600 transition">
                 <i class="fas fa-arrow-left group-hover:text-red-600"></i>
-                <span class="group-hover:text-red-600">
+                <span class="group-hover:text-red-600 text-xl font-bold">
                     Kembali ke Halaman Laporan Permintaan Bahan Baku
                 </span>
             </a>
@@ -24,17 +24,17 @@
         <table class="w-full border border-gray-300 text-sm">
         <thead class="bg-[#565725] text-white">
             <tr>
-                <th class="border p-2 w-[30px]">No</th>
-                <th class="border p-2 w-[200px]">Nama Bahan Baku</th>
-                <th class="border p-2 w-[70px]">Jumlah Permintaan</th>
-                <th class="border p-2 w-[70px]">Sisa Stok</th>
-                <th class="border p-2 w-[50px]">UOM</th>
-                <th class="border p-2 w-[70px]">Keterangan Manager</th>
-                <th class="border p-2 w-[100px]">Jumlah Disetujui</th>
-                <th class="border p-2 w-[150px]">Status Finance</th>
-                <th class="border p-2 w-[250px]">Keterangan Finance</th>
-            </tr>
-        </thead>
+            <th class="border p-2 w-[50px]">No</th>
+            <th class="border p-2 w-[150px]">Nama Bahan Baku</th>
+            <th class="border p-2 w-[50px]">Jumlah Permintaan</th>
+            <th class="border p-2 w-[50px]">Sisa stok</th>
+            <th class="border p-2 w-[50px]">UOM</th>
+            <th class="border p-2 w-[50px]">Jumlah Disetujui</th>
+            <th class="border p-2 w-[100px]">Ket. Manager</th>
+            <th class="border p-2 w-[50px]">Status</th>
+            <th class="border p-2 w-[100px]">Ket. Finance</th>
+        </tr>
+            </thead>
         <tbody id="items">
             @foreach ( $permintaanBahanBakuDetail as $no => $detail )
                 <tr class="item-row text-[#565725]">
@@ -58,10 +58,10 @@
                         @endif
                     @endforeach
                     <td class="border p-2 text-center text-[#565725]">
-                        {{ $detail->keterangan_manager }}
+                        <input type="number" name="qty_approve[]" value="{{ $detail->qty_approve }}" class="w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
                     </td>
                     <td class="border p-2 text-center text-[#565725]">
-                        <input type="number" name="qty_approve[]" value="{{ $detail->qty_approve }}" class="w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
+                        {{ $detail->keterangan_manager }}
                     </td>
                     <td class="border p-2 text-center text-[#565725]">
                         <select name="status_finance[]" class="w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
@@ -72,7 +72,7 @@
                     <td class="border p-2 text-center text-[#565725]">
                         <textarea name="keterangan_finance[]" rows="1" class="w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" placeholder="(Opsional)" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'">{{ $detail->keterangan_finance }}</textarea>
                     </td>
-                    <td>
+                    <td hidden>
                         <input type="hidden" name="id_detail[]" value="{{ $detail->id }}">
                     </td>
                 </tr>

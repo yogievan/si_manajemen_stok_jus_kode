@@ -12,6 +12,7 @@ class kedatanganBahanBakuDetail extends Model
             'id_laporan_kedatangan',
             'id_inventori',
             'qty_kedatangan',
+            'tgl_kedatangan',
             'lampiran_kedatangan',
             'keterangan_manager',
             'status_finance',
