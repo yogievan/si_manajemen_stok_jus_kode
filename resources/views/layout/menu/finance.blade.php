@@ -24,7 +24,7 @@
         </a>
     </li>
     <li class="my-2">
-        <a href="{{ route('finance.laporanStockHarian') }}" class="flex gap-3 p-2 rounded font-semibold hover:bg-[#acac56] {{ request()->routeIs('finance.laporanStockHarian*') ? 'bg-[#acac56]' : '' }}">
+        <a href="{{ route('finance.laporanStokHarian') }}" class="flex gap-3 p-2 rounded font-semibold hover:bg-[#acac56] {{ request()->routeIs('finance.laporanStockHarian*') ? 'bg-[#acac56]' : '' }}">
             <i class="fa fa-box my-auto text-white"></i> 
             <p class="text-white">Laporan Stok Harian</p>
         </a>
@@ -36,7 +36,7 @@
         </a>
     </li>
     <li class="my-2">
-        <a href="{{ route('finance.laporanStockOpname') }}" class="flex gap-3 p-2 rounded font-semibold hover:bg-[#acac56] {{ request()->routeIs('finance.laporanStockOpname*') ? 'bg-[#acac56]' : '' }}">
+        <a href="{{ route('finance.laporanStokOpname') }}" class="flex gap-3 p-2 rounded font-semibold hover:bg-[#acac56] {{ request()->routeIs('finance.laporanStockOpname*') ? 'bg-[#acac56]' : '' }}">
             <i class="fa fa-boxes my-auto text-white"></i> 
             <p class="text-white">Laporan Stok Opname</p>
         </a>

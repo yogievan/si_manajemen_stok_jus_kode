@@ -35,47 +35,55 @@
                     <th class="border p-2 w-[20px]">UOM</th>
                     <th class="border p-2 w-[150px]">Link Invoice</th>
                     <th class="border p-2 w-[150px]">Keterangan Manager</th>
+                    <th class="border p-2 w-[150px]">Status Finance</th>
+                    <th class="border p-2 w-[150px]">Confirm Finance</th>
                 </tr>
             </thead>
             <tbody id="items">
                 @foreach ( $kedatanganBahanBakuDetail as $no => $detail )
+                    @php
+                        $item = $inventori->firstWhere('id', $detail->id_inventori);
+                        $reqDetail = $permintaanBahanBakuDetail->firstWhere('id_inventori', $detail->id_inventori);
+                    @endphp
                     <tr class="item-row text-[#565725] text-center">
                         <td class="border text-center w-[20px]">{{++$no}}</td>
-                        @foreach ($inventori as $item)
-                            @if ($detail->id_inventori == $item->id)
-                            <td class="border p-2 w-[200px]">
-                                <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this)" readonly>
-                                    @foreach ($inventori as $item)
-                                        @if ($detail->id_inventori == $item->id)
-                                            <option selected value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}">
-                                                {{ $item->nama_barang }}
-                                            </option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td class="border p-2 w-[20px]">
-                                {{ $detail->qty_approve }}
-                            </td>
-                            <td class="border p-2 w-[20px]">
-                                <div class="relative max-w-sm">
-                                    <input autocomplete="off" value="{{ $detail->tgl_kedatangan ? \Carbon\Carbon::parse($detail->tgl_kedatangan)->format('Y-m-d') : '' }}" name="tgl_kedatangan[]" type="date" placeholder=""  class="w-full text-sm border rounded-lg px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
-                                </div>
-                            </td>
-                            <td class="border p-2 w-[20px]">
-                                <input type="number" value="{{ $detail->qty_kedatangan }}" name="qty_kedatangan[]" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500">
-                            </td>
-                            <td class="border p-2 text-center text-[#565725] w-[20px]">
-                                {{ $item->uom->nama_uom }}
-                            </td>
-                            <td class="border p-2 w-[150px]">
-                                <input type="text" value="{{ $detail->lampiran_kedatangan }}" name="lampiran_kedatangan[]" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500">
-                            </td>
-                            <td class="border p-2 w-[150px]">
-                                <input type="text" value="{{ $detail->keterangan_manager }}" name="keterangan_manager[]" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500">
-                            </td>
-                            @endif
-                        @endforeach
+                        <td class="border p-2 w-[200px]">
+                            <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this)" readonly>
+                                @foreach ($inventori as $item)
+                                    @if ($detail->id_inventori == $item->id)
+                                        <option selected value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}">
+                                            {{ $item->nama_barang }}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </td>
+                        <td class="border p-2 w-[20px]">
+                            {{ $reqDetail->qty_approve }}
+                        </td>
+                        <td class="border p-2 w-[20px]">
+                            <div class="relative max-w-sm">
+                                <input autocomplete="off" value="{{ $detail->tgl_kedatangan ? \Carbon\Carbon::parse($detail->tgl_kedatangan)->format('Y-m-d') : '' }}" name="tgl_kedatangan[]" type="date" placeholder=""  class="w-full text-sm border rounded-lg px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                            </div>
+                        </td>
+                        <td class="border p-2 w-[20px]">
+                            <input type="number" value="{{ $detail->qty_kedatangan }}" name="qty_kedatangan[]" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500">
+                        </td>
+                        <td class="border p-2 text-center text-[#565725] w-[20px]">
+                            {{ $item->uom->nama_uom }}
+                        </td>
+                        <td class="border p-2 w-[150px]">
+                            <input type="text" value="{{ $detail->lampiran_kedatangan }}" name="lampiran_kedatangan[]" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500">
+                        </td>
+                        <td class="border p-2 w-[150px]">
+                            <input type="text" value="{{ $detail->keterangan_manager }}" name="keterangan_manager[]" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500">
+                        </td>
+                        <td class="border p-2 w-[100px]">
+                            {{ $detail->status_finance }}
+                        </td>
+                        <td class="border p-2 w-[100px]">
+                            {{ $detail->confirm_finance ?? '-' }}
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

@@ -7,10 +7,10 @@
 @section('content')
     <div>
         <div class="mb-6">
-            <a href="{{ route('manager.laporanPermintaanBahanBaku') }}" class="group inline-flex items-center gap-2 text-gray-400 hover:text-red-600 transition">
+            <a href="{{ url()->previous() }}" class="group inline-flex items-center gap-2 text-gray-400 hover:text-red-600 transition">
                 <i class="fas fa-arrow-left group-hover:text-red-600"></i>
                 <span class="group-hover:text-red-600 text-xl font-bold">
-                    Kembali ke Halaman Laporan Permintaan Bahan Baku
+                    Kembali ke Halaman Sebelumnya
                 </span>
             </a>
         </div>

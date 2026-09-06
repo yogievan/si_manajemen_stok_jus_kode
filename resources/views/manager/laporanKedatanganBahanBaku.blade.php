@@ -14,13 +14,13 @@
                         <th scope="col" class="px-2 py-1 font-semibold text-center w-[30px] border border-default">
                             No
                         </th>
-                        <th scope="col" class="px-2 py-1 font-semibold text-center w-[100px] border border-default">
+                        <th scope="col" class="px-2 py-1 font-semibold text-center w-[200px] border border-default">
                             Waktu Permintaan
                         </th>
                         <th scope="col" class="px-2 py-1 font-semibold text-center w-[200px] border border-default">
                             Waktu Approval
                         </th>
-                        <th scope="col" class="px-2 py-1 font-semibold text-center w-[220px] border border-default">
+                        <th scope="col" class="px-2 py-1 font-semibold text-center w-[100px] border border-default">
                             Aksi
                         </th>
                     </tr>
@@ -73,13 +73,13 @@
                         <th scope="col" class="px-2 py-1 font-semibold text-center w-[30px] border border-default">
                             No
                         </th>
-                        <th scope="col" class="px-2 py-1 font-semibold text-center w-[100px] border border-default">
-                            Waktu Laporan Dibuat
+                        <th scope="col" class="px-2 py-1 font-semibold text-center w-[200px] border border-default">
+                            Waktu Pembuatan
                         </th>
                         <th scope="col" class="px-2 py-1 font-semibold text-center w-[200px] border border-default">
-                            Waktu Approval
+                            Verifikasi Kedatangan
                         </th>
-                        <th scope="col" class="px-2 py-1 font-semibold text-center w-[220px] border border-default">
+                        <th scope="col" class="px-2 py-1 font-semibold text-center w-[100px] border border-default">
                             Aksi
                         </th>
                     </tr>

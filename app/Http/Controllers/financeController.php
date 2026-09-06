@@ -10,6 +10,9 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\permintaanBahanBaku;
 use App\Models\permintaanBahanBakuDetail;
+use App\Models\kedatanganBahanBaku;
+use App\Models\kedatanganBahanBakuDetail;
+use App\Models\laporanStokHarian;
 use Carbon\Carbon;
 
 class financeController extends Controller
@@ -145,20 +148,77 @@ class financeController extends Controller
 
     public function laporanKedatanganBahanBakuFinance()
     {
-        return view('finance.laporanKedatanganBahanBaku');
+        $kedatanganBahanBaku = kedatanganBahanBaku::orderBy('id', 'desc')->get();
+        return view('finance.laporanKedatanganBahanBaku', compact('kedatanganBahanBaku'));
+    }
+    public function detailLaporanKedatanganBahanBakuFinance($id)
+    {
+       $uom = uom::all();
+        $inventori = Inventori::with('uom')->get();
+        $kedatanganBahanBaku = kedatanganBahanBaku::findOrFail($id);
+        $kedatanganBahanBakuDetail = kedatanganBahanBakuDetail::where('id_laporan_kedatangan', $id)->get();
+        $permintaanBahanBaku = permintaanBahanBaku::findOrFail($kedatanganBahanBaku->id_request);
+        $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $kedatanganBahanBaku->id_request)->get();
+        return view('finance.detailLaporanKedatanganBahanBaku', compact('inventori', 'uom', 'kedatanganBahanBaku', 'kedatanganBahanBakuDetail', 'permintaanBahanBaku', 'permintaanBahanBakuDetail'));
+    }
+    public function validasiLaporanKedatanganBahanBakuFinance($id)
+    {
+        $uom = uom::all();
+        $inventori = Inventori::with('uom')->get();
+        $kedatanganBahanBaku = kedatanganBahanBaku::findOrFail($id);
+        $kedatanganBahanBakuDetail = kedatanganBahanBakuDetail::where('id_laporan_kedatangan', $id)->get();
+        $permintaanBahanBaku = permintaanBahanBaku::findOrFail($kedatanganBahanBaku->id_request);
+        $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $kedatanganBahanBaku->id_request)->get();             
+        return view('finance.validasiLaporanKedatanganBahanBaku', compact('inventori', 'uom', 'kedatanganBahanBaku', 'kedatanganBahanBakuDetail', 'permintaanBahanBaku', 'permintaanBahanBakuDetail'));
+    }
+    public function simpanValidasiLaporanKedatanganBahanBakuFinance(Request $request, $id)
+    {
+        $request->validate([
+            'status_finance' => 'required|array',
+            'status_finance.*' => 'required',
+            'confirm_finance' => 'required|array',
+            'confirm_finance.*' => 'required',
+        ]);
+        $kedatanganBahanBaku = kedatanganBahanBaku::findOrFail($id);
+        $kedatanganBahanBaku->update([
+            'approved_at' => now(),
+        ]);
+
+        foreach ($request->id_detail as $key => $detailId) {
+            $detail = kedatanganBahanBakuDetail::find($detailId);
+            if ($detail) {
+                $detail->status_finance = $request->status_finance[$key];
+                $detail->confirm_finance = $request->confirm_finance[$key] ?? null;
+                $detail->save();
+            }
+        }
+        Alert::toast('Validasi Laporan Kedatangan Bahan Baku Berhasil!','success');
+        return redirect()->route('finance.laporanKedatanganBahanBaku');
+    }
+    public function laporanStokHarianFinance()
+    {
+        $laporanStockHarian = laporanStokHarian::orderBy('id', 'desc')->get();
+        return view('finance.laporanStokHarian', compact('laporanStockHarian'));
+    }
+    public function tambahLaporanStokHarianFinance(request $request)
+    {
+        $bulan = $request->input('bulan');
+        $tahun = $request->input('tahun');
+
+        laporanStokHarian::create([
+            'bulan' => $bulan,
+            'tahun' => $tahun,
+        ]);
+        return view('finance.tambahLaporanStokHarian', compact('bulan', 'tahun'));
     }
 
     public function laporanPenjualanHarianFinance()
     {
         return view('finance.laporanPenjualanHarian');
     }
-    public function laporanStockHarianFinance()
+    public function laporanStokOpnameFinance()
     {
-        return view('finance.laporanStockHarian');
-    }
-    public function laporanStockOpnameFinance()
-    {
-        return view('finance.laporanStockOpname');
+        return view('finance.laporanStokOpname');
     }
 
     public function pengaturan()

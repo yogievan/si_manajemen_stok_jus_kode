@@ -4,3 +4,8 @@
     @include('layout.menu.pic')
 @endsection
 @section('name_page', 'Laporan stok Harian (Stock In/Out)')
+@section('content')
+    <div>
+        
+    </div>
+@endsection

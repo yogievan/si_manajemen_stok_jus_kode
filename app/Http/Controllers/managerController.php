@@ -133,6 +133,17 @@ class managerController extends Controller
         return view('manager.laporanKedatanganBahanBaku',compact('permintaanBahanBaku', 'kedatanganBahanBaku'));
     }
 
+    public function detailLaporanKedatanganBahanBakuManager($id)
+    {
+        $uom = uom::all();
+        $inventori = Inventori::with('uom')->get();
+        $kedatanganBahanBaku = kedatanganBahanBaku::findOrFail($id);
+        $kedatanganBahanBakuDetail = kedatanganBahanBakuDetail::where('id_laporan_kedatangan', $id)->get();
+        $permintaanBahanBaku = permintaanBahanBaku::findOrFail($kedatanganBahanBaku->id_request);
+        $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $kedatanganBahanBaku->id_request)->get();
+        return view('manager.detailLaporanKedatanganBahanBaku', compact('inventori', 'uom', 'kedatanganBahanBaku', 'kedatanganBahanBakuDetail', 'permintaanBahanBaku', 'permintaanBahanBakuDetail'));
+    }
+
     public function tambahLaporanKedatanganBahanBakuManager($id)
     {
         $permintaanBahanBaku = permintaanBahanBaku::findOrFail($id);
@@ -199,6 +210,7 @@ class managerController extends Controller
                 'qty_kedatangan' => $request->qty_kedatangan[$key] ?? 0,
                 'lampiran_kedatangan' => $request->lampiran_kedatangan[$key] ?? null,
                 'keterangan_manager' => $request->keterangan_manager[$key] ?? null,
+                'status_finance' => 'Pending',
             ]);
         }
         Alert::toast('Laporan Kedatangan Bahan Baku Berhasil di rubah!','success');
@@ -213,18 +225,19 @@ class managerController extends Controller
         return redirect()->route('manager.laporanKedatanganBahanBaku');
     }
 
+    public function laporanStokHarianManager()
+    {
+        $StockHarian = Inventori::orderBy('id', 'asc')->get();
+        return view('manager.laporanStokHarian', compact('StockHarian'));
+    }
+
     public function laporanPenjualanHarianManager()
     {
         return view('manager.laporanPenjualanHarian');
     }
 
-    public function laporanStockHarianManager()
+    public function laporanStokOpnameManager()
     {
-        return view('manager.laporanStockHarian');
-    }
-
-    public function laporanStockOpnameManager()
-    {
-        return view('manager.laporanStockOpname');
+        return view('manager.laporanStokOpname');
     }
 }

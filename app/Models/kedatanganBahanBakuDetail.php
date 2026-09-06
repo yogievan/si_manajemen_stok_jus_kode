@@ -16,6 +16,6 @@ class kedatanganBahanBakuDetail extends Model
             'lampiran_kedatangan',
             'keterangan_manager',
             'status_finance',
-            'keterangan_finance',
+            'confirm_finance',
         ];
 }

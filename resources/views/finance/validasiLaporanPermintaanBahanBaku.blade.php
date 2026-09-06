@@ -24,16 +24,16 @@
         <table class="w-full border border-gray-300 text-sm">
         <thead class="bg-[#565725] text-white">
             <tr>
-            <th class="border p-2 w-[50px]">No</th>
-            <th class="border p-2 w-[150px]">Nama Bahan Baku</th>
-            <th class="border p-2 w-[50px]">Jumlah Permintaan</th>
-            <th class="border p-2 w-[50px]">Sisa stok</th>
-            <th class="border p-2 w-[50px]">UOM</th>
-            <th class="border p-2 w-[50px]">Jumlah Disetujui</th>
-            <th class="border p-2 w-[100px]">Ket. Manager</th>
-            <th class="border p-2 w-[50px]">Status</th>
-            <th class="border p-2 w-[100px]">Ket. Finance</th>
-        </tr>
+                <th class="border p-2 w-[50px]">No</th>
+                <th class="border p-2 w-[150px]">Nama Bahan Baku</th>
+                <th class="border p-2 w-[50px]">Jumlah Permintaan</th>
+                <th class="border p-2 w-[50px]">Sisa stok</th>
+                <th class="border p-2 w-[50px]">UOM</th>
+                <th class="border p-2 w-[50px]">Jumlah Disetujui</th>
+                <th class="border p-2 w-[100px]">Ket. Manager</th>
+                <th class="border p-2 w-[50px]">Status</th>
+                <th class="border p-2 w-[100px]">Ket. Finance</th>
+            </tr>
             </thead>
         <tbody id="items">
             @foreach ( $permintaanBahanBakuDetail as $no => $detail )
@@ -81,7 +81,7 @@
         </table>
            <div class="mt-10">
                 <button type="submit" class="bg-green-600 hover:bg-green-800 text-white px-6 py-2 rounded">
-                    Simpan Validasi Pengajuan Permintaan Bahan Baku
+                    Validasi Pengajuan Permintaan Bahan Baku
                 </button>
             </div>
         </form>

@@ -140,79 +140,82 @@
                                     {{ optional($uom->firstWhere('id', $item->id_uom))->nama_uom }}
                                 </td>
                                 <td class="px-2 py-1 text-center w-[100px]">
-                                    <div class="flex justify-center gap-2">
-                                        <button class="bg-blue-600 hover:bg-blue-800 p-2 rounded-md text-white openEditModal"
-                                            data-id="{{ $item->id }}"
-                                            data-nama="{{ $item->nama_barang }}"
-                                            data-leadtime="{{ $item->lead_time }}"
-                                            data-averagedailyusage="{{ $item->average_daily_usage }}"
-                                            data-safetystock="{{ $item->safety_stock }}"
-                                            data-reorderpoint="{{ $item->reorder_point }}"
-                                            data-kategori="{{ $item->id_kategori }}"
-                                            data-stock="{{ $item->stock }}"
-                                            data-uom="{{ $item->id_uom }}"
-                                            data-modal-target="editModal"
-                                            data-modal-toggle="editModal">
-                                            <i class="fas fa-edit text-[16px]"></i> Edit
-                                        </button>
-                                        <div id="editModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                                            <div class="relative bg-white rounded-lg shadow-sm">
-                                                <div class="flex items-center justify-between p-4 border-b rounded-t">
-                                                    <h3 class="text-xl font-semibold text-gray-900">
-                                                        Edit Inventori Bahan Baku/Buah
-                                                    </h3>
-                                                    <button data-modal-hide="editModal" type="button" class="text-red-400 bg-transparent hover:bg-red-200 hover:text-red-800 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
-                                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                                        </svg>
-                                                        <span class="sr-only">Close modal</span>
-                                                    </button>
-                                                </div>
-
-                                                <div class="p-4 space-y-4">
-                                                    <form action="{{ route('finance.inventori.edit') }}" method="POST" class="grid grid-cols-1 gap-4">
-                                                        @csrf
-                                                        <input type="hidden" name="id" id="edit-id">
-                                                        <div>
-                                                            <input type="text" name="nama_barang" id="edit-nama" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Nama Barang" required>
-                                                        </div>
-                                                        <div class="grid grid-cols-3 gap-4">
-                                                            <select name="id_kategori" id="edit-kategori" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" required>
-                                                                <option selected disabled>Pilih Kategori Bahan Baku</option>
-                                                                @foreach($kategori as $k)
-                                                                    <option value="{{ $k->id }}">{{ $k->nama_kategori }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                            <input type="number" name="stock" id="edit-stock" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Stock Awal">
-                                                            <select name="id_uom" id="edit-uom" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" required>
-                                                                <option selected disabled>Pilih Unit Of Measurement</option>
-                                                               @foreach($uom as $u)
-                                                                    <option value="{{ $u->id }}">{{ $u->nama_uom }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="grid grid-cols-4 gap-4">
-                                                            <div class="flex gap-1">
-                                                                <input type="number" name="lead_time" id="edit-lead_time" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Lead Time">
-                                                                <p class="text-center align-center content-center">Hari</p>
-                                                            </div>
-                                                            <input type="number" name="average_daily_usage" id="edit-average_daily_usage" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Average Daily Usage">
-                                                            <input type="number" name="safety_stock" id="edit-safety_stock" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Safety Stock">
-                                                            <input type="number" name="reorder_point" id="edit-reorder_point" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Reorder Point">
-                                                        </div>
-                                                        <button type="submit" class="bg-blue-600 hover:bg-blue-800 p-2 rounded-md text-white w-full align-center">
-                                                            <i class="fas fa-plus-circle text-[16px] text-center"></i> Perbarui Bahan Baku
+                                    <div class="flex gap-2 justify-center">
+                                        <div class="flex-auto">
+                                            <button class="bg-blue-600 hover:bg-blue-800 p-2 rounded-md text-white openEditModal w-full"
+                                                data-id="{{ $item->id }}"
+                                                data-nama="{{ $item->nama_barang }}"
+                                                data-leadtime="{{ $item->lead_time }}"
+                                                data-averagedailyusage="{{ $item->average_daily_usage }}"
+                                                data-safetystock="{{ $item->safety_stock }}"
+                                                data-reorderpoint="{{ $item->reorder_point }}"
+                                                data-kategori="{{ $item->id_kategori }}"
+                                                data-stock="{{ $item->stock }}"
+                                                data-uom="{{ $item->id_uom }}"
+                                                data-modal-target="editModal"
+                                                data-modal-toggle="editModal">
+                                                <i class="fas fa-edit text-[16px]"></i> Edit
+                                            </button>
+                                            <div id="editModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                                <div class="relative bg-white rounded-lg shadow-sm">
+                                                    <div class="flex items-center justify-between p-4 border-b rounded-t">
+                                                        <h3 class="text-xl font-semibold text-gray-900">
+                                                            Edit Inventori Bahan Baku/Buah
+                                                        </h3>
+                                                        <button data-modal-hide="editModal" type="button" class="text-red-400 bg-transparent hover:bg-red-200 hover:text-red-800 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                            </svg>
+                                                            <span class="sr-only">Close modal</span>
                                                         </button>
-                                                    </form>
+                                                    </div>
+
+                                                    <div class="p-4 space-y-4">
+                                                        <form action="{{ route('finance.inventori.edit') }}" method="POST" class="grid grid-cols-1 gap-4">
+                                                            @csrf
+                                                            <input type="hidden" name="id" id="edit-id">
+                                                            <div>
+                                                                <input type="text" name="nama_barang" id="edit-nama" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Nama Barang" required>
+                                                            </div>
+                                                            <div class="grid grid-cols-3 gap-4">
+                                                                <select name="id_kategori" id="edit-kategori" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" required>
+                                                                    <option selected disabled>Pilih Kategori Bahan Baku</option>
+                                                                    @foreach($kategori as $k)
+                                                                        <option value="{{ $k->id }}">{{ $k->nama_kategori }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <input type="number" name="stock" id="edit-stock" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Stock Awal">
+                                                                <select name="id_uom" id="edit-uom" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" required>
+                                                                    <option selected disabled>Pilih Unit Of Measurement</option>
+                                                                @foreach($uom as $u)
+                                                                        <option value="{{ $u->id }}">{{ $u->nama_uom }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="grid grid-cols-4 gap-4">
+                                                                <div class="flex gap-1">
+                                                                    <input type="number" name="lead_time" id="edit-lead_time" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Lead Time">
+                                                                    <p class="text-center align-center content-center">Hari</p>
+                                                                </div>
+                                                                <input type="number" name="average_daily_usage" id="edit-average_daily_usage" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Average Daily Usage">
+                                                                <input type="number" name="safety_stock" id="edit-safety_stock" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Safety Stock">
+                                                                <input type="number" name="reorder_point" id="edit-reorder_point" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Reorder Point">
+                                                            </div>
+                                                            <button type="submit" class="bg-blue-600 hover:bg-blue-800 p-2 rounded-md text-white w-full align-center">
+                                                                <i class="fas fa-plus-circle text-[16px] text-center"></i> Perbarui Bahan Baku
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <a href="{{ route('finance.inventori.hapus', $item->id) }}" data-confirm-delete="true">
-                                            <button class="bg-red-600 hover:bg-red-800 p-2 rounded-md text-white " window="Hapus Bahan Baku">
-                                                <i class="fas fa-trash text-[16px]"></i>
-                                            </button>
-                                        </a>
+                                        <div>
+                                            <a href="{{ route('finance.inventori.hapus', $item->id) }}" data-confirm-delete="true">
+                                                <button class="bg-red-600 hover:bg-red-800 p-2 rounded-md text-white " window="Hapus Bahan Baku">
+                                                    <i class="fas fa-trash text-[16px]"></i>
+                                                </button>
+                                            </a>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
