@@ -14,6 +14,8 @@ class laporanStokHarianDetail extends Model
         'stock_awal',
         'stock_masuk',
         'stock_keluar',
+        'tgl_masuk',
+        'tgl_keluar',
         'stock_akhir',
     ];
 }

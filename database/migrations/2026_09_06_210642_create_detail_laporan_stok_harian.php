@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('stok_awal')->nullable();
             $table->integer('stok_masuk')->nullable();
             $table->integer('stok_keluar')->nullable();
+            $table->timestamp('tgl_masuk')->nullable();
+            $table->timestamp('tgl_keluar')->nullable();
             $table->integer('stok_akhir')->nullable();
             $table->timestamps();
         });

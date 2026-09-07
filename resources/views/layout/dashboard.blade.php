@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>
-        @yield('web_title', 'Untitled Page') 
+        @yield('web_title', 'Untitled Page')
     </title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- Fonts --}}
@@ -14,18 +14,18 @@
 
     {{-- fontawesome css --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    
+
     {{-- font poppins --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital@0;1&display=swap" rel="stylesheet">
-    
+
     {{-- favicon --}}
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
     {{-- flowbite css --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-    
+
 </head>
 <body>
     <div class="grid grid-cols-6 min-h-screen">
@@ -93,7 +93,7 @@
                 <div class="p-3 bg-white rounded-[15px] border min-h-screen m-1.5">
                     @yield('content')
                 </div>
-                
+
                 <!-- FOOTER -->
                 <div class="mx-1.5 mt-3 bg-[#0F0F0F] rounded-t-[15px]">
                     @php

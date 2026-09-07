@@ -22,8 +22,9 @@ Route::get('/finance/laporankedatanganbahanbaku/detail/{id}', [App\Http\Controll
 Route::get('/finance/laporankedatanganbahanbaku/validasi/{id}', [App\Http\Controllers\financeController::class, 'validasiLaporanKedatanganBahanBakuFinance'])->name('finance.laporanKedatanganBahanBaku.validasi');
 Route::put('/finance/laporankedatanganbahanbaku/validasi/{id}/simpan', [App\Http\Controllers\financeController::class, 'simpanValidasiLaporanKedatanganBahanBakuFinance'])->name('finance.laporanKedatanganBahanBaku.validasi.simpan');
 Route::get('/finance/laporanpenjualanharian', [App\Http\Controllers\financeController::class, 'laporanPenjualanHarianFinance'])->name('finance.laporanPenjualanHarian');
-Route::get('/finance/laporanstockharian', [App\Http\Controllers\financeController::class, 'laporanStokHarianFinance'])->name('finance.laporanStokHarian');
-Route::get('/finance/laporanStokHarian/tambah', [App\Http\Controllers\financeController::class, 'tambahLaporanStokHarianFinance'])->name('finance.laporanStokHarian.tambah');
+Route::get('/finance/laporanstokharian', [App\Http\Controllers\financeController::class, 'laporanStokHarianFinance'])->name('finance.laporanStokHarian');
+Route::post('/finance/laporanStokHarian/tambah', [App\Http\Controllers\financeController::class, 'tambahLaporanStokHarianFinance'])->name('finance.laporanStokHarian.tambah');
+Route::get('/finance/laporanstokharian/detail/{id}', [App\Http\Controllers\financeController::class, 'detailLaporanStokHarianFinance'])->name('finance.laporanStokHarian.detail');
 Route::get('/finance/laporanStokOpname', [App\Http\Controllers\financeController::class, 'laporanStokOpnameFinance'])->name('finance.laporanStokOpname');
 Route::get('/finance/pengaturan', [App\Http\Controllers\financeController::class, 'pengaturan'])->name('finance.pengaturan');
 

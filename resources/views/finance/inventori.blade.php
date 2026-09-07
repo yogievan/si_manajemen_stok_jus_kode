@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs border border-gray-300">
+        <div class="relative max-h-screen overflow-x-auto overflow-y-auto custom-scrollbar bg-neutral-primary-soft shadow-xs border border-gray-300">
             <table class="w-full text-sm text-left text-[#565725]">
                 <thead class="bg-[#565725] text-white">
                     <tr>
@@ -116,7 +116,7 @@
                                 </td>
                                 @php
                                     $kat = $kategori->firstWhere('id', $item->id_kategori);
-                                    $warna = $colorMap[$item->id_kategori] ?? 'bg-gray-100';    
+                                    $warna = $colorMap[$item->id_kategori] ?? 'bg-gray-100';
                                 @endphp
                                 <td class="px-2 py-1 text-center border border-default w-[70px] {{ $warna }} text-black">
                                     {{ $kat->nama_kategori ?? '-' }}

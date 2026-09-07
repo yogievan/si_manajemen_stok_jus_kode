@@ -59,7 +59,7 @@ class financeController extends Controller
             'reorder_point' => $request->reorder_point,
             'id_uom' => $request->id_uom,
         ]);
-        Alert::toast('Bahan Baku Berhasil di tambahakan!','success');
+        Alert::toast('Bahan Baku Berhasil ditambahakan!','success');
         return redirect()->route('finance.inventori');
     }
     public function editInventoriFinance(Request $request)
@@ -94,7 +94,7 @@ class financeController extends Controller
     {
         $inventori = Inventori::findOrFail($id);
         $inventori->delete();
-        Alert::toast('Bahan Baku Berhasil di hapus!','success');
+        Alert::toast('Bahan Baku Berhasil dihapus!','success');
         return redirect()->route('finance.inventori');
     }
 
@@ -116,7 +116,7 @@ class financeController extends Controller
         $uom = uom::all();
         $inventori = Inventori::with('uom')->get();
         $permintaanBahanBaku = permintaanBahanBaku::findOrFail($id);
-        $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $id)->get();                    
+        $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $id)->get();
         return view('finance.validasiLaporanPermintaanBahanBaku', compact('inventori', 'uom', 'permintaanBahanBaku', 'permintaanBahanBakuDetail'));
     }
     public function simpanValidasiLaporanPermintaanBahanBakuFinance(Request $request, $id)
@@ -168,7 +168,7 @@ class financeController extends Controller
         $kedatanganBahanBaku = kedatanganBahanBaku::findOrFail($id);
         $kedatanganBahanBakuDetail = kedatanganBahanBakuDetail::where('id_laporan_kedatangan', $id)->get();
         $permintaanBahanBaku = permintaanBahanBaku::findOrFail($kedatanganBahanBaku->id_request);
-        $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $kedatanganBahanBaku->id_request)->get();             
+        $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $kedatanganBahanBaku->id_request)->get();
         return view('finance.validasiLaporanKedatanganBahanBaku', compact('inventori', 'uom', 'kedatanganBahanBaku', 'kedatanganBahanBakuDetail', 'permintaanBahanBaku', 'permintaanBahanBakuDetail'));
     }
     public function simpanValidasiLaporanKedatanganBahanBakuFinance(Request $request, $id)
@@ -202,14 +202,32 @@ class financeController extends Controller
     }
     public function tambahLaporanStokHarianFinance(request $request)
     {
-        $bulan = $request->input('bulan');
-        $tahun = $request->input('tahun');
-
+        $laporanStockHarian = laporanStokHarian::orderBy('id', 'desc')->get();
         laporanStokHarian::create([
-            'bulan' => $bulan,
-            'tahun' => $tahun,
+            'bulan' => $request->bulan,
+            'tahun' => $request->tahun,
+            'status_manager' => 'Pending',
+            'confirm_finance' => 'Pending',
         ]);
-        return view('finance.tambahLaporanStokHarian', compact('bulan', 'tahun'));
+        Alert::toast('Laporan Stok Harian Berhasil ditambahkan!','success');
+        return redirect()->route('finance.laporanStokHarian');
+    }
+    public function detailLaporanStokHarianFinance($id)
+    {
+        $laporanStockHarian = laporanStokHarian::findOrFail($id);
+        $inventori = Inventori::orderBy('id_kategori', 'asc')->orderBy('id', 'asc')->get();
+        $kategori = Kategori::all();
+        $colorMap = [
+            1 => 'bg-amber-200',
+            2 => 'bg-blue-300',
+            3 => 'bg-red-300',
+            4 => 'bg-green-400',
+            5 => 'bg-black text-white',
+            6 => 'bg-red-600 text-white',
+        ];
+        $uom = uom::all();
+        $jumlahHari = Carbon::createFromDate($laporanStockHarian->tahun, $laporanStockHarian->bulan, 1)->daysInMonth;
+        return view('finance.detailLaporanStokHarian', compact('laporanStockHarian', 'inventori', 'kategori', 'colorMap', 'uom', 'jumlahHari'));
     }
 
     public function laporanPenjualanHarianFinance()

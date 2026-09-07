@@ -31,6 +31,7 @@
                             @csrf
                             <div class="grid grid-cols-2 gap-2">
                                 <select name="bulan" class="border border-gray-400 p-2 rounded focus:outline-none focus:border-blue-500">
+                                    <option value="" selected disabled>Pilih Bulan</option>
                                     <option value="01">Januari</option>
                                     <option value="02">Februari</option>
                                     <option value="03">Maret</option>
@@ -70,9 +71,9 @@
                             Tanggal Laporan Dibuat
                         </th>
                         <th scope="col" class="px-2 py-1 font-semibold text-center w-[100px] border border-default">
-                            Periode Laporan Stock Harian
+                            Periode Laporan Stok Harian
                         </th>
-                        <th scope="col" class="px-2 py-1 font-semibold text-center w-[100px] border border-default">
+                        <th scope="col" class="px-2 py-1 font-semibold text-center w-[200px] border border-default">
                             Aksi
                         </th>
                     </tr>
@@ -85,15 +86,15 @@
                                     {{++$no}}
                                 </th>
                                 <td class="px-2 py-1 text-center border border-default w-[100px]">
+                                    {{ $item->created_at->translatedFormat('d F Y') }}
                                 </td>
                                 <td class="px-2 py-1 text-center border border-default w-[100px]">
+                                     <b> {{ \Carbon\Carbon::createFromFormat('!m', $item->bulan)->translatedFormat('F') }} - {{ $item->tahun }} </b>
                                 </td>
-                                <td class="px-2 py-1 text-center border border-default w-[200px]">
-                                </td>
-                                <td class="px-2 py-1 border border-default">
-                                    <a href="#">
+                                <td class="px-2 py-1 border border-default w-[200px] text-center">
+                                    <a href="{{ route('finance.laporanStokHarian.detail', $item->id) }}">
                                         <button class="bg-gray-600 hover:bg-gray-800 p-2 rounded-md text-white">
-                                            <i class="fas fa-file-alt text-[16px]"></i> Detail Laporan Stock Harian
+                                            <i class="fas fa-file-alt text-[16px]"></i> Detail Laporan Stok Harian
                                         </button>
                                     </a>
                                 </td>

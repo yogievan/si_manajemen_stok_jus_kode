@@ -9,7 +9,8 @@ class laporanStokHarian extends Model
     protected $table = 'laporan_stok_harian';
 
     protected $fillable = [
-        'tgl_laporan_stok_harian',
+        'bulan',
+        'tahun',
         'status_manager',
         'confirm_finance',
     ];
