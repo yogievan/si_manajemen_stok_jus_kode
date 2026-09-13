@@ -8,7 +8,7 @@
     <div>
         <div class="mb-4">
             <button class="bg-green-600 hover:bg-green-800 p-2 rounded-md text-white" data-modal-target="tambah_laporan_stok_harian" data-modal-toggle="tambah_laporan_stok_harian">
-                <i class="fas fa-plus-circle text-[16px]"></i> Buat Laporan Stock Harian Bahan Baku
+                <i class="fas fa-plus-circle text-[16px]"></i> Buat Laporan Stok Harian Bahan Baku
             </button>
         </div>
         <div id="tambah_laporan_stok_harian" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -16,7 +16,7 @@
                 <div class="relative bg-white rounded-lg shadow-sm">
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
                         <h3 class="text-xl font-semibold text-gray-900">
-                            Tambah Laporan Stock Harian Bahan Baku
+                            Tambah Laporan Stok Harian Bahan Baku
                         </h3>
                         <button data-modal-hide="tambah_laporan_stok_harian" type="button" class="text-red-400 bg-transparent hover:bg-red-200 hover:text-red-800 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -49,7 +49,7 @@
                             </div>
                             <button type="submit">
                                 <div class="bg-green-600 hover:bg-green-800 p-2 rounded-md text-white w-full text-center">
-                                    <i class="fas fa-plus-circle text-[16px]"></i> Buat Laporan Stock Harian Bahan Baku
+                                    <i class="fas fa-plus-circle text-[16px]"></i> Buat Laporan Stok Harian Bahan Baku
                                 </div>
                             </button>
                         </form>
@@ -79,8 +79,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($laporanStockHarian->count() >0)
-                        @foreach ($laporanStockHarian as $no => $item)
+                    @if ($laporanStokHarian->count() >0)
+                        @foreach ($laporanStokHarian as $no => $item)
                             <tr class="odd:bg-neutral-primary even:bg-neutral-secondary-soft border-b border-default text-[12px]">
                                 <th scope="row" class="px-2 py-1 font-medium text-heading whitespace-nowrap w-[30px] text-center">
                                     {{++$no}}

@@ -46,7 +46,7 @@
                             {{ $detail->qty_request }}
                         </td>
                         <td class="border p-2 w-[50px]">
-                            {{ $item->stock }}
+                            {{ $item->stok }}
                         </td>
                         <td class="border p-2 w-[50px]">
                             {{ $detail->qty_approve }}
@@ -101,7 +101,7 @@
             <td class="border p-2 text-center uom text-[#565725]">-</td>
             <td class="border text-center">
                 <button type="button" class="bg-red-500 text-white px-3 py-1 rounded" onclick="hapusItem(this)">Hapus</button>
-            </td> 
+            </td>
             `;
         table.appendChild(row);
         updateNomor();

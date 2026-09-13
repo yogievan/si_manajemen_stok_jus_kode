@@ -43,7 +43,7 @@ class financeController extends Controller
             'nama_barang' => 'required|string|max:255',
             'id_kategori' => 'required|integer',
             'id_uom' => 'required|integer',
-            'stock' => 'nullable|integer',
+            'stok' => 'nullable|integer',
             'lead_time' => 'nullable|integer',
             'average_daily_usage' => 'nullable|integer',
             'safety_stock' => 'nullable|integer',
@@ -52,7 +52,7 @@ class financeController extends Controller
         Inventori::create([
             'nama_barang' => $request->nama_barang,
             'id_kategori' => $request->id_kategori,
-            'stock' => $request->stock,
+            'stok' => $request->stok,
             'lead_time' => $request->lead_time,
             'average_daily_usage' => $request->average_daily_usage,
             'safety_stock' => $request->safety_stock,
@@ -68,7 +68,7 @@ class financeController extends Controller
             'nama_barang' => 'required|string|max:255',
             'id_kategori' => 'required|integer',
             'id_uom' => 'required|integer',
-            'stock' => 'nullable|integer',
+            'stok' => 'nullable|integer',
             'lead_time' => 'nullable|integer',
             'average_daily_usage' => 'nullable|integer',
             'safety_stock' => 'nullable|integer',
@@ -79,7 +79,7 @@ class financeController extends Controller
         $item->update([
             'nama_barang' => $request->nama_barang,
             'id_kategori' => $request->id_kategori,
-            'stock' => $request->stock,
+            'stok' => $request->stok,
             'lead_time' => $request->lead_time,
             'average_daily_usage' => $request->average_daily_usage,
             'safety_stock' => $request->safety_stock,
@@ -197,12 +197,12 @@ class financeController extends Controller
     }
     public function laporanStokHarianFinance()
     {
-        $laporanStockHarian = laporanStokHarian::orderBy('id', 'desc')->get();
-        return view('finance.laporanStokHarian', compact('laporanStockHarian'));
+        $laporanStokHarian = laporanStokHarian::orderBy('id', 'desc')->get();
+        return view('finance.laporanStokHarian', compact('laporanStokHarian'));
     }
     public function tambahLaporanStokHarianFinance(request $request)
     {
-        $laporanStockHarian = laporanStokHarian::orderBy('id', 'desc')->get();
+        $laporanStokHarian = laporanStokHarian::orderBy('id', 'desc')->get();
         laporanStokHarian::create([
             'bulan' => $request->bulan,
             'tahun' => $request->tahun,
@@ -214,7 +214,7 @@ class financeController extends Controller
     }
     public function detailLaporanStokHarianFinance($id)
     {
-        $laporanStockHarian = laporanStokHarian::findOrFail($id);
+        $laporanStokHarian = laporanStokHarian::findOrFail($id);
         $inventori = Inventori::orderBy('id_kategori', 'asc')->orderBy('id', 'asc')->get();
         $kategori = Kategori::all();
         $colorMap = [
@@ -226,8 +226,8 @@ class financeController extends Controller
             6 => 'bg-red-600 text-white',
         ];
         $uom = uom::all();
-        $jumlahHari = Carbon::createFromDate($laporanStockHarian->tahun, $laporanStockHarian->bulan, 1)->daysInMonth;
-        return view('finance.detailLaporanStokHarian', compact('laporanStockHarian', 'inventori', 'kategori', 'colorMap', 'uom', 'jumlahHari'));
+        $jumlahHari = Carbon::createFromDate($laporanStokHarian->tahun, $laporanStokHarian->bulan, 1)->daysInMonth;
+        return view('finance.detailLaporanStokHarian', compact('laporanStokHarian', 'inventori', 'kategori', 'colorMap', 'uom', 'jumlahHari'));
     }
 
     public function laporanPenjualanHarianFinance()

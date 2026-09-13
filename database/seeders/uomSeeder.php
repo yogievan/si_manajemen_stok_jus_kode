@@ -28,6 +28,7 @@ class uomSeeder extends Seeder
             ['nama_uom' => 'Porsi'],
             ['nama_uom' => 'Roll'],
             ['nama_uom' => 'Unit'],
+            ['nama_uom' => 'Toples'],
         ];
 
 

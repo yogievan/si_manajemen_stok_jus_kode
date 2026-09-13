@@ -54,8 +54,8 @@ class picController extends Controller
         return view('pic.laporanPenjualanHarian');
     }
 
-    public function laporanStockHarianPic()
+    public function laporanStokHarianPic()
     {
-        return view('pic.laporanStockHarian');
+        return view('pic.laporanStokHarian');
     }
 }

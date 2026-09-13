@@ -55,4 +55,4 @@ Route::get('/pic/inventori', [App\Http\Controllers\picController::class, 'invent
 Route::get('/pic/laporankedatanganbahanbaku', [App\Http\Controllers\picController::class, 'laporanKedatanganBahanBakuPic'])->name('pic.laporanKedatanganBahanBaku');
 Route::delete('/pic/laporankedatanganbahanbaku/hapus/{id}', [App\Http\Controllers\picController::class, 'hapusLaporanKedatanganBahanBakuPic'])->name('pic.laporanKedatanganBahanBaku.hapus');
 Route::get('/pic/laporanpenjualanharian', [App\Http\Controllers\picController::class, 'laporanPenjualanHarianPic'])->name('pic.laporanPenjualanHarian');
-Route::get('/pic/laporanstokharian', [App\Http\Controllers\picController::class, 'laporanStockHarianPic'])->name('pic.laporanStokHarian');
+Route::get('/pic/laporanstokharian', [App\Http\Controllers\picController::class, 'laporanStokHarianPic'])->name('pic.laporanStokHarian');

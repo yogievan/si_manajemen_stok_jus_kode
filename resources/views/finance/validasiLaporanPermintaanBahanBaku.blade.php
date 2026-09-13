@@ -50,7 +50,7 @@
                     @foreach ($inventori as $item)
                         @if ($detail->id_inventori == $item->id)
                             <td class="border p-2 text-center text-[12px] stok text-[#565725] w-[50px]">
-                                {{ $item->stock }}
+                                {{ $item->stok }}
                             </td>
                             <td class="border p-2 text-center text-[12px] text-[#565725] w-[50px]">
                                 {{ $item->uom->nama_uom }}

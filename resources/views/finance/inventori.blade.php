@@ -82,7 +82,7 @@
                             Kategori
                         </th>
                         <th scope="col" class="px-2 py-1 font-semibold text-center w-[50px] border border-default">
-                            Stock
+                            Stok
                         </th>
                         <th scope="col" class="px-2 py-1 font-semibold text-center w-[50px] border border-default">
                             Lead Time
@@ -122,7 +122,7 @@
                                     {{ $kat->nama_kategori ?? '-' }}
                                 </td>
                                 <td class="px-2 py-1 text-center border border-default w-[50px]">
-                                    {{ $item -> stock }}
+                                    {{ $item -> stok }}
                                 </td>
                                 <td class="px-2 py-1 text-center border border-default w-[50px]">
                                     {{ $item -> lead_time }}
@@ -150,7 +150,7 @@
                                                 data-safetystock="{{ $item->safety_stock }}"
                                                 data-reorderpoint="{{ $item->reorder_point }}"
                                                 data-kategori="{{ $item->id_kategori }}"
-                                                data-stock="{{ $item->stock }}"
+                                                data-stok="{{ $item->stok }}"
                                                 data-uom="{{ $item->id_uom }}"
                                                 data-modal-target="editModal"
                                                 data-modal-toggle="editModal">
@@ -184,7 +184,7 @@
                                                                         <option value="{{ $k->id }}">{{ $k->nama_kategori }}</option>
                                                                     @endforeach
                                                                 </select>
-                                                                <input type="number" name="stock" id="edit-stock" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Stock Awal">
+                                                                <input type="number" name="stok" id="edit-stok" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Stok Awal">
                                                                 <select name="id_uom" id="edit-uom" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" required>
                                                                     <option selected disabled>Pilih Unit Of Measurement</option>
                                                                 @foreach($uom as $u)
@@ -244,7 +244,7 @@
                 document.getElementById('edit-safety_stock').value = this.dataset.safetystock;
                 document.getElementById('edit-reorder_point').value = this.dataset.reorderpoint;
                 document.getElementById('edit-kategori').value = this.dataset.kategori;
-                document.getElementById('edit-stock').value = this.dataset.stock;
+                document.getElementById('edit-stok').value = this.dataset.stok;
                 document.getElementById('edit-uom').value = this.dataset.uom;
             });
         });

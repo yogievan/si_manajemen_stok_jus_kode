@@ -72,7 +72,7 @@
                         @foreach ($inventori as $item)
                             @if ($detail->id_inventori == $item->id)
                                 <td class="border p-2 text-center text-[12px] stok text-[#565725] w-[50px]">
-                                    {{ $item->stock }}
+                                    {{ $item->stok }}
                                 </td>
                                 <td class="border p-2 text-center text-[12px] text-[#565725] w-[50px]">
                                     {{ $detail->qty_approve }}
@@ -122,7 +122,7 @@
                 <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this); updateStok(this)">
                     <option value="" selected disabled>Pilih Bahan Baku</option>
                     @foreach ($inventori as $item)
-                        <option value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}" data-stok="{{ $item->stock }}">
+                        <option value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}" data-stok="{{ $item->stok }}">
                             {{ $item->nama_barang }}
                         </option>
                     @endforeach

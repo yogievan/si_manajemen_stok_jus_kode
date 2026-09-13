@@ -3,7 +3,7 @@
 @section('menu')
     @include('layout.menu.finance')
 @endsection
-@section('name_page', 'Detail Laporan stok Harian (Stock In/Out) Periode ' . \Carbon\Carbon::createFromFormat('!m', $laporanStockHarian->bulan)->translatedFormat('F') . ' - ' . $laporanStockHarian->tahun)
+@section('name_page', 'Detail Laporan stok Harian (Stock In/Out) Periode ' . \Carbon\Carbon::createFromFormat('!m', $laporanStokHarian->bulan)->translatedFormat('F') . ' - ' . $laporanStokHarian->tahun)
 @section('content')
 <div>
     <div class="mb-6">
@@ -27,7 +27,7 @@
                     @for ($i = 1; $i <= $jumlahHari; $i++)
                         <th colspan="2" class="border border-gray-400 p-1 text-center font-bold w-[100px]">
                             {{ $i }}
-                            {{ \Carbon\Carbon::createFromDate($laporanStockHarian->tahun, $laporanStockHarian->bulan, $i)->translatedFormat('M') }}
+                            {{ \Carbon\Carbon::createFromDate($laporanStokHarian->tahun, $laporanStokHarian->bulan, $i)->translatedFormat('M') }}
                         </th>
                     @endfor
                 </tr>
@@ -58,7 +58,7 @@
                         {{ $kat->nama_kategori ?? '-' }}
                     </td>
                     <td class="border border-gray-300 p-1.5 text-center w-[90px]">
-                        {{ $item->stock }}
+                        {{ $item->stok }}
                     </td>
                     <td class="border border-gray-300 p-1.5 text-center bg-gray-50 w-[80px]">
                         {{ optional($uom->firstWhere('id', $item->id_uom))->nama_uom }}

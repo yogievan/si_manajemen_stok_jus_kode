@@ -3,7 +3,7 @@
 @section('menu')
     @include('layout.menu.manager')
 @endsection
-@section('name_page', 'Inventori Stock Bahan Baku dan Buah')
+@section('name_page', 'Inventori Stok Bahan Baku dan Buah')
 @section('content')
     <div>
         <div class="relative max-h-screen overflow-x-auto overflow-y-auto custom-scrollbar bg-neutral-primary-soft shadow-xs border border-gray-300">
@@ -20,13 +20,13 @@
                             Kategori
                         </th>
                         <th scope="col" class="px-2 py-1 font-semibold text-center w-[50px] border border-default">
-                            Stock
+                            Stok
                         </th>
                         <th scope="col" class="px-2 py-1 font-semibold text-center w-[50px] border border-default">
                             Average Daily Usage
                         </th>
                         <th scope="col" class="px-2 py-1 font-semibold text-center w-[50px] border border-default">
-                            Safety Stock
+                            Safety Stok
                         </th>
                         <th scope="col" class="px-2 py-1 font-semibold text-center w-[50px] border border-default">
                             Reorder Point
@@ -54,7 +54,7 @@
                                     {{ $kat->nama_kategori ?? '-' }}
                                 </td>
                                 <td class="px-2 py-1 text-center border border-default w-[50px]">
-                                    {{ $item -> stock }}
+                                    {{ $item -> stok }}
                                 </td>
                                  <td class="px-2 py-1 text-center border border-default w-[50px]">
                                     {{ $item -> average_daily_usage }}

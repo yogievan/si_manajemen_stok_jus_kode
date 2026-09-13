@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('nama_barang');
             $table->foreignId('id_kategori')->references('id')->on('kategori')->onDelete('cascade');
-            $table->integer('stock')->nullable();
-            $table->integer('average_daily_usage')->nullable();
+            $table->foreignId('id_uom')->references('id')->on('unit_of_measurement')->onDelete('cascade');
+            $table->integer('stok')->nullable();
             $table->integer('lead_time')->nullable();
+            $table->integer('average_daily_usage')->nullable();
             $table->integer('safety_stock')->nullable();
             $table->integer('reorder_point')->nullable();
-            $table->foreignId('id_uom')->references('id')->on('unit_of_measurement')->onDelete('cascade');
             $table->timestamps();
         });
     }

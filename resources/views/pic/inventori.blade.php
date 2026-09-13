@@ -20,7 +20,7 @@
                             Kategori
                         </th>
                         <th scope="col" class="px-2 py-1 font-semibold text-center w-[70px] border border-default">
-                            Stock
+                            Stok
                         </th>
                         <th scope="col" class="px-2 py-1 font-semibold text-center w-[50px] border border-default">
                             UOM
@@ -45,7 +45,7 @@
                                     {{ $kat->nama_kategori ?? '-' }}
                                 </td>
                                 <td class="px-2 py-1 text-center border border-default w-[70px]">
-                                    {{ $item -> stock }}
+                                    {{ $item -> stok }}
                                 </td>
                                 <td class="px-2 py-1 text-center border border-default w-[50px]">
                                     {{ optional($uom->firstWhere('id', $item->id_uom))->nama_uom }}

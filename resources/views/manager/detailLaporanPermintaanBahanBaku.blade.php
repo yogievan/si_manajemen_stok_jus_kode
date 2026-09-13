@@ -46,7 +46,7 @@
                             {{ $detail->qty_request }}
                         </td>
                         <td class="border p-2 w-[50px]">
-                            {{ $item->stock }}
+                            {{ $item->stok }}
                         </td>
                         <td class="border p-2 w-[50px]">
                             {{ $detail->qty_approve }}

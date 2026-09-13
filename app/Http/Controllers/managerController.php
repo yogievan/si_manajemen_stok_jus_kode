@@ -87,7 +87,7 @@ class managerController extends Controller
         $uom = uom::all();
         $inventori = Inventori::with('uom')->get();
         $permintaanBahanBaku = permintaanBahanBaku::findOrFail($id);
-        $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $id)->get();                    
+        $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $id)->get();
         return view('manager.editLaporanPermintaanBahanBaku', compact('inventori', 'uom', 'permintaanBahanBaku', 'permintaanBahanBakuDetail'));
     }
     public function simpanEditLaporanPermintaanBahanBakuManager(Request $request, $id)
@@ -227,8 +227,8 @@ class managerController extends Controller
 
     public function laporanStokHarianManager()
     {
-        $StockHarian = Inventori::orderBy('id', 'asc')->get();
-        return view('manager.laporanStokHarian', compact('StockHarian'));
+        $StokHarian = Inventori::orderBy('id', 'asc')->get();
+        return view('manager.laporanStokHarian', compact('StokHarian'));
     }
 
     public function laporanPenjualanHarianManager()
