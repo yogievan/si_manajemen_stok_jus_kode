@@ -39,7 +39,7 @@
                     <td class="border text-center w-[50px]">{{++$no}}</td>
                     @foreach ($inventori as $item)
                         @if ($detail->id_inventori == $item->id)
-                        <td class="border p-2 w-[150px]">
+                        <td class="border p-2 w-[150px] text-left">
                             {{ $item->nama_barang }}
                         </td>
                         <td class="border p-2 w-[50px]">
@@ -100,8 +100,8 @@
             </td>
             <td class="border p-2 text-center uom text-[#565725]">-</td>
             <td class="border text-center">
-                <button type="button" class="bg-red-500 text-white px-3 py-1 rounded" onclick="hapusItem(this)">Hapus</button>
-            </td> 
+                <button type="button" class="bg-red-500 text-white px-3 py-1 rounded" onclick="hapusItem(this)"><i class="fas fa-trash"></i></button>
+            </td>
             `;
         table.appendChild(row);
         updateNomor();

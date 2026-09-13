@@ -70,7 +70,7 @@
 
         <div class="relative max-h-screen overflow-x-auto overflow-y-auto custom-scrollbar bg-neutral-primary-soft shadow-xs border border-gray-300">
             <table class="w-full text-sm text-left text-[#565725]">
-                <thead class="bg-[#565725] text-white">
+                <thead class="sticky top-0 z-30 bg-[#565725] text-white">
                     <tr>
                         <th scope="col" class="px-2 py-1 font-semibold text-center w-[30px] border border-default">
                             No

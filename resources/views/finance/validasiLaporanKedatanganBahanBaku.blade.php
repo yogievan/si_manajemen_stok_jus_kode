@@ -16,7 +16,7 @@
         </div>
         <div class="text-[#565725]">
             <div><b>Request Order :</b> {{ \Carbon\Carbon::parse($permintaanBahanBaku->tgl_request)->translatedFormat('l, d F Y \P\u\k\u\l H:i') }} WIB</div>
-            <div><b>Approve Time:</b> {{ $permintaanBahanBaku->approved_at ? \Carbon\Carbon::parse($permintaanBahanBaku->approved_at)->translatedFormat('l, d F Y \P\u\k\u\l H:i') . ' WIB' : '-'}}</div>
+            <div><b>Approve Time Request Order:</b> {{ $permintaanBahanBaku->approved_at ? \Carbon\Carbon::parse($permintaanBahanBaku->approved_at)->translatedFormat('l, d F Y \P\u\k\u\l H:i') . ' WIB' : '-'}}</div>
         </div>
         <form action="{{ route('finance.laporanKedatanganBahanBaku.validasi.simpan', $kedatanganBahanBaku->id) }}" method="POST">
         @csrf
@@ -40,7 +40,7 @@
             @foreach ( $kedatanganBahanBakuDetail as $no => $detail )
                 @php
                     $item = $inventori->firstWhere('id', $detail->id_inventori);
-                    $reqDetail = $permintaanBahanBakuDetail->firstWhere('id_inventori', $detail->id_inventori);
+                    $reqDetail = $kedatanganBahanBakuDetail->firstWhere('id_inventori', $detail->id_inventori);
                 @endphp
                 <tr class="item-row text-[#565725] text-center">
                     <td class="border text-center w-[20px]">{{++$no}}</td>
@@ -69,7 +69,7 @@
                         </td>
                     <td class="border p-2 w-[100px]">
                         <select name="status_finance[]" class="w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
-                            <option value="Approve" {{ $detail->status_finance == 'Approve' ? 'selected' : '' }}>Approve</option>
+                            <option value="Approve" {{ ($detail->status_finance == 'Approve' || $detail->status_finance == 'Pending') ? 'selected' : '' }}>Approve</option>
                             <option value="Reject" {{ $detail->status_finance == 'Reject' ? 'selected' : '' }}>Reject</option>
                         </select>
                     </td>

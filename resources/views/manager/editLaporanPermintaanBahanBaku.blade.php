@@ -22,7 +22,7 @@
             <div class="relative max-w-sm">
                 <input id="date" value="{{ \Carbon\Carbon::parse($permintaanBahanBaku->tgl_request)->format('d-m-Y') }}" name="tgl_request" type="text" placeholder="Pilih tanggal"  class="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 required>
-                
+
                 <svg class="w-5 h-5 absolute right-3 top-2.5 text-gray-400"
                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -67,7 +67,7 @@
                             </select>
                         </td>
                         <td class="border p-2">
-                            <input type="number" value="{{ $detail->qty_request }}" name="qty_request[]" class="w-full text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
+                            <input autocomplete="off" type="number" value="{{ $detail->qty_request }}" name="qty_request[]" class="w-full text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
                         </td>
                         @foreach ($inventori as $item)
                             @if ($detail->id_inventori == $item->id)
@@ -115,9 +115,10 @@
         const table = document.getElementById('items');
         const row = document.createElement('tr');
         row.classList.add('item-row');
-        const nomorBaru = document.querySelectorAll('#items .item-row').length + 1;
+
+        // Sesuaikan dengan 10 kolom yang ada di table thead form edit
         row.innerHTML = `
-            <td class="border text-center nomor w-[30px] text-[#565725]">${nomorBaru}</td>
+            <td class="border text-center nomor w-[50px] text-[#565725]"></td>
             <td class="border p-2 text-[#565725]">
                 <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this); updateStok(this)">
                     <option value="" selected disabled>Pilih Bahan Baku</option>
@@ -132,14 +133,19 @@
                 <input autocomplete="off" type="number" name="qty_request[]" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
             </td>
             <td class="border p-2 text-center text-[12px] stok text-[#565725] w-[50px]">-</td>
+            <td class="border p-2 text-center text-[12px] text-[#565725] w-[50px]">-</td>
             <td class="border p-2 text-center text-[12px] uom text-[#565725] w-[50px]">-</td>
-            <td class="border p-2 text-center uom text-[#565725]">
-                <textarea name="keterangan_manager[]" rows="1" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" placeholder="Keterangan (Opsional)" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+            <td class="border p-2 text-center text-[#565725]">
+                <textarea name="keterangan_manager[]" rows="1" class="w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" placeholder="(Opsional)" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
             </td>
-            <td class="border text-center">
-                <button type="button" class="bg-red-500 text-white px-3 py-1 rounded" onclick="hapusItem(this)">Hapus</button>
+            <td class="border p-2 text-center text-[12px] text-[#565725] w-[50px]">-</td>
+            <td class="border p-2 text-center text-[12px] text-[#565725] w-[100px]">-</td>
+            <td class="border text-center p-2">
+                <button type="button" class="bg-red-500 text-white p-1 text-xl rounded w-full" onclick="hapusItem(this)">
+                    <i class="fas fa-trash"></i>
+                </button>
             </td>
-            `;
+        `;
         table.appendChild(row);
         updateNomor();
     }

@@ -14,9 +14,10 @@
                 </span>
             </a>
         </div>
-        <div class="text-[#565725] mb-10">
+        <div class="text-[#565725] mb-4">
             <div><b>Request Order :</b> {{ \Carbon\Carbon::parse($permintaanBahanBaku->tgl_request)->translatedFormat('l, d F Y \P\u\k\u\l H:i') }} WIB</div>
             <div><b>Approve Time:</b> {{ $permintaanBahanBaku->approved_at ? \Carbon\Carbon::parse($permintaanBahanBaku->approved_at)->translatedFormat('l, d F Y \P\u\k\u\l H:i') . ' WIB' : '-'}}</div>
+            <div><b>Approve Time Goods Receipt:</b> {{ $kedatanganBahanBaku->approved_at ? \Carbon\Carbon::parse($kedatanganBahanBaku->approved_at)->translatedFormat('l, d F Y \P\u\k\u\l H:i') . ' WIB' : '-'}}</div>
         </div>
         <table class="w-full border border-gray-300 text-sm">
             <thead class="bg-[#565725] text-white">

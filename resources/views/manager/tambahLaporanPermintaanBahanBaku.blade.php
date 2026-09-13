@@ -63,7 +63,9 @@
                     <textarea name="keterangan_manager[]" rows="1" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" placeholder="Keterangan (Opsional)" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
                 </td>
                 <td class="border text-center">
-                    <button type="button" class="bg-red-500 text-white px-3 py-1 rounded" onclick="hapusItem(this)">Hapus</button>
+                    <button type="button" class="bg-red-500 text-white px-3 py-1 rounded" onclick="hapusItem(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </td>
             </tr>
         </tbody>
@@ -104,7 +106,7 @@
                 <textarea name="keterangan_manager[]" rows="1" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500" placeholder="Keterangan (Opsional)" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
             </td>
             <td class="border text-center">
-                <button type="button" class="bg-red-500 text-white px-3 py-1 rounded" onclick="hapusItem(this)">Hapus</button>
+                <button type="button" class="bg-red-500 text-white px-3 py-1 rounded" onclick="hapusItem(this)"><i class="fas fa-trash"></i></button>
             </td>
             `;
         table.appendChild(row);

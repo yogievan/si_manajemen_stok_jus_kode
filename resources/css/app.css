@@ -14,24 +14,32 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+@tailwind utilities;
+
+@layer base {
+
+  th, td {
+    @apply text-base;
+  }
+}
 
 /* For WebKit browsers (Chrome, Edge, Safari) */
 ::-webkit-scrollbar {
-  width: 7px;              /* width of vertical scrollbar */
-  height: 7px;             /* height of horizontal scrollbar */
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  border-radius: 9999px;    /* fully rounded track */
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #565725;         /* scrollbar handle color */
-  border-radius: 9999px;    /* fully rounded thumb */
+  background: #565725;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3d3d1a;         /* darker on hover */
+  background: #3d3d1a;
 }
 
 .flatpickr-calendar {
@@ -55,16 +63,18 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  height: 12px;
-  width: 12px;
+  height: 10px;
+  width: 10px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
   background: #f1f1f1;
+  border-radius: 6px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: #565725;
   border-radius: 6px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+  background: #565725;
+  border-radius: 6px;
 }

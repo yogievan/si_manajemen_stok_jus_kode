@@ -178,6 +178,7 @@ class financeController extends Controller
             'status_finance.*' => 'required',
             'confirm_finance' => 'required|array',
             'confirm_finance.*' => 'required',
+            'approved_at' => 'datetime',
         ]);
         $kedatanganBahanBaku = kedatanganBahanBaku::findOrFail($id);
         $kedatanganBahanBaku->update([

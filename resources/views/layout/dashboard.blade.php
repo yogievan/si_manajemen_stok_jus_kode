@@ -44,7 +44,7 @@
             <p class="mt-10 text-[#9e9e4e]">Menu</p>
             <p class="mt-3 h-[2px] bg-[#9e9e4e] border-0"></p>
 
-            <nav>
+            <nav class="text-lg">
                 <ul class="mt-5">
                     @yield('menu')
                 </ul>
