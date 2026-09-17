@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_laporan_kedatangan')->references('id')->on('laporan_kedatangan_bahan_baku')->onDelete('cascade');
             $table->foreignId('id_inventori')->references('id')->on('inventori')->onDelete('cascade');
-            $table->timestamp('tgl_kedatangan')->nullable();
+            $table->date('tgl_kedatangan')->nullable();
             $table->integer('qty_kedatangan')->nullable();
             $table->string('lampiran_kedatangan')->nullable();
             $table->string('keterangan_manager')->nullable();

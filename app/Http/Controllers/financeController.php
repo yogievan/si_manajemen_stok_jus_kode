@@ -13,6 +13,7 @@ use App\Models\permintaanBahanBakuDetail;
 use App\Models\kedatanganBahanBaku;
 use App\Models\kedatanganBahanBakuDetail;
 use App\Models\laporanStokHarian;
+use App\Models\laporanStokHarianDetail;
 use Carbon\Carbon;
 
 class financeController extends Controller
@@ -174,11 +175,11 @@ class financeController extends Controller
     public function simpanValidasiLaporanKedatanganBahanBakuFinance(Request $request, $id)
     {
         $request->validate([
+            'id_detail' => 'required|array',
             'status_finance' => 'required|array',
-            'status_finance.*' => 'required',
-            'confirm_finance' => 'required|array',
-            'confirm_finance.*' => 'required',
-            'approved_at' => 'datetime',
+            'status_finance.*' => 'required|string',
+            'confirm_finance' => 'nullable|array',
+            'confirm_finance.*' => 'nullable|string',
         ]);
         $kedatanganBahanBaku = kedatanganBahanBaku::findOrFail($id);
         $kedatanganBahanBaku->update([
@@ -216,8 +217,32 @@ class financeController extends Controller
     public function detailLaporanStokHarianFinance($id)
     {
         $laporanStokHarian = laporanStokHarian::findOrFail($id);
+        $dataKedatangan = kedatanganBahanBakuDetail::all();
+
+        $dataStok = laporanStokHarianDetail::from('detail_laporan_stok_harian as stok')
+            ->join('inventori as inv', 'stok.id_inventori', '=', 'inv.id')
+            ->leftJoin('detail_kedatangan_bahan_baku as datang', function($join) {
+                $join->on('stok.id_inventori', '=', 'datang.id_inventori')
+                    ->on('stok.tgl_masuk', '=', 'datang.tgl_kedatangan');
+            })
+           ->select(
+                'stok.id',
+                'stok.id_inventori',
+                'stok.tgl_masuk',
+                'stok.tgl_keluar',
+                'inv.nama_barang',
+                'stok.stok_awal',
+                'stok.stok_masuk',
+                'stok.stok_keluar',
+                'stok.stok_akhir',
+                'datang.qty_kedatangan',
+                'datang.lampiran_kedatangan'
+            )
+            ->get();
+
         $inventori = Inventori::orderBy('id_kategori', 'asc')->orderBy('id', 'asc')->get();
         $kategori = Kategori::all();
+
         $colorMap = [
             1 => 'bg-amber-200',
             2 => 'bg-blue-300',
@@ -228,7 +253,8 @@ class financeController extends Controller
         ];
         $uom = uom::all();
         $jumlahHari = Carbon::createFromDate($laporanStokHarian->tahun, $laporanStokHarian->bulan, 1)->daysInMonth;
-        return view('finance.detailLaporanStokHarian', compact('laporanStokHarian', 'inventori', 'kategori', 'colorMap', 'uom', 'jumlahHari'));
+
+        return view('finance.detailLaporanStokHarian', compact('laporanStokHarian', 'inventori', 'kategori', 'colorMap', 'uom', 'jumlahHari', 'dataStok', 'dataKedatangan'));
     }
 
     public function laporanPenjualanHarianFinance()

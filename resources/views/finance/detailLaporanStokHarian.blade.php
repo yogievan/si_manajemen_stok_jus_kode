@@ -65,8 +65,51 @@
                     </td>
 
                     @for ($i = 1; $i <= $jumlahHari; $i++)
-                        <td class="border border-gray-300 p-1.5 text-center text-green-800 bg-green-100 w-[52px]">1</td>
-                        <td class="border border-gray-300 p-1.5 text-center text-red-800 bg-red-100 w-[48px]">4</td>
+                        @php
+                            $tanggalLoop = \Carbon\Carbon::createFromDate($laporanStokHarian->tahun, $laporanStokHarian->bulan, $i)->format('Y-m-d');
+
+                            // 1. Cari data IN dari tabel kedatangan
+                            $kedatanganHariIni = collect($dataKedatangan)->filter(function($k) use ($item, $tanggalLoop) {
+                                if (!$k->tgl_kedatangan) return false;
+                                return $k->id_inventori == $item->id &&
+                                    \Carbon\Carbon::parse($k->tgl_kedatangan)->format('Y-m-d') == $tanggalLoop;
+                            })->first();
+
+                            // 2. Cari data IN dari tabel stok (berdasarkan tgl_masuk)
+                            $stokMasukHariIni = collect($dataStok)->filter(function($s) use ($item, $tanggalLoop) {
+                                if (!$s->tgl_masuk) return false;
+                                return $s->id_inventori == $item->id &&
+                                    \Carbon\Carbon::parse($s->tgl_masuk)->format('Y-m-d') == $tanggalLoop;
+                            })->first();
+
+                            // 3. Cari data OUT dari tabel stok (berdasarkan tgl_keluar) -> INI PERBAIKANNYA
+                            $stokKeluarHariIni = collect($dataStok)->filter(function($s) use ($item, $tanggalLoop) {
+                                if (!$s->tgl_keluar) return false;
+                                return $s->id_inventori == $item->id &&
+                                    \Carbon\Carbon::parse($s->tgl_keluar)->format('Y-m-d') == $tanggalLoop;
+                            })->first();
+
+                            // 4. Ambil nominalnya
+                            $in = optional($kedatanganHariIni)->qty_kedatangan ?? (optional($stokMasukHariIni)->stok_masuk ?? 0);
+                            $out = optional($stokKeluarHariIni)->stok_keluar ?? 0;
+                        @endphp
+                        @php
+                            $kat = $kategori->firstWhere('id', $item->id_kategori);
+                            $warna = $colorMap[$item->id_kategori] ?? 'bg-gray-100';
+
+                            // Ambil nama UOM dan ubah ke huruf kecil semua (agar aman dari salah ketik seperti 'Kg' atau 'KG')
+                            $namaUom = strtolower(optional($uom->firstWhere('id', $item->id_uom))->nama_uom);
+
+                            // Jika UOM adalah 'kg', set desimal jadi 2. Jika bukan, set jadi 0.
+                            $desimal = ($namaUom == 'kg') ? 2 : 0;
+                        @endphp
+
+                        <td class="border border-gray-300 p-1.5 text-center w-[50px] {{ $in > 0 ? 'text-green-800 bg-green-100' : 'bg-white text-gray-400' }}">
+                            {{ $in > 0 ? number_format($in, $desimal) : '-' }}
+                        </td>
+                        <td class="border border-gray-300 p-1.5 text-center w-[50px] {{ $out > 0 ? 'text-red-800 bg-red-100' : 'bg-gray-100 text-gray-400' }}">
+                            {{ $out > 0 ? number_format($out, $desimal) : '-' }}
+                        </td>
                     @endfor
                 </tr>
                 @endforeach

@@ -11,11 +11,11 @@ class laporanStokHarianDetail extends Model
     protected $fillable = [
         'id_laporan_stok_harian',
         'id_inventori',
-        'stock_awal',
-        'stock_masuk',
-        'stock_keluar',
+        'stok_awal',
+        'stok_masuk',
+        'stok_keluar',
         'tgl_masuk',
         'tgl_keluar',
-        'stock_akhir',
+        'stok_akhir',
     ];
 }

@@ -47,6 +47,9 @@ Route::get('/manager/laporanpermintaanbahanbaku/edit/{id}', [App\Http\Controller
 Route::put('/manager/laporanpermintaanbahanbaku/edit/{id}/simpan', [App\Http\Controllers\managerController::class, 'simpanEditLaporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku.update');
 Route::delete('/manager/laporanpermintaanbahanbaku/hapus/{id}', [App\Http\Controllers\managerController::class, 'hapusLaporanPermintaanBahanBakuManager'])->name('manager.laporanPermintaanBahanBaku.hapus');
 Route::get('/manager/laporanstokharian', [App\Http\Controllers\managerController::class, 'laporanStokHarianManager'])->name('manager.laporanStokHarian');
+Route::get('/manager/laporanstokharian/detail/{id}', [App\Http\Controllers\managerController::class, 'detailLaporanStokHarianManager'])->name('manager.laporanStokHarian.detail');
+Route::get('/manager/laporanstokharian/pengeluaran/tambah/{id}', [App\Http\Controllers\managerController::class, 'tambahLaporanPengeluaranStokHarianManager'])->name('manager.laporanStokPengeluaranHarian.tambah');
+Route::post('/manager/laporanstokharian/pengeluaran/tambah/{id}/simpan', [App\Http\Controllers\managerController::class, 'simpanTambahLaporanPengeluaranStokHarianManager'])->name('manager.laporanStokPengeluaranHarian.simpan');
 Route::get('/manager/laporanstokopname', [App\Http\Controllers\managerController::class, 'laporanStokOpnameManager'])->name('manager.laporanStokOpname');
 
 // PIC Routes

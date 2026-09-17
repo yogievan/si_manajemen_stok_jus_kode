@@ -6,102 +6,52 @@
 @section('name_page', 'Laporan stok Harian (Stock In/Out)')
 @section('content')
 <div>
-    <div class="relative max-h-[80vh] overflow-x-auto overflow-y-auto custom-scrollbar border border-gray-400 shadow-md bg-white">
-        <table class="w-full text-xs text-left border-collapse whitespace-nowrap">
-        <thead class="sticky top-0 z-30 bg-gray-200">
-            <tr>
-            <th rowspan="2" class="sticky left-0 z-40 border border-gray-400 p-2 text-center bg-gray-300 min-w-[40px]">No</th>
-            <th rowspan="2" class="sticky left-[40px] z-40 border border-gray-400 p-2 text-center bg-gray-300 min-w-[200px]">Agustus</th>
-            <th rowspan="2" class="border border-gray-400 p-2 text-center bg-gray-300">Kategori</th>
-            <th rowspan="2" class="border border-gray-400 p-2 text-center bg-gray-300 leading-tight">Movement<br>Minggu 4</th>
-            <th rowspan="2" class="border border-gray-400 p-2 text-center bg-gray-300">Uom</th>
-
-            <th colspan="2" class="border border-gray-400 p-1 text-center bg-red-600 text-white font-bold">1 Aug</th>
-            <th colspan="2" class="border border-gray-400 p-1 text-center bg-gray-100 font-bold">2 Aug</th>
-            <th colspan="2" class="border border-gray-400 p-1 text-center bg-gray-100 font-bold">3 Aug</th>
-            <th colspan="2" class="border border-gray-400 p-1 text-center bg-gray-100 font-bold">4 Aug</th>
-            <th colspan="2" class="border border-gray-400 p-1 text-center bg-gray-100 font-bold">5 Aug</th>
-            <th colspan="2" class="border border-gray-400 p-1 text-center bg-gray-100 font-bold">6 Aug</th>
-            <th colspan="2" class="border border-gray-400 p-1 text-center bg-gray-100 font-bold">7 Aug</th>
-            </tr>
-
-            <tr>
-            <th class="border border-gray-400 p-1 text-center bg-green-100 text-green-800 w-12">IN</th>
-            <th class="border border-gray-400 p-1 text-center bg-red-100 text-red-800 w-12">OUT</th>
-            <th class="border border-gray-400 p-1 text-center bg-green-100 text-green-800 w-12">IN</th>
-            <th class="border border-gray-400 p-1 text-center bg-red-100 text-red-800 w-12">OUT</th>
-            <th class="border border-gray-400 p-1 text-center bg-green-100 text-green-800 w-12">IN</th>
-            <th class="border border-gray-400 p-1 text-center bg-red-100 text-red-800 w-12">OUT</th>
-            <th class="border border-gray-400 p-1 text-center bg-green-100 text-green-800 w-12">IN</th>
-            <th class="border border-gray-400 p-1 text-center bg-red-100 text-red-800 w-12">OUT</th>
-            <th class="border border-gray-400 p-1 text-center bg-green-100 text-green-800 w-12">IN</th>
-            <th class="border border-gray-400 p-1 text-center bg-red-100 text-red-800 w-12">OUT</th>
-            <th class="border border-gray-400 p-1 text-center bg-green-100 text-green-800 w-12">IN</th>
-            <th class="border border-gray-400 p-1 text-center bg-red-100 text-red-800 w-12">OUT</th>
-            <th class="border border-gray-400 p-1 text-center bg-green-100 text-green-800 w-12">IN</th>
-            <th class="border border-gray-400 p-1 text-center bg-red-100 text-red-800 w-12">OUT</th>
-            <th class="border border-gray-400 p-1 text-center bg-red-100 text-red-800 w-12">OUT</th>
-            <th class="border border-gray-400 p-1 text-center bg-green-100 text-green-800 w-12">IN</th>
-            <th class="border border-gray-400 p-1 text-center bg-red-100 text-red-800 w-12">OUT</th>
-            <th class="border border-gray-400 p-1 text-center bg-green-100 text-green-800 w-12">IN</th>
-            <th class="border border-gray-400 p-1 text-center bg-red-100 text-red-800 w-12">OUT</th>
-            <th class="border border-gray-400 p-1 text-center bg-green-100 text-green-800 w-12">IN</th>
-            <th class="border border-gray-400 p-1 text-center bg-red-100 text-red-800 w-12">OUT</th>
-            <th class="border border-gray-400 p-1 text-center bg-green-100 text-green-800 w-12">IN</th>
-            <th class="border border-gray-400 p-1 text-center bg-red-100 text-red-800 w-12">OUT</th>
-            <th class="border border-gray-400 p-1 text-center bg-green-100 text-green-800 w-12">IN</th>
-            <th class="border border-gray-400 p-1 text-center bg-red-100 text-red-800 w-12">OUT</th>
-            <th class="border border-gray-400 p-1 text-center bg-green-100 text-green-800 w-12">IN</th>
-            <th class="border border-gray-400 p-1 text-center bg-red-100 text-red-800 w-12">OUT</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr class="hover:bg-gray-100">
-            <td class="sticky left-0 z-20 border border-gray-300 p-1.5 text-center bg-white">1</td>
-            <td class="sticky left-[40px] z-20 border border-gray-300 p-1.5 bg-white">Roti Bakar</td>
-            <td class="border border-gray-300 p-1.5 text-center bg-[#fef2cb] text-yellow-800">[M1] Bahan Maka</td>
-            <td class="border border-gray-300 p-1.5 text-center">68</td>
-            <td class="border border-gray-300 p-1.5 text-center bg-gray-50">Porsi</td>
-
-            <td class="border border-gray-300 p-1.5 text-center"></td>
-            <td class="border border-gray-300 p-1.5 text-center bg-red-100 text-red-600">4</td>
-            <td class="border border-gray-300 p-1.5 text-center"></td>
-            <td class="border border-gray-300 p-1.5 text-center bg-red-100 text-red-600">5</td>
-            <td class="border border-gray-300 p-1.5 text-center"></td>
-            <td class="border border-gray-300 p-1.5 text-center bg-red-100 text-red-600">9</td>
-            </tr>
-
-            <tr class="hover:bg-gray-100">
-            <td class="sticky left-0 z-20 border border-gray-300 p-1.5 text-center bg-white">2</td>
-            <td class="sticky left-[40px] z-20 border border-gray-300 p-1.5 bg-white">Roti Jadul</td>
-            <td class="border border-gray-300 p-1.5 text-center bg-[#fef2cb] text-yellow-800">[M1] Bahan Maka</td>
-            <td class="border border-gray-300 p-1.5 text-center">0</td>
-            <td class="border border-gray-300 p-1.5 text-center bg-gray-50">Porsi</td>
-
-            <td class="border border-gray-300 p-1.5 text-center"></td>
-            <td class="border border-gray-300 p-1.5 text-center"></td>
-            <td class="border border-gray-300 p-1.5 text-center"></td>
-            <td class="border border-gray-300 p-1.5 text-center"></td>
-            <td class="border border-gray-300 p-1.5 text-center"></td>
-            <td class="border border-gray-300 p-1.5 text-center"></td>
-            </tr>
-
-            <tr class="hover:bg-gray-100">
-            <td class="sticky left-0 z-20 border border-gray-300 p-1.5 text-center bg-white">3</td>
-            <td class="sticky left-[40px] z-20 border border-gray-300 p-1.5 bg-white">Indomie Goreng</td>
-            <td class="border border-gray-300 p-1.5 text-center bg-[#fef2cb] text-yellow-800">[M1] Bahan Maka</td>
-            <td class="border border-gray-300 p-1.5 text-center">21</td>
-            <td class="border border-gray-300 p-1.5 text-center bg-gray-50">Pcs</td>
-
-            <td class="border border-gray-300 p-1.5 text-center"></td>
-            <td class="border border-gray-300 p-1.5 text-center bg-red-100 text-red-600">5</td>
-            <td class="border border-gray-300 p-1.5 text-center"></td>
-            <td class="border border-gray-300 p-1.5 text-center bg-red-100 text-red-600">1</td>
-            <td class="border border-gray-300 p-1.5 text-center"></td>
-            <td class="border border-gray-300 p-1.5 text-center bg-red-100 text-red-600">1</td>
-            </tr>
-        </tbody>
+    <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs border border-gray-300">
+        <table class="w-full text-[#565725]">
+            <thead class="bg-[#565725] text-white">
+                <tr>
+                    <th scope="col" class="px-2 py-1 font-semibold text-center w-[30px] border border-default">
+                        No
+                    </th>
+                    <th scope="col" class="px-2 py-1 font-semibold text-center w-[100px] border border-default">
+                        Tanggal Laporan Dibuat
+                    </th>
+                    <th scope="col" class="px-2 py-1 font-semibold text-center w-[100px] border border-default">
+                        Periode Laporan Stok Harian
+                    </th>
+                    <th scope="col" class="px-2 py-1 font-semibold text-center w-[200px] border border-default">
+                        Aksi
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if ($laporanStokHarian->count() >0)
+                    @foreach ($laporanStokHarian as $no => $item)
+                        <tr class="odd:bg-neutral-primary even:bg-neutral-secondary-soft border-b border-default text-[12px]">
+                            <th scope="row" class="px-2 py-1 font-medium text-heading whitespace-nowrap w-[30px] text-center">
+                                {{++$no}}
+                            </th>
+                            <td class="px-2 py-1 text-center border border-default w-[100px]">
+                                {{ $item->created_at->translatedFormat('d F Y') }}
+                            </td>
+                            <td class="px-2 py-1 text-center border border-default w-[100px]">
+                                    <b> {{ \Carbon\Carbon::createFromFormat('!m', $item->bulan)->translatedFormat('F') }} - {{ $item->tahun }} </b>
+                            </td>
+                            <td class="px-2 py-1 border border-default w-[200px] text-center">
+                                <a href="{{ route('manager.laporanStokHarian.detail', $item->id) }}">
+                                    <button class="bg-gray-600 hover:bg-gray-800 p-2 rounded-md text-white">
+                                        <i class="fas fa-file-alt text-[16px]"></i> Detail Laporan Stok Harian
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr class="border">
+                        <td colspan="8" class="text-center p-2">No Record Data</td>
+                    </tr>
+                @endif
+            </tbody>
         </table>
     </div>
 </div>
