@@ -40,7 +40,7 @@
                                         <option value="{{ $item -> id }}">{{ $item -> nama_kategori }}</option>
                                     @endforeach
                                 </select>
-                                <input autocomplete="off" type="number" name="stock" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Stock Awal">
+                                <input autocomplete="off" type="number" step="any" name="stock" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Stock Awal">
                                 <select name="id_uom" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" required>
                                     <option value="" selected disabled>Pilih Unit Of Measurement</option>
                                     @foreach ($uom as $item)
@@ -50,12 +50,12 @@
                             </div>
                             <div class="grid grid-cols-4 gap-4">
                                 <div class="flex gap-1">
-                                    <input autocomplete="off" type="number" name="lead_time" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Lead Time" required>
+                                    <input autocomplete="off" type="number" step="any" name="lead_time" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Lead Time" required>
                                     <p class="text-center align-center content-center">Hari</p>
                                 </div>
-                                <input autocomplete="off" type="number" name="average_daily_usage" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Average Daily Usage">
-                                <input autocomplete="off" type="number" name="safety_stock" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Safety Stock">
-                                <input autocomplete="off" type="number" name="reorder_point" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Reorder Point">
+                                <input autocomplete="off" type="number" step="any" name="average_daily_usage" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Average Daily Usage">
+                                <input autocomplete="off" type="number" step="any" name="safety_stock" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Safety Stock">
+                                <input autocomplete="off" type="number" step="any" name="reorder_point" class="bg-white p-2 rounded outline-none w-full font-normal focus:ring-green-500 focus:border-green-500" placeholder="Reorder Point">
                             </div>
                             <button type="submit">
                                 <div class="bg-green-600 hover:bg-green-800 p-2 rounded-md text-white w-full text-center">

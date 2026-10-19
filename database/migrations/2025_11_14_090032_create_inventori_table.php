@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_barang');
             $table->foreignId('id_kategori')->references('id')->on('kategori')->onDelete('cascade');
             $table->foreignId('id_uom')->references('id')->on('unit_of_measurement')->onDelete('cascade');
-            $table->integer('stok')->nullable();
+            $table->decimal('stok', 11, 2)->nullable();
             $table->integer('lead_time')->nullable();
             $table->integer('average_daily_usage')->nullable();
             $table->integer('safety_stock')->nullable();

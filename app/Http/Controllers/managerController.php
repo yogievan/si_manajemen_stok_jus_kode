@@ -252,7 +252,10 @@ class managerController extends Controller
     public function detailLaporanStokHarianManager($id)
     {
         $laporanStokHarian = laporanStokHarian::findOrFail($id);
-        $dataKedatangan = kedatanganBahanBakuDetail::all();
+
+        $dataKedatangan = kedatanganBahanBakuDetail::whereMonth('tgl_kedatangan', $laporanStokHarian->bulan)
+            ->whereYear('tgl_kedatangan', $laporanStokHarian->tahun)
+            ->get();
 
         $dataStok = laporanStokHarianDetail::from('detail_laporan_stok_harian as stok')
             ->join('inventori as inv', 'stok.id_inventori', '=', 'inv.id')
@@ -260,7 +263,9 @@ class managerController extends Controller
                 $join->on('stok.id_inventori', '=', 'datang.id_inventori')
                     ->on('stok.tgl_masuk', '=', 'datang.tgl_kedatangan');
             })
-           ->select(
+            ->whereMonth('stok.tgl_keluar', $laporanStokHarian->bulan) // Filter Bulan
+            ->whereYear('stok.tgl_keluar', $laporanStokHarian->tahun)   // Filter Tahun
+            ->select(
                 'stok.id',
                 'stok.id_inventori',
                 'stok.tgl_masuk',
@@ -286,8 +291,9 @@ class managerController extends Controller
             5 => 'bg-black text-white',
             6 => 'bg-red-600 text-white',
         ];
+
         $uom = uom::all();
-        $jumlahHari = Carbon::createFromDate($laporanStokHarian->tahun, $laporanStokHarian->bulan, 1)->daysInMonth;
+        $jumlahHari = \Carbon\Carbon::createFromDate($laporanStokHarian->tahun, $laporanStokHarian->bulan, 1)->daysInMonth;
 
         return view('manager.detailLaporanStockHarian', compact('laporanStokHarian', 'inventori', 'kategori', 'colorMap', 'uom', 'jumlahHari', 'dataStok', 'dataKedatangan'));
     }
@@ -308,21 +314,105 @@ class managerController extends Controller
 
         foreach($request->id_inventori as $key => $id_inv){
             $qtyBaru = isset($request->stok_keluar[$key]) ? (float) $request->stok_keluar[$key] : 0;
+            $tglRequest = \Carbon\Carbon::parse($request->tgl_request)->format('Y-m-d');
 
-            laporanStokHarianDetail::create([
+            $transaksiSebelumnya = \App\Models\laporanStokHarianDetail::where('id_inventori', $id_inv)
+                ->orderBy('tgl_keluar', 'desc')
+                ->orderBy('id', 'desc')
+                ->first();
+
+            $inventoriMaster = \App\Models\Inventori::find($id_inv);
+
+            if ($transaksiSebelumnya && $transaksiSebelumnya->stok_akhir !== null) {
+                $stokAwal = (float) $transaksiSebelumnya->stok_akhir;
+            } else {
+                $stokAwal = $inventoriMaster ? (float) $inventoriMaster->stok : 0;
+            }
+
+            $stokAkhir = $stokAwal - $qtyBaru;
+
+            \App\Models\laporanStokHarianDetail::create([
                 'id_laporan_stok_harian' => $id,
                 'id_inventori' => $id_inv,
+                'stok_awal' => $stokAwal,
                 'stok_keluar' => $qtyBaru,
-                'tgl_keluar' => \Carbon\Carbon::parse($request->tgl_request)->format('Y-m-d'),
+                'stok_akhir' => $stokAkhir,
+                'tgl_keluar' => $tglRequest,
             ]);
-
-            if ($qtyBaru > 0) {
-                Inventori::where('id', $id_inv)->decrement('stok', $qtyBaru);
-            }
         }
 
-        Alert::toast('Laporan Pengeluaran Stok Harian Berhasil disimpan!','success');
+        Alert::toast('Laporan Pengeluaran Stok Harian Berhasil disimpan!', 'success');
         return redirect()->route('manager.laporanStokHarian.detail', ['id' => $id]);
+    }
+
+    public function editLaporanPengeluaranStokHarianManager($id, $tanggal)
+    {
+        $laporanStokHarian = LaporanStokHarian::findOrFail($id);
+        $inventori = Inventori::all();
+        $tanggal_edit = \Carbon\Carbon::parse($tanggal)->format('Y-m-d');
+        $detailLaporan = laporanStokHarianDetail::where('id_laporan_stok_harian', $id)
+                            ->where('tgl_keluar', $tanggal_edit)
+                            ->get();
+
+        return view('manager.editLaporanPengeluaranStokBahanBaku', [
+            'laporanStokHarian' => $laporanStokHarian,
+            'inventori' => $inventori,
+            'detailLaporan' => $detailLaporan,
+            'tanggal_edit' => $tanggal_edit
+        ]);
+    }
+
+    public function simpanEditLaporanPengeluaranStokHarianManager(Request $request, $id)
+    {
+        $request->validate([
+            'tgl_request' => 'required|date',
+            'id_inventori' => 'required|array',
+            'stok_keluar' => 'required|array',
+        ]);
+
+        $tanggalEdit = \Carbon\Carbon::parse($request->tgl_request)->format('Y-m-d');
+        \App\Models\laporanStokHarianDetail::where('id_laporan_stok_harian', $id)
+            ->where('tgl_keluar', $tanggalEdit)
+            ->delete();
+
+        foreach($request->id_inventori as $key => $id_inv){
+            $qtyBaru = isset($request->stok_keluar[$key]) ? (float) $request->stok_keluar[$key] : 0;
+
+            $transaksiSebelumnya = \App\Models\laporanStokHarianDetail::where('id_inventori', $id_inv)
+                ->orderBy('tgl_keluar', 'desc')
+                ->orderBy('id', 'desc')
+                ->first();
+
+            $inventoriMaster = \App\Models\Inventori::find($id_inv);
+
+            if ($transaksiSebelumnya && $transaksiSebelumnya->stok_akhir !== null) {
+                $stokAwal = (float) $transaksiSebelumnya->stok_akhir;
+            } else {
+                $stokAwal = $inventoriMaster ? (float) $inventoriMaster->stok : 0;
+            }
+
+            $stokAkhir = $stokAwal - $qtyBaru;
+            \App\Models\laporanStokHarianDetail::create([
+                'id_laporan_stok_harian' => $id,
+                'id_inventori' => $id_inv,
+                'stok_awal' => $stokAwal,
+                'stok_keluar' => $qtyBaru,
+                'stok_akhir' => $stokAkhir,
+                'tgl_keluar' => $tanggalEdit,
+            ]);
+        }
+
+        Alert::toast('Laporan Pengeluaran Stok Harian Berhasil di-update!', 'success');
+        return redirect()->route('manager.laporanStokHarian.detail', ['id' => $id]);
+    }
+
+    public function tambahLaporanPengeluaranStokHarianBuahManager($id)
+    {
+        $laporanStokHarian = laporanStokHarian::findOrFail($id);
+        $inventori = Inventori::where('id_kategori', 3)->where('nama_barang', 'LIKE', '%(Buah Utuh)%')->get();
+        $uom = uom::all();
+        $kategori = Kategori::all();
+        return view('manager.tambahLaporanPengeluaranStokBuah', compact('laporanStokHarian', 'inventori', 'uom', 'kategori'));
     }
 
     public function laporanPenjualanHarianManager()

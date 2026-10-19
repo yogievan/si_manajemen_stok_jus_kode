@@ -15,12 +15,17 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_laporan_stok_harian')->references('id')->on('laporan_stok_harian')->onDelete('cascade');
             $table->foreignId('id_inventori')->references('id')->on('inventori')->onDelete('cascade');
-            $table->integer('stok_awal')->nullable();
-            $table->integer('stok_masuk')->nullable();
-            $table->integer('stok_keluar')->nullable();
             $table->date('tgl_masuk')->nullable();
             $table->date('tgl_keluar')->nullable();
-            $table->integer('stok_akhir')->nullable();
+            $table->decimal('stok_awal', 11, 2)->nullable();
+            $table->decimal('stok_masuk', 11, 2)->nullable();
+            $table->decimal('stok_keluar', 11, 2)->nullable();
+            $table->decimal('keluar_buah_utuh', 11, 2)->nullable();
+            $table->decimal('buah_susut', 11, 2)->nullable();
+            $table->decimal('buah_tidak_bisa_digunakan', 11, 2)->nullable();
+            $table->decimal('buah_prep', 11, 2)->nullable();
+            $table->decimal('buah_prep_rusak', 11, 2)->nullable();
+            $table->decimal('stok_akhir', 11, 2)->nullable();
             $table->timestamps();
         });
     }

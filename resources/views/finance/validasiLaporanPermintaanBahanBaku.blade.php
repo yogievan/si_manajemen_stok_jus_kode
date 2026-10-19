@@ -58,7 +58,7 @@
                         @endif
                     @endforeach
                     <td class="border p-2 text-center text-[#565725]">
-                        <input type="number" name="qty_approve[]" value="{{ $detail->qty_approve }}" class="w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
+                        <input type="number" step="any" name="qty_approve[]" value="{{ $detail->qty_approve }}" class="w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
                     </td>
                     <td class="border p-2 text-center text-[#565725]">
                         {{ $detail->keterangan_manager }}

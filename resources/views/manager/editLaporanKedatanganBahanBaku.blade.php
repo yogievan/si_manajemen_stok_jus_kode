@@ -67,7 +67,7 @@
                             </div>
                         </td>
                         <td class="border p-2 w-[20px]">
-                            <input type="number" value="{{ $detail->qty_kedatangan }}" name="qty_kedatangan[]" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500">
+                            <input type="number" step="any" value="{{ $detail->qty_kedatangan }}" name="qty_kedatangan[]" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500">
                         </td>
                         <td class="border p-2 text-center text-[#565725] w-[20px]">
                             {{ $item->uom->nama_uom }}

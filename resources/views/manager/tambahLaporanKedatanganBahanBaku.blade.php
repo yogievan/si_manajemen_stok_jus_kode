@@ -64,7 +64,7 @@
                                         </div>
                                     </td>
                                     <td class="border p-2 w-[20px]">
-                                        <input type="number" name="qty_kedatangan[]" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500">
+                                        <input type="number" step="any" name="qty_kedatangan[]" class="w-full text-sm text-[#565725] p-2 border rounded focus:ring-green-500 focus:border-green-500">
                                     </td>
                                     @foreach ($inventori as $item)
                                         @if ($detail->id_inventori == $item->id)
@@ -91,6 +91,6 @@
                     </button>
                 </div>
             </div>
-        </form> 
+        </form>
     </div>
 @endsection
