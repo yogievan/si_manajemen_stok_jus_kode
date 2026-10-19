@@ -85,11 +85,14 @@
         $(element).select2({
             placeholder: "Pilih Bahan Baku",
             allowClear: true,
+            focus: true,
             width: '100%'
         }).on('select2:select', function (e) {
             updateUOM(this);
             updateStok(this);
-        });
+        }).on('select2:open', function (e) {
+        document.querySelector('.select2-container--open .select2-search__field').focus();
+    });
     }
     $(document).ready(function() {
         initSelect2('.select-bahan');

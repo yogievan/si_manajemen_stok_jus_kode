@@ -14,15 +14,10 @@
             </span>
         </a>
     </div>
-    <div class="mb-4 flex gap-4">
+    <div class="mb-4">
         <a href="{{ route('manager.laporanStokPengeluaranHarian.tambah', $laporanStokHarian->id) }}">
             <button class="bg-green-600 hover:bg-green-800 p-2 rounded-md text-white">
-                <i class="fas fa-plus-circle text-[16px]"></i> Buat Laporan Pengeluaran Stok Harian <b>BAHAN BAKU</b>
-            </button>
-        </a>
-        <a href="{{ route('manager.laporanStokPengeluaranHarianBuah.tambah', $laporanStokHarian->id) }}">
-            <button class="bg-green-600 hover:bg-green-800 p-2 rounded-md text-white">
-                <i class="fas fa-plus-circle text-[16px]"></i> Buat Laporan Pengeluaran Stok Harian <b>BUAH</b>
+                <i class="fas fa-plus-circle text-[16px]"></i> Buat Laporan Pengeluaran Stok Harian BAHAN BAKU
             </button>
         </a>
     </div>

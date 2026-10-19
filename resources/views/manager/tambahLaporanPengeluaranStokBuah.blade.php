@@ -32,13 +32,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($inventori as $no => $item)
+                @foreach ($inventoriBuah as $no => $buah)
                     <tr>
                         <td class="border border-gray-300 p-1.5 text-center bg-white w-[40px]">
                             {{++$no}}
                         </td>
                         @php
-                            if (in_array($item->nama_barang, [
+                            if (in_array($buah->nama_barang, [
                                 'Mangga Frozen (Buah Utuh)',
                                 'Sirsak (Buah Utuh)',
                                 'Strawberry (Buah Utuh)',
@@ -51,26 +51,28 @@
                                 $bgClass = 'bg-white';
                             }
                         @endphp
+
                         <td class="border border-gray-300 {{ $bgClass }} p-1.5 w-[300px]">
-                            {{ $item->nama_barang }}
+                            <input type="hidden" name="id_inventori[]" value="{{ $buah->id }}">
+                            {{ $buah->nama_barang }}
                         </td>
                         <td class="border border-gray-300 p-1.5 bg-white w-[150px] text-center">
-                            <input type="number" step="any" name="" class="w-full text-center" readonly value="{{ $item->stok_masuk }}">
+                            <input type="number" step="any" name="stok_masuk[]" class="w-full text-center" value="{{ $buah->stok_masuk ?? 0 }}" readonly>
                         </td>
                         <td class="border border-gray-300 p-1.5 bg-white w-[150px] text-center">
-                            <input type="number" step="any" name="" class="w-full text-center">
+                            <input type="number" step="any" name="buah_susut[]" class="w-full text-center" value="0">
                         </td>
                         <td class="border border-gray-300 p-1.5 bg-white w-[150px] text-center">
-                            <input type="number" step="any" name="" class="w-full text-center">
+                            <input type="number" step="any" name="keluar_buah_utuh[]" class="w-full text-center" value="0">
                         </td>
                         <td class="border border-gray-300 p-1.5 bg-white w-[150px] text-center">
-                            <input type="number" step="any" name="" class="w-full text-center">
+                            <input type="number" step="any" name="buah_tidak_bisa_digunakan[]" class="w-full text-center" value="0">
                         </td>
                         <td class="border border-gray-300 p-1.5 bg-white w-[150px] text-center">
-                            <input type="number" step="any" name="" class="w-full text-center">
+                            <input type="number" step="any" name="buah_prep[]" class="w-full text-center" value="0">
                         </td>
                         <td class="border border-gray-300 p-1.5 bg-white w-[150px] text-center">
-                            <input type="number" step="any" name="" class="w-full text-center">
+                            <input type="number" step="any" name="buah_prep_rusak[]" class="w-full text-center" value="0">
                         </td>
                     </tr>
                 @endforeach

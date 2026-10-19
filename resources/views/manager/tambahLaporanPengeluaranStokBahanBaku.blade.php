@@ -20,7 +20,7 @@
         <div class="text-[#565725] my-4">
             <div class="pb-2 font-semibold"> Tanggal Pengeluaran Bahan Baku</div>
             <div class="relative max-w-sm">
-                <input autocomplete="off" value="" id="date" name="tgl_request" type="text" placeholder="Pilih tanggal"  class="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                <input autocomplete="off" value="" id="date" name="tgl_keluar" type="text" placeholder="Pilih tanggal"  class="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 required>
 
                 <svg class="w-5 h-5 absolute right-3 top-2.5 text-gray-400"
@@ -65,7 +65,65 @@
                 </tr>
             </tbody>
         </table>
-        <button type="button" onclick="tambahItem()" class="mt-3 bg-white text-blue-600 px-4 py-2 rounded border border-blue-600 hover:bg-blue-800 hover:text-white"> + Tambah Bahan Baku</button>
+        <button type="button" onclick="tambahItem()" class="mt-3 mb-10 bg-white text-blue-600 px-4 py-2 rounded border border-blue-600 hover:bg-blue-800 hover:text-white"> + Tambah Bahan Baku</button>
+
+        <table class="w-full border border-gray-300 text-sm">
+            <thead class="text-white">
+                <tr>
+                    <th class="bg-[#565725] border p-2 w-max-[50px]">No</th>
+                    <th class="bg-[#565725] border p-2 w-[300px]">Nama Buah</th>
+                    <th class="bg-red-500 border p-2 w-[150px]">Buah Susut</th>
+                    <th class="bg-blue-700 border p-2 w-[150px]">Keluar <br>(Buah Utuh)</br></th>
+                    <th class="bg-blue-700 border p-2 w-[150px]">Buah tidak bisa digunakan</th>
+                    <th class="bg-yellow-500 border p-2 w-[150px]">Buah Prep</th>
+                    <th class="bg-yellow-500 border p-2 w-[150px]">Buah Prep Rusak</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($inventoriBuah as $no => $buah)
+                    <tr>
+                        <td class="border border-gray-300 p-1.5 text-center bg-white w-[40px]">
+                            {{++$no}}
+                        </td>
+                        @php
+                            if (in_array($buah->nama_barang, [
+                                'Mangga Frozen (Buah Utuh)',
+                                'Sirsak (Buah Utuh)',
+                                'Strawberry (Buah Utuh)',
+                                'Blueberry (Buah Utuh)',
+                                'Blackberry (Buah Utuh)',
+                                'Markisa (Buah Utuh)'
+                            ])) {
+                                $bgClass = 'bg-blue-300';
+                            } else {
+                                $bgClass = 'bg-white';
+                            }
+                        @endphp
+
+                        <td class="border border-gray-300 {{ $bgClass }} p-1.5 w-[300px]">
+                            <input type="hidden" name="id_inventori[]" value="{{ $buah->id }}">
+                            {{ $buah->nama_barang }}
+                        </td>
+                        <td class="border border-gray-300 p-1.5 bg-white w-[150px] text-center">
+                            <input type="number" step="any" name="buah_susut[]" class="w-full text-center" value="0" onfocus="if(this.value=='0') this.value=''" onblur="if(this.value=='') this.value='0'">
+                        </td>
+                        <td class="border border-gray-300 p-1.5 bg-white w-[150px] text-center">
+                            <input type="number" step="any" name="keluar_buah_utuh[]" class="w-full text-center" value="0" onfocus="if(this.value=='0') this.value=''" onblur="if(this.value=='') this.value='0'">
+                        </td>
+                        <td class="border border-gray-300 p-1.5 bg-white w-[150px] text-center">
+                            <input type="number" step="any" name="buah_tidak_bisa_digunakan[]" class="w-full text-center" value="0" onfocus="if(this.value=='0') this.value=''" onblur="if(this.value=='') this.value='0'">
+                        </td>
+                        <td class="border border-gray-300 p-1.5 bg-white w-[150px] text-center">
+                            <input type="number" step="any" name="buah_prep[]" class="w-full text-center" value="0" onfocus="if(this.value=='0') this.value=''" onblur="if(this.value=='') this.value='0'">
+                        </td>
+                        <td class="border border-gray-300 p-1.5 bg-white w-[150px] text-center">
+                            <input type="number" step="any" name="buah_prep_rusak[]" class="w-full text-center" value="0" onfocus="if(this.value=='0') this.value=''" onblur="if(this.value=='') this.value='0'">
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
         <div class="mt-10">
             <button type="submit" class="bg-green-600 hover:bg-green-800 text-white px-6 py-2 rounded">
                 Simpan Laporan Pengeluaran Bahan Baku
@@ -86,8 +144,33 @@
             updateStok(this);
         });
     }
+
     $(document).ready(function() {
         initSelect2('.select-bahan');
+        $('#date').on('change', function() {
+            let tanggal = $(this).val();
+            if(!tanggal) return;
+            $.ajax({
+                url: "{{ route('manager.getStokMasuk') }}",
+                type: 'GET',
+                data: { tanggal: tanggal },
+                success: function(response) {
+                    $('input[name="stok_masuk[]"]').each(function() {
+                        let inputStok = $(this);
+                        let idInventori = inputStok.closest('tr').find('input[name="id_inventori[]"]').val();
+
+                        if (response[idInventori] !== undefined) {
+                            inputStok.val(response[idInventori]);
+                        } else {
+                            inputStok.val(0);
+                        }
+                    });
+                },
+                error: function(xhr) {
+                    console.log("Gagal mengambil data stok masuk.");
+                }
+            });
+        });
     });
 
     function tambahItem(){
@@ -127,14 +210,13 @@
     function hapusItem(button){
         const row = $(button).closest('tr');
         row.find('.select-bahan').select2('destroy');
-
         row.remove();
         updateNomor();
     }
 
     function updateNomor(){
         const rows = document.querySelectorAll('#items .item-row');
-            rows.forEach((row,index)=>{
+        rows.forEach((row,index)=>{
             row.querySelector('.nomor').innerText = index+1;
         });
     }
@@ -148,21 +230,6 @@
             uomCell.innerText = uom;
         }else{
             uomCell.innerText = "-";
-        }
-    }
-
-    function updateStok(select){
-        const selectedOption = select.options[select.selectedIndex];
-        const stok = selectedOption.getAttribute("data-stok");
-        const row = select.closest("tr");
-        const stokCell = row.querySelector(".stok");
-
-        if(stokCell) {
-            if(stok){
-                stokCell.innerText = stok;
-            }else{
-                stokCell.innerText = "-";
-            }
         }
     }
 </script>

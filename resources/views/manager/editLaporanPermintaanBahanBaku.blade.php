@@ -55,11 +55,11 @@
                                 <option value="">Pilih Bahan Baku</option>
                                 @foreach ($inventori as $item)
                                     @if ($detail->id_inventori == $item->id)
-                                        <option selected value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}">
+                                        <option selected value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}" data-stok="{{ $item->stok }}">
                                             {{ $item->nama_barang }}
                                         </option>
                                     @else
-                                        <option value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}">
+                                        <option value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}" data-stok="{{ $item->stok }}">
                                             {{ $item->nama_barang }}
                                         </option>
                                     @endif
@@ -111,16 +111,33 @@
 @endsection
 @push('scripts')
 <script>
+    function initSelect2(element) {
+        $(element).select2({
+            placeholder: "Pilih Bahan Baku",
+            allowClear: true,
+            width: '100%'
+        }).on('select2:select', function (e) {
+            // Panggil fungsi update menggunakan jQuery/DOM element saat ini
+            updateUOM(this);
+            updateStok(this);
+        }).on('select2:open', function (e) {
+            document.querySelector('.select2-container--open .select2-search__field').focus();
+        });
+    }
+
+    $(document).ready(function() {
+        initSelect2('.select-bahan');
+    });
+
     function tambahItem(){
         const table = document.getElementById('items');
         const row = document.createElement('tr');
-        row.classList.add('item-row');
+        row.classList.add('item-row', 'text-[#565725]');
 
-        // Sesuaikan dengan 10 kolom yang ada di table thead form edit
         row.innerHTML = `
             <td class="border text-center nomor w-[50px] text-[#565725]"></td>
             <td class="border p-2 text-[#565725]">
-                <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required onchange="updateUOM(this); updateStok(this)">
+                <select name="id_inventori[]" class="select-bahan w-full text-sm p-2 border rounded focus:ring-green-500 focus:border-green-500" required>
                     <option value="" selected disabled>Pilih Bahan Baku</option>
                     @foreach ($inventori as $item)
                         <option value="{{ $item->id }}" data-uom="{{ $item->uom->nama_uom }}" data-stok="{{ $item->stok }}">
@@ -146,9 +163,13 @@
                 </button>
             </td>
         `;
+
         table.appendChild(row);
+        initSelect2(row.querySelector('.select-bahan'));
+
         updateNomor();
     }
+
     function hapusItem(button){
         const row = button.closest('tr');
         row.remove();
@@ -157,20 +178,34 @@
 
     function updateNomor(){
         const rows = document.querySelectorAll('#items .item-row');
-            rows.forEach((row,index)=>{
-            row.querySelector('.nomor').innerText = index+1;
+        rows.forEach((row, index)=>{
+            const nomorCell = row.querySelector('.nomor');
+            if(nomorCell) {
+                nomorCell.innerText = index + 1;
+            }
         });
     }
 
     function updateUOM(select){
-        const selectedOption = select.options[select.selectedIndex];
-        const uom = selectedOption.getAttribute("data-uom");
+        // Menggunakan jQuery untuk mendeteksi data atribut dengan aman baik pada select biasa maupun Select2
+        const selectedOption = $(select).find(':selected');
+        const uom = selectedOption.attr("data-uom");
         const row = select.closest("tr");
         const uomCell = row.querySelector(".uom");
-        if(uom){
-            uomCell.innerText = uom;
-        }else{
-            uomCell.innerText = "-";
+
+        if(uomCell){
+            uomCell.innerText = uom ? uom : "-";
+        }
+    }
+
+    function updateStok(select){
+        const selectedOption = $(select).find(':selected');
+        const stok = selectedOption.attr("data-stok");
+        const row = select.closest("tr");
+        const stokCell = row.querySelector(".stok");
+
+        if(stokCell) {
+            stokCell.innerText = stok ? stok : "-";
         }
     }
 </script>

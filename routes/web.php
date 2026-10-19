@@ -56,13 +56,12 @@ Route::post('/manager/laporanstokharian/pengeluaranbahanbaku/tambah/{id}/simpan'
 Route::get('/manager/laporanstokharian/pengeluaranbahanbaku/edit/{id}/{tanggal}', [App\Http\Controllers\managerController::class, 'editLaporanPengeluaranStokHarianManager'])->name('manager.laporanStokPengeluaranHarian.edit');
 Route::put('/manager/laporanstokharian/pengeluaranbahanbaku/edit/{id}/{tanggal}/simpan', [App\Http\Controllers\managerController::class, 'simpanEditLaporanPengeluaranStokHarianManager'])->name('manager.laporanStokPengeluaranHarian.update');
 
-Route::get('/manager/laporanstokharian/pengeluaranbuah/tambah/{id}', [App\Http\Controllers\managerController::class, 'tambahLaporanPengeluaranStokHarianBuahManager'])->name('manager.laporanStokPengeluaranHarianBuah.tambah');
-Route::post('/manager/laporanstokharian/pengeluaranbuah/tambah/{id}/simpan', [App\Http\Controllers\managerController::class, 'simpanTambahLaporanPengeluaranStokHarianBuahManager'])->name('manager.laporanStokPengeluaranHarianBuah.simpan');
-Route::get('/manager/laporanstokharian/pengeluaranbuah/edit/{id}/{tanggal}', [App\Http\Controllers\managerController::class, 'editLaporanPengeluaranStokHarianBuahManager'])->name('manager.laporanStokPengeluaranHarianBuah.edit');
-Route::put('/manager/laporanstokharian/pengeluaranbuah/edit/{id}/{tanggal}/simpan', [App\Http\Controllers\managerController::class, 'simpanEditLaporanPengeluaranStokHarianBuahManager'])->name('manager.laporanStokPengeluaranHarianBuah.update');
-
 Route::get('/manager/laporanpenjualanharian', [App\Http\Controllers\managerController::class, 'laporanPenjualanHarianManager'])->name('manager.laporanPenjualanHarian');
 Route::get('/manager/laporanstokopname', [App\Http\Controllers\managerController::class, 'laporanStokOpnameManager'])->name('manager.laporanStokOpname');
+
+Route::prefix('manager')->name('manager.')->middleware(['auth'])->group(function () {
+    Route::get('/get-stok-masuk', [App\Http\Controllers\managerController::class, 'getStokMasukByTanggal'])->name('getStokMasuk');
+});
 
 // PIC Routes
 Route::get('/pic/dashboard', [App\Http\Controllers\picController::class, 'dashboardPic'])->name('pic.dashboard');
