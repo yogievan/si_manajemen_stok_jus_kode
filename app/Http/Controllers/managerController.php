@@ -678,4 +678,12 @@ class managerController extends Controller
             return redirect()->back()->withInput();
         }
     }
+    public function laporanPenjualanHarianManager()
+    {
+        return view('manager.laporanPenjualanHarian');
+    }
+    public function laporanStokOpnameManager()
+    {
+        return view('manager.laporanStokOpname');
+    }
 }
