@@ -117,7 +117,6 @@
             allowClear: true,
             width: '100%'
         }).on('select2:select', function (e) {
-            // Panggil fungsi update menggunakan jQuery/DOM element saat ini
             updateUOM(this);
             updateStok(this);
         }).on('select2:open', function (e) {

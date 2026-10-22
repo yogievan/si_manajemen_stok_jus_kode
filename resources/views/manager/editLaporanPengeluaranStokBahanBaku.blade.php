@@ -14,7 +14,7 @@
             </span>
         </a>
     </div>
-    <form action="{{ route('manager.laporanStokPengeluaranHarian.update', ['id' => $laporanStokHarian->id, 'tanggal' => $tanggal_edit]) }}" method="POST">
+    <form action="{{ route('manager.laporanStokPengeluaranHarianBahanBaku.update', ['id' => $laporanStokHarian->id, 'tanggal' => $tanggal_edit]) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="text-[#565725] my-4">

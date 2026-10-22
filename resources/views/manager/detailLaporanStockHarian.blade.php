@@ -14,10 +14,16 @@
             </span>
         </a>
     </div>
-    <div class="mb-4">
-        <a href="{{ route('manager.laporanStokPengeluaranHarian.tambah', $laporanStokHarian->id) }}">
+    <div class="mb-4 flex gap-5">
+        <a href="{{ route('manager.laporanStokPengeluaranHarianBahanBaku.tambah', $laporanStokHarian->id) }}">
             <button class="bg-green-600 hover:bg-green-800 p-2 rounded-md text-white">
-                <i class="fas fa-plus-circle text-[16px]"></i> Buat Laporan Pengeluaran Stok Harian BAHAN BAKU
+                <i class="fas fa-plus-circle text-[16px]"></i> Buat Laporan Pengeluaran Stok Harian <b>BAHAN BAKU</b>
+            </button>
+        </a>
+
+        <a href="{{ route('manager.laporanStokPengeluaranHarianBuah.tambah', $laporanStokHarian->id) }}">
+            <button class="bg-green-600 hover:bg-green-800 p-2 rounded-md text-white">
+                <i class="fas fa-plus-circle text-[16px]"></i> Buat Laporan Pengeluaran Stok Harian <b>BUAH</b>
             </button>
         </a>
     </div>
@@ -51,10 +57,17 @@
 
                         <th colspan="2" class="border border-gray-400 p-1 text-center w-[100px]">
                             @if($adaPengeluaranHariIni)
-                                <a href="{{ route('manager.laporanStokPengeluaranHarian.edit', ['id' => $laporanStokHarian->id, 'tanggal' => $tanggalEdit]) }}"
-                                class="w-full bg-yellow-400 hover:bg-yellow-500 p-2 rounded-md text-white flex items-center gap-1 justify-center cursor-pointer">
-                                    Edit
-                                </a>
+                                <div class="flex gap-2">
+                                    <a href="{{ route('manager.laporanStokPengeluaranHarianBahanBaku.edit', ['id' => $laporanStokHarian->id, 'tanggal' => $tanggalEdit]) }}" class="w-full bg-yellow-400 hover:bg-yellow-500 p-2 rounded-md text-white flex flex-col items-center justify-center cursor-pointer leading-tight text-xs">
+                                        <span>Edit</span>
+                                        <span class="font-bold">B. BAKU</span>
+                                    </a>
+
+                                    <a href="{{ route('manager.laporanStokPengeluaranHarianBuah.edit', ['id' => $laporanStokHarian->id, 'tanggal' => $tanggalEdit]) }}" class="w-full bg-yellow-400 hover:bg-yellow-500 p-2 rounded-md text-white flex flex-col items-center justify-center cursor-pointer leading-tight text-xs">
+                                        <span>Edit</span>
+                                        <span class="font-bold">BUAH</span>
+                                    </a>
+                                </div>
                             @else
                                 <span class="inline-block text-gray-300 font-normal">-</span>
                             @endif
@@ -109,35 +122,29 @@
                     @for ($i = 1; $i <= $jumlahHari; $i++)
                         @php
                             $tanggalLoop = \Carbon\Carbon::createFromDate($laporanStokHarian->tahun, $laporanStokHarian->bulan, $i)->format('Y-m-d');
-
-                            $kedatanganHariIni = collect($dataKedatangan)->filter(function($k) use ($item, $tanggalLoop) {
-                                if (!$k->tgl_kedatangan) return false;
+                            $kedatangan = collect($dataKedatangan)->filter(function($k) use ($item, $tanggalLoop) {
                                 return $k->id_inventori == $item->id &&
-                                    \Carbon\Carbon::parse($k->tgl_kedatangan)->format('Y-m-d') == $tanggalLoop;
-                            })->first();
+                                       $k->tgl_kedatangan &&
+                                       \Carbon\Carbon::parse($k->tgl_kedatangan)->format('Y-m-d') == $tanggalLoop;
+                            })->sum('qty_kedatangan');
 
-                            $stokMasukHariIni = collect($dataStok)->filter(function($s) use ($item, $tanggalLoop) {
-                                if (!$s->tgl_masuk) return false;
+                            $stokMasuk = collect($dataStok)->filter(function($s) use ($item, $tanggalLoop) {
                                 return $s->id_inventori == $item->id &&
-                                    \Carbon\Carbon::parse($s->tgl_masuk)->format('Y-m-d') == $tanggalLoop;
-                            })->first();
+                                       $s->tgl_masuk &&
+                                       \Carbon\Carbon::parse($s->tgl_masuk)->format('Y-m-d') == $tanggalLoop;
+                            })->sum('stok_masuk');
 
-                            $stokKeluarHariIni = collect($dataStok)->filter(function($s) use ($item, $tanggalLoop) {
-                                if (!$s->tgl_keluar) return false;
+                            $in = $kedatangan > 0 ? $kedatangan : $stokMasuk;
+                            $dataOut = collect($dataStok)->filter(function($s) use ($item, $tanggalLoop) {
                                 return $s->id_inventori == $item->id &&
-                                    \Carbon\Carbon::parse($s->tgl_keluar)->format('Y-m-d') == $tanggalLoop;
-                            })->first();
+                                       $s->tgl_keluar &&
+                                       \Carbon\Carbon::parse($s->tgl_keluar)->format('Y-m-d') == $tanggalLoop;
+                            });
 
-                            $in = optional($kedatanganHariIni)->qty_kedatangan ?? (optional($stokMasukHariIni)->stok_masuk ?? 0);
-                            $out = optional($stokKeluarHariIni)->stok_keluar ?? 0;
-                        @endphp
-
-                        @php
+                            $out = $dataOut->sum('stok_keluar') + $dataOut->sum('buah_susut') + $dataOut->sum('keluar_buah_utuh');
                             $kat = $kategori->firstWhere('id', $item->id_kategori);
                             $warna = $colorMap[$item->id_kategori] ?? 'bg-gray-100';
-
                             $namaUom = strtolower(optional($uom->firstWhere('id', $item->id_uom))->nama_uom);
-
                             $desimal = ($namaUom == 'kg') ? 2 : 0;
                         @endphp
 
