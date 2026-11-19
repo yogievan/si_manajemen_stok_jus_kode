@@ -647,19 +647,19 @@ class managerController extends Controller
                     $stokAkhir = ($stokAwal + $stokMasuk) - $totalKeluar;
 
                     laporanStokHarianDetail::create([
-                        'id_laporan_stok_harian'    => $id,
-                        'id_inventori'              => $id_inv,
-                        'stok_awal'                 => $stokAwal,
-                        'stok_masuk'                => $stokMasuk,
-                        'stok_keluar'               => 0,
-                        'keluar_buah_utuh'          => $utuh,
-                        'buah_susut'                => $susut,
+                        'id_laporan_stok_harian' => $id,
+                        'id_inventori' => $id_inv,
+                        'stok_awal' => $stokAwal,
+                        'stok_masuk' => $stokMasuk,
+                        'stok_keluar' => 0,
+                        'keluar_buah_utuh' => $utuh,
+                        'buah_susut' => $susut,
                         'buah_tidak_bisa_digunakan' => $rusak,
-                        'buah_prep'                 => $prep,
-                        'buah_prep_rusak'           => $prepRusak,
-                        'stok_akhir'                => $stokAkhir,
-                        'tgl_masuk'                 => $tglRequest,
-                        'tgl_keluar'                => $tglRequest,
+                        'buah_prep' => $prep,
+                        'buah_prep_rusak' => $prepRusak,
+                        'stok_akhir' => $stokAkhir,
+                        'tgl_masuk' => $tglRequest,
+                        'tgl_keluar' => $tglRequest,
                     ]);
 
                     if ($inventoriMaster) {

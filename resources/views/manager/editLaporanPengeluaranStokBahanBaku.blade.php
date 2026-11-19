@@ -137,9 +137,21 @@
         updateNomor();
     }
 
-    function hapusItem(button){
+    function hapusItem(button) {
+        const itemsBody = document.getElementById('items');
         const row = $(button).closest('tr');
-        row.find('.select-bahan').select2('destroy');
+        if (!itemsBody || row.length === 0) return;
+
+        const totalRows = itemsBody.querySelectorAll('.item-row').length;
+        if (totalRows <= 1) {
+            alert('Minimal harus ada 1 baris bahan baku.');
+            return;
+        }
+
+        const select = row.find('.select-bahan');
+        if (select.hasClass('select2-hidden-accessible')) {
+            select.select2('destroy');
+        }
 
         row.remove();
         updateNomor();
@@ -178,4 +190,49 @@
         }
     }
 </script>
+@endpush
+@push('styles')
+<style>
+    .select2-container--default .select2-selection--single {
+    height: 38px !important;
+    min-height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 0.75rem !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 0.25rem !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    order: 1 !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+    padding-left: 0 !important;
+    padding-right: 0.5rem !important;
+    color: #111827 !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__clear {
+    order: 2 !important;
+    float: none !important;
+    margin-left: auto !important;
+    margin-right: 1.5rem !important; /* Jarak aman antara tombol silang (x) dan panah dropdown */
+    height: auto !important;
+    line-height: normal !important;
+    font-size: 1rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    order: 3 !important;
+    height: 100% !important;
+    top: 0 !important;
+    right: 0.5rem !important;
+}
+</style>
 @endpush

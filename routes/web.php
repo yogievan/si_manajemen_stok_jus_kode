@@ -26,7 +26,13 @@ Route::get('/finance/laporanstokharian', [App\Http\Controllers\financeController
 Route::post('/finance/laporanStokHarian/tambah', [App\Http\Controllers\financeController::class, 'tambahLaporanStokHarianFinance'])->name('finance.laporanStokHarian.tambah');
 Route::get('/finance/laporanstokharian/detail/{id}', [App\Http\Controllers\financeController::class, 'detailLaporanStokHarianFinance'])->name('finance.laporanStokHarian.detail');
 Route::get('/finance/laporanStokOpname', [App\Http\Controllers\financeController::class, 'laporanStokOpnameFinance'])->name('finance.laporanStokOpname');
-Route::get('/finance/pengaturan', [App\Http\Controllers\financeController::class, 'pengaturan'])->name('finance.pengaturan');
+Route::get('/finance/pengaturan/kategoriUom', [App\Http\Controllers\financeController::class, 'pengaturanKategoriUom'])->name('finance.pengaturanKategoriUom');
+Route::get('/finance/pengaturan/kategoriMenu', [App\Http\Controllers\financeController::class, 'pengaturanKategoriMenu'])->name('finance.pengaturanKategoriMenu');
+Route::get('/finance/pengaturan/menu', [App\Http\Controllers\financeController::class, 'pengaturanMenu'])->name('finance.pengaturanMenu');
+Route::post('/finance/pengaturan/menu/tambah', [App\Http\Controllers\financeController::class, 'tambahMenu'])->name('finance.pengaturanMenu.tambah');
+Route::post('/finance/pengaturan/menu/resepMenu/tambah', [App\Http\Controllers\financeController::class, 'tambahResepMenu'])->name('finance.pengaturanMenu.tambahResepMenu');
+Route::delete('/finance/pengaturan/menu/hapus/{id}', [App\Http\Controllers\financeController::class, 'hapusMenu'])->name('finance.pengaturanMenu.hapus');
+Route::get('/finance/pengaturan/akunPengguna', [App\Http\Controllers\financeController::class, 'pengaturanAkunPengguna'])->name('finance.pengaturanAkunPengguna');
 
 // Manager Routes
 Route::get('/manager/dashboard', [App\Http\Controllers\managerController::class, 'dashboardManager'])->name('manager.dashboard');

@@ -1,4 +1,4 @@
-<div class="text-[#565725]">
+<ul class="text-[#565725]">
     <li class="my-2">
         <a href="{{ route('manager.dashboard') }}" class="flex gap-3 p-2 rounded font-semibold {{ request()->routeIs('manager.dashboard*') ? 'bg-[#acac56]' : '' }}">
             <i class="fa fa-house my-auto text-white"></i>
@@ -41,4 +41,4 @@
             <p class="text-white">Laporan Stok Opname</p>
         </a>
     </li>
-</div>
+</ul>

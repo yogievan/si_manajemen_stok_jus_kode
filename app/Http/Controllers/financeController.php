@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Kategori;
 use App\Models\uom;
-use App\Models\Inventori;
+use App\Models\inventori;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\permintaanBahanBaku;
@@ -14,7 +14,11 @@ use App\Models\kedatanganBahanBaku;
 use App\Models\kedatanganBahanBakuDetail;
 use App\Models\laporanStokHarian;
 use App\Models\laporanStokHarianDetail;
+use App\Models\KategoriMenu;
+use App\Models\menu;
+use App\Models\resepMenuDetail;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class financeController extends Controller
 {
@@ -25,7 +29,7 @@ class financeController extends Controller
 
     public function inventoriFinance()
     {
-        $inventori = Inventori::orderBy('id_kategori', 'asc')->orderBy('id', 'asc')->get();
+        $inventori = inventori::orderBy('id_kategori', 'asc')->orderBy('id', 'asc')->get();
         $kategori = Kategori::all();
         $colorMap = [
             1 => 'bg-amber-200',
@@ -50,7 +54,7 @@ class financeController extends Controller
             'safety_stock' => 'nullable|integer',
             'reorder_point' => 'nullable|integer',
         ]);
-        Inventori::create([
+        inventori::create([
             'nama_barang' => $request->nama_barang,
             'id_kategori' => $request->id_kategori,
             'stok' => $request->stok,
@@ -75,7 +79,7 @@ class financeController extends Controller
             'safety_stock' => 'nullable|integer',
             'reorder_point' => 'nullable|integer',
         ]);
-        $item = Inventori::findOrFail($request->id);
+        $item = inventori::findOrFail($request->id);
 
         $item->update([
             'nama_barang' => $request->nama_barang,
@@ -93,7 +97,7 @@ class financeController extends Controller
     }
     public function hapusInventoriFinance($id)
     {
-        $inventori = Inventori::findOrFail($id);
+        $inventori = inventori::findOrFail($id);
         $inventori->delete();
         Alert::toast('Bahan Baku Berhasil dihapus!','success');
         return redirect()->route('finance.inventori');
@@ -107,7 +111,7 @@ class financeController extends Controller
     public function detailLaporanPermintaanBahanBakuFinance($id)
     {
         $uom = uom::all();
-        $inventori = Inventori::with('uom')->get();
+        $inventori = inventori::with('uom')->get();
         $permintaanBahanBaku = permintaanBahanBaku::findOrFail($id);
         $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $id)->get();
         return view('finance.detailLaporanPermintaanBahanBaku', compact('permintaanBahanBaku', 'permintaanBahanBakuDetail', 'inventori', 'uom'));
@@ -115,7 +119,7 @@ class financeController extends Controller
     public function validasiLaporanPermintaanBahanBakuFinance($id)
     {
         $uom = uom::all();
-        $inventori = Inventori::with('uom')->get();
+        $inventori = inventori::with('uom')->get();
         $permintaanBahanBaku = permintaanBahanBaku::findOrFail($id);
         $permintaanBahanBakuDetail = permintaanBahanBakuDetail::where('id_laporan_permintaan', $id)->get();
         return view('finance.validasiLaporanPermintaanBahanBaku', compact('inventori', 'uom', 'permintaanBahanBaku', 'permintaanBahanBakuDetail'));
@@ -165,7 +169,7 @@ class financeController extends Controller
     public function validasiLaporanKedatanganBahanBakuFinance($id)
     {
         $uom = uom::all();
-        $inventori = Inventori::with('uom')->get();
+        $inventori = inventori::with('uom')->get();
         $kedatanganBahanBaku = kedatanganBahanBaku::findOrFail($id);
         $kedatanganBahanBakuDetail = kedatanganBahanBakuDetail::where('id_laporan_kedatangan', $id)->get();
         $permintaanBahanBaku = permintaanBahanBaku::findOrFail($kedatanganBahanBaku->id_request);
@@ -240,7 +244,7 @@ class financeController extends Controller
             )
             ->get();
 
-        $inventori = Inventori::orderBy('id_kategori', 'asc')->orderBy('id', 'asc')->get();
+        $inventori = inventori::orderBy('id_kategori', 'asc')->orderBy('id', 'asc')->get();
         $kategori = Kategori::all();
 
         $colorMap = [
@@ -266,8 +270,91 @@ class financeController extends Controller
         return view('finance.laporanStokOpname');
     }
 
-    public function pengaturan()
+    public function pengaturanKategoriUom()
     {
-        return view('finance.pengaturan');
+        $kategoriUom = uom::all();
+        return view('finance.pengaturanKategoriUom', compact('kategoriUom'));
+    }
+    public function pengaturanKategoriMenu()
+    {
+        $kategoriMenu = KategoriMenu::all();
+        return view('finance.pengaturanKategoriMenu', compact('kategoriMenu'));
+    }
+
+    public function pengaturanMenu()
+    {
+        $menu = menu::orderBy('id_kategori', 'asc')->orderBy('id', 'asc')->get();
+        $kategoriMenu = KategoriMenu::all();
+        $inventori = inventori::all();
+        $detailResep = resepMenuDetail::all();
+        $uom = uom::all();
+        return view('finance.pengaturanDaftarMenu', compact('menu', 'kategoriMenu', 'inventori', 'detailResep', 'uom'));
+    }
+    public function tambahMenu(Request $request)
+    {
+        $request->validate([
+            'nama_menu' => 'required|string|max:255',
+            'id_kategori' => 'required|integer',
+        ]);
+
+        menu::create([
+            'nama_menu' => $request->nama_menu,
+            'id_kategori' => $request->id_kategori,
+        ]);
+
+        Alert::toast('Menu Berhasil ditambahakan!','success');
+        return redirect()->route('finance.pengaturanMenu');
+    }
+    public function hapusMenu($id)
+    {
+        $menu = menu::findOrFail($id);
+        $menu->delete();
+        Alert::toast('Menu Berhasil dihapus!','success');
+        return redirect()->route('finance.pengaturanMenu');
+    }
+
+    public function tambahResepMenu(Request $request)
+    {
+        $validated = $request->validate([
+            'id_menu' => ['required', 'integer', 'exists:menu,id'],
+            'id_inventori' => ['required', 'array', 'min:1'],
+            'id_inventori.*' => ['required', 'integer', 'distinct', 'exists:inventori,id'],
+            'qty' => ['required', 'array', 'min:1'],
+            'qty.*' => ['required', 'numeric', 'gt:0', 'max:99999999.99'],
+        ]);
+
+        if (count($validated['id_inventori']) !== count($validated['qty'])) {
+            return back()
+                ->withInput()
+                ->with('error', 'Jumlah data bahan baku dan qty tidak sesuai.');
+        }
+
+        try {
+            DB::transaction(function () use ($validated) {
+                $now = now();
+                DB::table('detail_resep_menu')
+                    ->where('id_menu', $validated['id_menu'])
+                    ->delete();
+
+                $rows = [];
+                foreach ($validated['id_inventori'] as $index => $idInventori) {
+                    $rows[] = [
+                        'id_menu' => $validated['id_menu'],
+                        'id_inventori' => $idInventori,
+                        'qty' => round((float) $validated['qty'][$index], 3),
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ];
+                }
+
+                DB::table('detail_resep_menu')->insert($rows);
+            });
+
+            Alert::toast('Resep Menu Berhasil Diperbarui!', 'success');
+            return redirect()->back();
+        } catch (\Throwable $e) {
+            Alert::toast('Gagal menyimpan resep: ' . $e->getMessage(), 'error');
+            return redirect()->back()->withInput();
+        }
     }
 }

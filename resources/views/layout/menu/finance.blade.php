@@ -1,4 +1,4 @@
-<div class="text-[#565725]">
+<ul class="text-[#565725]">
     <li class="my-2">
         <a href="{{ route('finance.dashboard') }}" class="flex gap-3 p-2 rounded font-semibold hover:bg-[#acac56] {{ request()->routeIs('finance.dashboard*') ? 'bg-[#acac56]' : '' }}">
             <i class="fa fa-house my-auto text-white"></i>
@@ -42,9 +42,25 @@
         </a>
     </li>
     <li class="my-2">
-        <a href="{{ route('finance.pengaturan') }}" class="flex gap-3 p-2 rounded font-semibold hover:bg-[#acac56] {{ request()->routeIs('finance.pengaturan*') ? 'bg-[#acac56]' : '' }}">
+    <button type="button" class="w-full flex items-center justify-between p-2 rounded font-semibold hover:bg-[#acac56] group" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+        <div class="flex items-center gap-3">
             <i class="fas fa-cog my-auto text-white"></i>
-            <p class="text-white">Pengaturan</p>
-        </a>
-    </li>
-</div>
+            <span class="text-white">Pengaturan</span>
+        </div>
+        <i class="fas fa-chevron-down text-white ml-auto"></i>
+    </button>
+    <ul id="dropdown-example" class="hidden py-2 space-y-2">
+        <li>
+            <a href="{{ route('finance.pengaturanKategoriUom') }}" class="pl-10 flex items-center px-2 py-1.5 text-white rounded-base font-semibold hover:bg-[#acac56] group">Kategori Unit of Mesurement (UOM)</a>
+        </li>
+        <li>
+            <a href="{{ route('finance.pengaturanKategoriMenu') }}" class="pl-10 flex items-center px-2 py-1.5 text-white rounded-base font-semibold hover:bg-[#acac56] group">Kategori Menu</a>
+        </li>
+        <li>
+            <a href="{{ route('finance.pengaturanMenu') }}" class="pl-10 flex items-center px-2 py-1.5 text-white rounded-base font-semibold hover:bg-[#acac56] group">Daftar Menu</a>
+        </li>
+        <li>
+            <a href="{{ route('finance.pengaturanAkunPengguna') }}" class="pl-10 flex items-center px-2 py-1.5 text-white rounded-base font-semibold hover:bg-[#acac56] group">Akun Pengguna</a>
+        </li>
+    </ul>
+</ul>
